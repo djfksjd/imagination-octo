@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).parents[1]
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 README_NAMES = {
     "README.md",
     "README.ko.md",
@@ -54,6 +54,8 @@ def test_embedded_engine_contains_the_confirmed_survivor_proof() -> None:
     assert "**Causal chain:**" in text
     assert "**First encounter:**" in text
     assert "**Decisive uncertainty:**" in text
+    assert "**Dramatic cause:**" in text
+    assert "**Changed next choice:**" in text
 
 
 def test_readmes_cover_all_supported_languages() -> None:
@@ -64,6 +66,8 @@ def test_readmes_cover_all_supported_languages() -> None:
         text = (REPO / name).read_text(encoding="utf-8")
         assert all(f"]({target})" in text for target in README_NAMES)
         assert "djfksjd/imagination" in text
+        assert "Engine v0.5.3" in text
+        assert "100" in text
 
 
 def test_router_preserves_user_choice_boundary() -> None:

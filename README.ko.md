@@ -7,7 +7,7 @@
 Codex와 Claude Code를 위한 사람 중심 창의성 플러그인입니다.
 
 [![테스트](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![버전](https://img.shields.io/badge/version-0.1.1-7c3aed)
+![버전](https://img.shields.io/badge/version-0.1.2-7c3aed)
 ![라이선스](https://img.shields.io/badge/license-MIT-0f766e)
 ![스킬](https://img.shields.io/badge/skills-3-f59e0b)
 
@@ -64,7 +64,7 @@ $imagination을 사용해서 대화 트리, 숨은 주사위, 설득 능력치 �
 
 | 런타임 | 선호 결과 | 주요 향상 |
 |---|---:|---|
-| Engine v0.5.2 | **25 대 5 (83.3%)** | 유용한 의외성 `+0.98`, 다양성 `+0.93`, 적합성 `+0.31` |
+| Engine v0.5.3 | **50 대 0 (100.0%)** | 유용한 의외성 `+0.97`, 다양성 `+0.66`, 적합성 `+0.60` |
 | Concept Workshop v0.4.1 | **25 대 5 (83.3%)** | 실행 가능성 `+1.37`, 적합성 `+0.59`, 인과적 명료성 `+0.59` |
 
 이는 테스트한 작업 분포에서 같은 모델 계열 심사자가 평가한 결과이며 모든

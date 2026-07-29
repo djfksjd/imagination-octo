@@ -7,7 +7,7 @@
 面向 Codex 与 Claude Code 的人机协作创意插件。
 
 [![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Version](https://img.shields.io/badge/version-0.1.1-7c3aed)
+![Version](https://img.shields.io/badge/version-0.1.2-7c3aed)
 ![License](https://img.shields.io/badge/license-MIT-0f766e)
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md)
@@ -51,7 +51,7 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination/main/install.sh
 
 | 运行时 | 对强普通提示词的偏好 | 主要提升 |
 |---|---:|---|
-| Engine v0.5.2 | **25–5（83.3%）** | 有用的意外性 `+0.98`、多样性 `+0.93`、契合度 `+0.31` |
+| Engine v0.5.3 | **50–0（100.0%）** | 有用的意外性 `+0.97`、多样性 `+0.66`、契合度 `+0.60` |
 | Workshop v0.4.1 | **25–5（83.3%）** | 可执行性 `+1.37`、契合度 `+0.59`、因果清晰度 `+0.59` |
 
 结果来自预注册测试分布中的模型评审，并不代表对所有创意任务都普遍占优。
