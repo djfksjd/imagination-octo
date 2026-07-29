@@ -7,7 +7,7 @@
 Um plugin criativo com decisão humana para Codex e Claude Code.
 
 [![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Versão](https://img.shields.io/badge/version-0.1.0-7c3aed)
+![Versão](https://img.shields.io/badge/version-0.1.3-7c3aed)
 ![Licença](https://img.shields.io/badge/license-MIT-0f766e)
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md)
@@ -53,8 +53,8 @@ turno, apenas essa opção será aprofundada.
 
 | Runtime | Preferência contra prompt forte | Principais ganhos |
 |---|---:|---|
-| Engine v0.5.1 | **26–4 (86,7%)** | surpresa útil `+0,90`, diversidade `+0,47`, aderência `+0,37` |
-| Workshop v0.4.1 | **25–5 (83,3%)** | aplicabilidade `+1,37`, aderência `+0,59`, clareza causal `+0,59` |
+| Engine v0.5.3 | **50–0 (100,0%)** | surpresa útil `+0,97`, diversidade `+0,66`, aderência `+0,60` |
+| Workshop v0.4.2 | **45–5 (90,0%)** | aplicabilidade `+1,37`, aderência `+0,95`, clareza causal `+0,71`, robustez `+0,82` |
 
 São resultados de juízes-modelo na distribuição pré-registrada, não garantia de
 criatividade universal.

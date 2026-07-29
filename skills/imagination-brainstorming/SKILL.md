@@ -31,16 +31,14 @@ run a fixed interview or delay useful work to collect complete requirements.
 When the brief is already sufficient, proceed and mark genuine uncertainties
 as open questions.
 
-Before elaborating, test the selected direction literally against every
-non-negotiable and the intended outcome. Treat a renamed, relocated, or
-indirect version of an excluded mechanism as the same mechanism. Do not let a
-polished memo launder a constraint violation or an idea that lacks a credible
-path to the outcome. If the conflict is direct, stop development, name it, and
-ask the user to approve the smallest viable repair or return to divergence.
-For each exclusion, privately map the job the forbidden mechanism performs to
-the proposed components and actions. If a component performs the same job
-under a new name, owner, location, or scale, treat it as a conflict. Treat
-material ambiguity as a blocker rather than explaining it away.
+Before elaborating, privately test the direction against its outcome and every
+non-negotiable by function, not label. A component that performs a forbidden
+job under another name, owner, location, or scale still conflicts. Never polish
+through a direct conflict: develop a smallest repair conditionally only when it
+preserves the defining mechanism and make approval the next decision;
+otherwise stop and return to divergence. When missing information determines
+equivalence, keep that component provisional, develop the rest, and make the
+resolving question the leading blocker.
 
 ## Pressure-test before elaborating
 

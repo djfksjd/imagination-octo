@@ -7,7 +7,7 @@
 Ein kreatives Human-in-the-Loop-Plugin für Codex und Claude Code.
 
 [![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Version](https://img.shields.io/badge/version-0.1.0-7c3aed)
+![Version](https://img.shields.io/badge/version-0.1.3-7c3aed)
 ![Lizenz](https://img.shields.io/badge/license-MIT-0f766e)
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md)
@@ -53,8 +53,8 @@ nächsten Schritt wird nur diese Option vertieft.
 
 | Runtime | Präferenz gegenüber starkem Prompt | Wichtigste Gewinne |
 |---|---:|---|
-| Engine v0.5.1 | **26–4 (86,7 %)** | nützliche Überraschung `+0,90`, Vielfalt `+0,47`, Passung `+0,37` |
-| Workshop v0.4.1 | **25–5 (83,3 %)** | Umsetzbarkeit `+1,37`, Passung `+0,59`, kausale Klarheit `+0,59` |
+| Engine v0.5.3 | **50–0 (100,0 %)** | nützliche Überraschung `+0,97`, Vielfalt `+0,66`, Passung `+0,60` |
+| Workshop v0.4.2 | **45–5 (90,0 %)** | Umsetzbarkeit `+1,37`, Passung `+0,95`, kausale Klarheit `+0,71`, Robustheit `+0,82` |
 
 Dies sind Modellrichter-Ergebnisse für die vorregistrierte Testverteilung, kein
 Nachweis universeller Kreativität.
