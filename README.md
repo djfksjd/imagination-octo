@@ -7,7 +7,7 @@
 One human-in-the-loop creative plugin for Codex and Claude Code.
 
 [![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Version](https://img.shields.io/badge/version-0.1.2-7c3aed)
+![Version](https://img.shields.io/badge/version-0.1.3-7c3aed)
 ![License](https://img.shields.io/badge/license-MIT-0f766e)
 ![Skills](https://img.shields.io/badge/skills-3-f59e0b)
 
@@ -68,7 +68,7 @@ Fresh preregistered blind comparisons against strong plain prompts:
 | Runtime | Preference | Largest measured gains |
 |---|---:|---|
 | Engine v0.5.3 | **50–0 (100.0%)** | useful surprise `+0.97`, diversity `+0.66`, fit `+0.60` |
-| Concept Workshop v0.4.1 | **25–5 (83.3%)** | actionability `+1.37`, fit `+0.59`, causal clarity `+0.59` |
+| Concept Workshop v0.4.2 | **45–5 (90.0%)** | actionability `+1.37`, fit `+0.95`, causal clarity `+0.71`, robustness `+0.82` |
 
 These are model-judge results from the tested task distribution, not a claim of
 universal creativity. See the full protocols and limitations in

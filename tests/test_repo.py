@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).parents[1]
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 README_NAMES = {
     "README.md",
     "README.ko.md",
@@ -58,6 +58,17 @@ def test_embedded_engine_contains_the_confirmed_survivor_proof() -> None:
     assert "**Changed next choice:**" in text
 
 
+def test_embedded_workshop_contains_the_confirmed_proportional_preflight() -> None:
+    text = (
+        REPO / "skills" / "imagination-brainstorming" / "SKILL.md"
+    ).read_text(encoding="utf-8")
+
+    assert "by function, not label" in text
+    assert "under another name, owner, location, or scale" in text
+    assert "develop a smallest repair conditionally" in text
+    assert "keep that component provisional" in text
+
+
 def test_readmes_cover_all_supported_languages() -> None:
     actual = {path.name for path in REPO.glob("README*.md")}
     assert README_NAMES <= actual
@@ -67,7 +78,9 @@ def test_readmes_cover_all_supported_languages() -> None:
         assert all(f"]({target})" in text for target in README_NAMES)
         assert "djfksjd/imagination" in text
         assert "Engine v0.5.3" in text
+        assert "Workshop v0.4.2" in text
         assert "100" in text
+        assert "90" in text
 
 
 def test_router_preserves_user_choice_boundary() -> None:
