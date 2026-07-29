@@ -6,6 +6,16 @@ from pathlib import Path
 
 REPO = Path(__file__).parents[1]
 VERSION = "0.1.0"
+README_NAMES = {
+    "README.md",
+    "README.ko.md",
+    "README.ja.md",
+    "README.zh-CN.md",
+    "README.es.md",
+    "README.fr.md",
+    "README.de.md",
+    "README.pt-BR.md",
+}
 
 
 def test_manifests_are_synchronized() -> None:
@@ -32,6 +42,16 @@ def test_all_three_skills_are_present() -> None:
         for path in (REPO / "skills").glob("*/SKILL.md")
     }
     assert actual == expected
+
+
+def test_readmes_cover_all_supported_languages() -> None:
+    actual = {path.name for path in REPO.glob("README*.md")}
+    assert README_NAMES <= actual
+
+    for name in README_NAMES:
+        text = (REPO / name).read_text(encoding="utf-8")
+        assert all(f"]({target})" in text for target in README_NAMES)
+        assert "djfksjd/imagination" in text
 
 
 def test_router_preserves_user_choice_boundary() -> None:
