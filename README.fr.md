@@ -7,7 +7,7 @@
 Un plugin créatif avec décision humaine pour Codex et Claude Code.
 
 [![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Version](https://img.shields.io/badge/version-0.1.0-7c3aed)
+![Version](https://img.shields.io/badge/version-0.1.1-7c3aed)
 ![Licence](https://img.shields.io/badge/license-MIT-0f766e)
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md)
@@ -53,7 +53,7 @@ cette seule option au tour suivant.
 
 | Runtime | Préférence face à un prompt fort | Principaux gains |
 |---|---:|---|
-| Engine v0.5.1 | **26–4 (86,7 %)** | surprise utile `+0,90`, diversité `+0,47`, adéquation `+0,37` |
+| Engine v0.5.2 | **25–5 (83,3 %)** | surprise utile `+0,98`, diversité `+0,93`, adéquation `+0,31` |
 | Workshop v0.4.1 | **25–5 (83,3 %)** | applicabilité `+1,37`, adéquation `+0,59`, clarté causale `+0,59` |
 
 Ces résultats proviennent de juges modèles sur la distribution préenregistrée ;

@@ -7,7 +7,7 @@
 Codex と Claude Code のための、人間参加型クリエイティブプラグイン。
 
 [![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Version](https://img.shields.io/badge/version-0.1.0-7c3aed)
+![Version](https://img.shields.io/badge/version-0.1.1-7c3aed)
 ![License](https://img.shields.io/badge/license-MIT-0f766e)
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md)
@@ -51,7 +51,7 @@ $imagination を使って、このブリーフに対する異なる方向性を�
 
 | ランタイム | 強い通常プロンプトとの比較 | 主な改善 |
 |---|---:|---|
-| Engine v0.5.1 | **26–4 (86.7%)** | 有用な意外性 `+0.90`、多様性 `+0.47`、適合性 `+0.37` |
+| Engine v0.5.2 | **25–5 (83.3%)** | 有用な意外性 `+0.98`、多様性 `+0.93`、適合性 `+0.31` |
 | Workshop v0.4.1 | **25–5 (83.3%)** | 実行可能性 `+1.37`、適合性 `+0.59`、因果的明瞭さ `+0.59` |
 
 これは事前登録したテスト分布でのモデル審査結果であり、普遍的な創造性を

@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).parents[1]
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 README_NAMES = {
     "README.md",
     "README.ko.md",
@@ -42,6 +42,18 @@ def test_all_three_skills_are_present() -> None:
         for path in (REPO / "skills").glob("*/SKILL.md")
     }
     assert actual == expected
+
+
+def test_embedded_engine_contains_the_confirmed_survivor_proof() -> None:
+    text = (
+        REPO / "skills" / "imagination-engine" / "SKILL.md"
+    ).read_text(encoding="utf-8")
+
+    assert "## Prove each survivor" in text
+    assert "**Constraint evidence:**" in text
+    assert "**Causal chain:**" in text
+    assert "**First encounter:**" in text
+    assert "**Decisive uncertainty:**" in text
 
 
 def test_readmes_cover_all_supported_languages() -> None:

@@ -7,7 +7,7 @@
 Ein kreatives Human-in-the-Loop-Plugin für Codex und Claude Code.
 
 [![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Version](https://img.shields.io/badge/version-0.1.0-7c3aed)
+![Version](https://img.shields.io/badge/version-0.1.1-7c3aed)
 ![Lizenz](https://img.shields.io/badge/license-MIT-0f766e)
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md)
@@ -53,7 +53,7 @@ nächsten Schritt wird nur diese Option vertieft.
 
 | Runtime | Präferenz gegenüber starkem Prompt | Wichtigste Gewinne |
 |---|---:|---|
-| Engine v0.5.1 | **26–4 (86,7 %)** | nützliche Überraschung `+0,90`, Vielfalt `+0,47`, Passung `+0,37` |
+| Engine v0.5.2 | **25–5 (83,3 %)** | nützliche Überraschung `+0,98`, Vielfalt `+0,93`, Passung `+0,31` |
 | Workshop v0.4.1 | **25–5 (83,3 %)** | Umsetzbarkeit `+1,37`, Passung `+0,59`, kausale Klarheit `+0,59` |
 
 Dies sind Modellrichter-Ergebnisse für die vorregistrierte Testverteilung, kein
