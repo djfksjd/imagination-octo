@@ -1,0 +1,7 @@
+interface:
+  display_name: "Imagination"
+  short_description: "Create ideas, choose one, then deepen it"
+  default_prompt: "Use $imagination to generate several directions for this brief, then wait for me to choose one."
+
+policy:
+  allow_implicit_invocation: false

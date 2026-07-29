@@ -1,0 +1,7 @@
+interface:
+  display_name: "Imagination Concept Workshop"
+  short_description: "Pressure-test and deepen a chosen idea"
+  default_prompt: "Use $imagination-brainstorming to turn this chosen direction into a coherent, pressure-tested concept."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,38 @@
+# Operating-system noise
+.DS_Store
+Thumbs.db
+
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Local environments and secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Local runs and temporary artifacts
+work/
+tmp/
+evals/runs/
+*.log
+*.tmp
+
+# Editor-local state
+.claude/
+.codex/
+.idea/
+.vscode/
+*.swp
+*~

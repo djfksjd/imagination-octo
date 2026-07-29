@@ -1,0 +1,37 @@
+{
+  "name": "imagination",
+  "version": "0.1.0",
+  "description": "One creative workflow for generating distinct ideas, waiting for the user's choice, and pressure-testing the selected direction.",
+  "author": {
+    "name": "djfksjd",
+    "url": "https://github.com/djfksjd"
+  },
+  "homepage": "https://github.com/djfksjd/imagination",
+  "repository": "https://github.com/djfksjd/imagination",
+  "license": "MIT",
+  "keywords": [
+    "creativity",
+    "ideation",
+    "brainstorming",
+    "concept-design",
+    "worldbuilding"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Imagination",
+    "shortDescription": "Generate ideas, choose, then deepen",
+    "longDescription": "A staged creative workflow that first returns a portfolio of useful, non-obvious directions, pauses for the user's choice, then pressure-tests and develops the selected idea. It preserves the independently evaluated Imagination Engine and Concept Workshop while preventing unreliable automatic selection.",
+    "developerName": "djfksjd",
+    "category": "Creativity",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://github.com/djfksjd/imagination",
+    "defaultPrompt": [
+      "Use $imagination to create several directions for my brief.",
+      "Use $imagination to develop the direction I selected.",
+      "Use $imagination to replace these rejected ideas with new mechanisms."
+    ]
+  }
+}

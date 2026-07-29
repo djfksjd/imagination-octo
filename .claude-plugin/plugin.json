@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "imagination",
+  "version": "0.1.0",
+  "description": "Generate useful, non-obvious ideas, wait for the user's choice, then pressure-test and deepen the selected direction.",
+  "author": {
+    "name": "djfksjd",
+    "url": "https://github.com/djfksjd"
+  },
+  "homepage": "https://github.com/djfksjd/imagination",
+  "repository": "https://github.com/djfksjd/imagination",
+  "license": "MIT",
+  "keywords": [
+    "creativity",
+    "ideation",
+    "brainstorming",
+    "concept-design",
+    "worldbuilding"
+  ],
+  "skills": "./skills/"
+}
