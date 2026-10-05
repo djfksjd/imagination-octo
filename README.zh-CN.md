@@ -1,68 +1,139 @@
 <div align="center">
 
-# ✨ Imagination
+<img src="assets/brand/imagination-octo-logo.png" alt="IMAGINATION OCTO — 广泛伸展，只选其一" width="380" />
 
-**生成不同创意，由你选择，再深入打磨经得住检验的方向。**
+# IMAGINATION OCTO
 
-面向 Codex 与 Claude Code 的人机协作创意插件。
+**REACH WIDE · CHOOSE ONE**
 
-[![Tests](https://github.com/djfksjd/imagination/actions/workflows/tests.yml/badge.svg)](https://github.com/djfksjd/imagination/actions/workflows/tests.yml)
-![Version](https://img.shields.io/badge/version-0.1.3-7c3aed)
-![License](https://img.shields.io/badge/license-MIT-0f766e)
+### 面向 Claude Code 与 Codex 的人机协作创意插件 —<br/>先给出不同的想法，再由你选择，最后得到经过检验的概念
 
 [English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md)
 
+[![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
+[![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
+![Stage](https://img.shields.io/badge/stage-v0.2%20beta-d69526?style=flat-square)
+![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
+![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
+
 </div>
 
----
+Imagination Octo 同时向多个方向伸展，然后停下。它返回少量在机制上而非措辞上不同的想法，并结束这一轮。只有在你选定一个之后，它才会检验并发展该方向。唯独“决定”这一步，它不做自动化。
 
-Imagination 把 AI 不应替你完成的环节——**选择**——留给用户。它先产生
-因果机制不同的方向，等待你选择，然后只对选中的创意进行检验和深化。
+**当前为 `v0.2 beta`。** 下列测量结果来自单一模型（`gpt-5.4`）生成、同一模型系列的 AI 调用评审、且简报数量较少的实验。尚未在 Claude 上测量，也不代表普遍意义上的创造力。
+
+## 功能
+
+| | |
+|---|---|
+| **发散组合** | 通过直接搜索、机制迁移、前提转换三轮产生 3–5 个方向。仅名称或主题不同的变体会被剔除。 |
+| **契合度拥有否决权** | 无论多么出人意料，削弱硬性约束的想法都会被舍弃。换个名字的违规仍是违规。 |
+| **由你选择** | 路由器不会在同一轮中既选择又发展。自动串联在测试中降低了约束契合度，因此强制停顿。 |
+| **压力测试** | 被选中的想法要面对其承重假设、更简单的常规方案，以及自身机制导致的失败。 |
+| **诚实的失败** | 如果常规答案更好，或该方向经不起检验，它会直说并让你回到发散阶段。 |
+| **小型运行时** | 只有三个技能文件。运行时没有牌组、禁用清单、关卡或脚本；测试中的 token 约为普通提示词的 1.1 倍。 |
+
+## 工作原理
 
 ```text
-需求简报 → 3–5 个不同方向 → 你来选择 → 经检验的概念
+ your brief ──► ┌─────────── diverge · imagination-engine ───────────┐
+                │  direct pass · mechanism transfer · premise shift  │
+                │    cull by failure · private proof per survivor    │
+                └──────────────────────────┬─────────────────────────┘
+                                           ▼
+                               3–5 distinct directions
+                                           ▼
+                                    ◆ YOU CHOOSE ◆        the turn always ends here
+                                           ▼
+                ┌─────── develop · imagination-brainstorming ────────┐
+                │ load-bearing assumption · conventional competitor  │
+                │   native failure mode · boring half · falsifier    │
+                └──────────────────────────┬─────────────────────────┘
+                                           ▼
+                             decision-ready concept memo
 ```
+
+- 两个阶段之间的停顿是方法的一部分，而不是界面细节。
+- 搜索与验证过程保持内部。你得到的是想法，而不是流水线运行报告。
+- 不做实现。产出是可以交给规划阶段的概念。
 
 ## 快速开始
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/install.sh | bash
 ```
+
+然后这样提问：
 
 ```text
-使用 $imagination 为这个需求提出几个真正不同的方向。
+使用 $imagination-octo，为一款叙事游戏设计几种谈判机制，
+不使用对话树、隐藏骰子或说服属性。
 ```
 
-首次回答会停在选择环节；回复编号后，下一轮才会深化该方向。
+第一次回复以一个选择题结束。用编号或方向回答即可：
 
-## 三个技能
+```text
+请发展第 2 个方案。
+```
 
-| 技能 | 用途 |
-|---|---|
-| `$imagination` | 推荐入口：发散、选择、深化 |
-| `$imagination-engine` | 生成 3–5 个有用且非显而易见的方向 |
-| `$imagination-brainstorming` | 把已选方向变成可决策的概念备忘录 |
+## 一个插件，三个技能
 
-> [!IMPORTANT]
-> 路由器不会在同一轮中替用户选择并继续深化。用户选择是两个阶段之间的
-> 必要边界。
+| 技能 | 适用场景 | 返回内容 |
+|---|---|---|
+| `$imagination-octo` | 大多数请求 | 组合 → 你的选择 → 发展后的概念 |
+| `$imagination-engine` | 只需要发散时 | 3–5 个有用且不显而易见的方向 |
+| `$imagination-brainstorming` | 已经选定想法时 | 可用于决策的概念备忘录 |
 
-## 测试结果
+## 测量结果（2026-07-30）
 
-| 运行时 | 对强普通提示词的偏好 | 主要提升 |
-|---|---:|---|
-| Engine v0.5.3 | **50–0（100.0%）** | 有用的意外性 `+0.97`、多样性 `+0.66`、契合度 `+0.60` |
-| Workshop v0.4.2 | **45–5（90.0%）** | 可执行性 `+1.37`、契合度 `+0.95`、因果清晰度 `+0.71`、稳健性 `+0.82` |
+与强普通提示词的预注册盲测对比。10 个全新的英文和韩文简报，每个条件运行 5 次，5 名评审。
 
-结果来自预注册测试分布中的模型评审，并不代表对所有创意任务都普遍占优。
+| 运行时 | 更愿意继续发展的一方 | 主要提升（1–7 分制） | Token |
+|---|---|---|---|
+| Engine v0.5.3 | **50 比 0（100.0%）** | 有用的意外性 `+0.97` · 多样性 `+0.66` · 契合度 `+0.60` | 1.12 倍 |
+| Concept Workshop v0.4.2 | **45 比 5（90.0%）** | 可执行性 `+1.37` · 契合度 `+0.95` · 稳健性 `+0.82` | 1.14 倍 |
+
+请如实解读：
+
+- **生成与评审都只用了 `gpt-5.4`。** 目前没有 Claude 运行，也没有人类评审。同一模型系列的评审可能有相同的偏好。
+- **10 个简报是很小的分布。** 95% Wilson 区间：Engine 92.9–100.0%，Workshop 78.6–95.7%。
+- **它也会输。** Workshop 有一个简报被全体评审判给普通提示词，更早的 Engine 版本在一个戏剧简报上也是如此。
+- **早期设计彻底失败。** 牌组加关卡的流水线（Engine v0.4.0）以 48 倍成本对普通提示词 0 比 30 落败，已被替换。该记录保留在 Engine 仓库中。
+- **尚未测量：** 多次独立运行是否收敛到相同的想法，以及把两轮完整流程作为一个产品的评估。
+
+协议、判定规则与结果文件：[Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill)。
+
+## 何时使用，何时不用
+
+**适合使用：** 你需要真正不同的选项时——概念、前提、机制、产品、服务、世界观、仪式，或之前的想法显得平庸时。
+
+**请用普通提示词：** 事实性问题、常规实现、仅需命名，以及任何常规答案就是正确答案的情况。
+
+## 由 `imagination` 更名而来
+
+本插件及其路由技能在 v0.1.3 之前名为 `imagination`。GitHub 会重定向旧仓库地址，但插件名和路由命令已更改：请移除旧的 `imagination` 插件，安装 `imagination-octo`，并使用 `$imagination-octo` 调用。两个专用技能的名称不变。
 
 ## 手动安装
 
 ```bash
-claude plugin marketplace add djfksjd/imagination
-claude plugin install imagination@djfksjd
-codex plugin marketplace add djfksjd/imagination
-codex plugin add imagination@djfksjd
+# Claude Code
+claude plugin marketplace add djfksjd/imagination-octo
+claude plugin install imagination-octo@djfksjd
+
+# Codex
+codex plugin marketplace add djfksjd/imagination-octo
+codex plugin add imagination-octo@djfksjd
 ```
 
-MIT License.
+## 开发
+
+专用运行时在各自的仓库中维护和评估。发布前请同步两个 `SKILL.md`，验证全部三个技能，运行仓库测试，并对两轮选择边界做前向测试。
+
+```bash
+python3 -m pytest tests/ -q
+bash -n install.sh
+```
+
+## 许可证
+
+[MIT](LICENSE)。

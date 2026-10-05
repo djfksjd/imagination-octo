@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "imagination",
+      "name": "imagination-octo",
       "source": "./",
       "description": "Generate distinct ideas, pause for the user's choice, then pressure-test and develop the selected direction."
     }
