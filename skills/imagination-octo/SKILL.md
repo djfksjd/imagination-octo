@@ -1,9 +1,9 @@
 ---
-name: imagination
-description: "Guide a creative request through idea generation, a required user choice, and pressure-tested concept development. Use when the user explicitly invokes $imagination to invent concepts, premises, mechanics, products, services, worlds, rituals, or other non-obvious directions, or follows up in the same conversation by selecting one of the generated ideas. Do not use for factual work, routine implementation, naming-only requests, or tasks with a known conventional answer."
+name: imagination-octo
+description: "Guide a creative request through idea generation, a required user choice, and pressure-tested concept development. Use when the user explicitly invokes $imagination-octo to invent concepts, premises, mechanics, products, services, worlds, rituals, or other non-obvious directions, or follows up in the same conversation by selecting one of the generated ideas. Do not use for factual work, routine implementation, naming-only requests, or tasks with a known conventional answer."
 ---
 
-# Imagination
+# Imagination Octo
 
 Provide one simple entrance to two distinct creative phases:
 

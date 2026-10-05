@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).parents[1]
-VERSION = "0.1.3"
+VERSION = "0.2.0"
 README_NAMES = {
     "README.md",
     "README.ko.md",
@@ -26,14 +26,14 @@ def test_manifests_are_synchronized() -> None:
     ]
     manifests = [json.loads(path.read_text(encoding="utf-8")) for path in paths]
 
-    assert {manifest["name"] for manifest in manifests} == {"imagination"}
+    assert {manifest["name"] for manifest in manifests} == {"imagination-octo"}
     assert {manifest["version"] for manifest in manifests} == {VERSION}
     assert all(manifest["skills"] == "./skills/" for manifest in manifests)
 
 
 def test_all_three_skills_are_present() -> None:
     expected = {
-        "imagination",
+        "imagination-octo",
         "imagination-engine",
         "imagination-brainstorming",
     }
@@ -76,7 +76,7 @@ def test_readmes_cover_all_supported_languages() -> None:
     for name in README_NAMES:
         text = (REPO / name).read_text(encoding="utf-8")
         assert all(f"]({target})" in text for target in README_NAMES)
-        assert "djfksjd/imagination" in text
+        assert "djfksjd/imagination-octo" in text
         assert "Engine v0.5.3" in text
         assert "Workshop v0.4.2" in text
         assert "100" in text
@@ -84,7 +84,7 @@ def test_readmes_cover_all_supported_languages() -> None:
 
 
 def test_router_preserves_user_choice_boundary() -> None:
-    text = (REPO / "skills" / "imagination" / "SKILL.md").read_text(
+    text = (REPO / "skills" / "imagination-octo" / "SKILL.md").read_text(
         encoding="utf-8"
     )
 

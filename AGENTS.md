@@ -2,7 +2,7 @@
 
 The plugin exposes three skills:
 
-- `skills/imagination/SKILL.md` is the user-facing state router.
+- `skills/imagination-octo/SKILL.md` is the user-facing state router.
 - `skills/imagination-engine/SKILL.md` is the evaluated divergence runtime.
 - `skills/imagination-brainstorming/SKILL.md` is the evaluated development runtime.
 

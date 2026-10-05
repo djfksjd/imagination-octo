@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "imagination",
-  "version": "0.1.3",
+  "name": "imagination-octo",
+  "version": "0.2.0",
   "description": "Generate useful, non-obvious ideas, wait for the user's choice, then pressure-test and deepen the selected direction.",
   "author": {
     "name": "djfksjd",
     "url": "https://github.com/djfksjd"
   },
-  "homepage": "https://github.com/djfksjd/imagination",
-  "repository": "https://github.com/djfksjd/imagination",
+  "homepage": "https://github.com/djfksjd/imagination-octo",
+  "repository": "https://github.com/djfksjd/imagination-octo",
   "license": "MIT",
   "keywords": [
     "creativity",
