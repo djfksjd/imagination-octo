@@ -23,7 +23,7 @@
 
 Imagination Octo s'étend dans plusieurs directions à la fois, puis s'arrête. Il renvoie un petit portefeuille d'idées qui diffèrent par leur mécanisme, non par leur formulation, et termine le tour. Ce n'est qu'après votre choix qu'il met cette direction à l'épreuve et la développe. La décision est la seule étape qu'il refuse d'automatiser.
 
-**Ceci est la `v0.3 beta`.** Les mesures ci-dessous proviennent d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Rien n'a été mesuré sur Claude, et il ne s'agit pas d'une affirmation de créativité universelle.
+**Ceci est la `v0.3 beta`.** Le tableau ci-dessous provient d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Une expérience ultérieure sur GPT et Claude existe, mais son résultat de préférence est annulé tant qu'il n'a pas été rejugé ; voir *À lire honnêtement*. Rien de tout cela ne prétend à une créativité universelle.
 
 ## Ce qu'il fait
 
@@ -104,8 +104,8 @@ Comparaisons à l'aveugle préenregistrées contre un prompt ordinaire solide. 1
 - **Dix briefs, c'est une petite distribution.** Intervalles de Wilson à 95 % : Engine 92,9–100,0 %, Workshop 78,6–95,7 %.
 - **Il peut perdre.** Un brief du Workshop est allé à l'unanimité au prompt ordinaire, et une version antérieure de l'Engine a perdu de la même façon un brief dramatique.
 - **Une conception antérieure a échoué nettement.** Le pipeline à cartes et à portes (Engine v0.4.0) a perdu 0–30 contre un prompt ordinaire pour 48× le coût et a été remplacé. Ce bilan est conservé dans le dépôt de l'Engine.
-- **Non mesuré :** la convergence d'exécutions séparées vers les mêmes idées, et le flux complet en deux tours considéré comme un seul produit.
-- **En cours de mesure :** l'Expérience A est préenregistrée dans [`evals/`](evals/PREREGISTRATION.md) : quatre conditions, dont un contrôle à effort égal, GPT et Claude comme générateurs, des juges de l'autre famille, la convergence entre exécutions et un test d'aveugle. Son résultat remplacera cette liste, quel qu'il soit. Le parcours en deux tours dispose d'une suite de régression comportementale dans le même dossier.
+- **Expérience A (2026-10-06) : résultat de préférence annulé pour l'instant.** Une expérience préenregistrée entre modèles ([règle](evals/PREREGISTRATION.md), [résultat](evals/results/2026-10-06-experiment-a.md)) sur 12 briefs inédits, générés par `gpt-5.5` et `claude-opus-5-5` et jugés par l'autre famille. Le moteur a été préféré au prompt simple sur 11 briefs sur 12 avec GPT et 10 sur 12 avec Claude, et un prompt simple à effort égal n'a pas comblé l'écart. Mais les juges ont deviné quel côté utilisait la skill dans 22 tests sur 24 pour chaque modèle ; selon la règle fixée à l'avance, ces chiffres de préférence ne comptent donc pas tant que les sorties n'ont pas été normalisées en format puis rejugées. La vérification à l'aveugle par l'auteur reste aussi à faire. Non concerné par cela : avec le moteur, des exécutions séparées ont moins répété les mêmes mécanismes (recouvrement 0,40 contre 0,54 avec GPT, 0,50 contre 0,63 avec Claude), pour 1,08× les tokens sur GPT et 1,99× sur Claude.
+- **Parcours en deux tours :** seul le comportement a été vérifié. Une suite de régression a réussi 13 cas sur 14 ; l'échec, un choix deviné quand la réponse correspondait à deux directions, a conduit à corriger le routeur. Il n'existe pas d'étude de préférence du parcours complet.
 
 Protocoles, règles de décision et fichiers de résultats : [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
 

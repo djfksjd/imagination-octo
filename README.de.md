@@ -23,7 +23,7 @@
 
 Imagination Octo greift in mehrere Richtungen zugleich aus und hält dann an. Es liefert ein kleines Portfolio von Ideen, die sich im Mechanismus unterscheiden, nicht in der Formulierung, und beendet den Zug. Erst nachdem du eine gewählt hast, prüft und entwickelt es diese Richtung. Die Entscheidung ist der eine Teil, den es nicht automatisiert.
 
-**Dies ist `v0.3 beta`.** Die Messwerte unten stammen von einem einzigen Modell (`gpt-5.4`), bewertet durch KI-Aufrufe derselben Modellfamilie, auf einer kleinen Menge von Briefings. Auf Claude wurde nicht gemessen, und es ist keine Behauptung universeller Kreativität.
+**Dies ist `v0.3 beta`.** Die Tabelle unten stammt von einem einzigen Modell (`gpt-5.4`), bewertet durch KI-Aufrufe derselben Modellfamilie, auf einer kleinen Menge von Briefings. Ein späteres modellübergreifendes Experiment mit GPT und Claude liegt vor, sein Präferenzergebnis ist aber bis zur Neubewertung ungültig; siehe *Ehrlich gelesen*. Nichts davon ist ein Anspruch auf universelle Kreativität.
 
 ## Was es tut
 
@@ -104,8 +104,8 @@ Ehrlich gelesen:
 - **Zehn Briefings sind eine kleine Verteilung.** 95-%-Wilson-Intervalle: Engine 92,9–100,0 %, Workshop 78,6–95,7 %.
 - **Es kann verlieren.** Ein Workshop-Briefing ging einstimmig an den normalen Prompt, und ein früherer Engine-Stand verlor ein Drama-Briefing auf dieselbe Weise.
 - **Ein früheres Design ist klar gescheitert.** Die Deck-und-Gate-Pipeline (Engine v0.4.0) verlor 0–30 gegen einen normalen Prompt bei 48-fachen Kosten und wurde ersetzt. Dieser Befund bleibt im Engine-Repository dokumentiert.
-- **Nicht gemessen:** ob getrennte Läufe auf dieselben Ideen konvergieren, und der vollständige Zwei-Züge-Ablauf als ein Produkt.
-- **Wird gerade gemessen:** Experiment A ist in [`evals/`](evals/PREREGISTRATION.md) präregistriert: vier Bedingungen einschließlich einer aufwandsgleichen Kontrolle, GPT und Claude als Generatoren, Bewertung durch die jeweils andere Modellfamilie, Konvergenz über Läufe hinweg und ein Verblindungstest. Das Ergebnis ersetzt diese Liste, wie auch immer es ausfällt. Für den Ablauf über zwei Züge liegt im selben Ordner eine Verhaltens-Regressionssuite.
+- **Experiment A (2026-10-06): Präferenzergebnis vorerst ungültig.** Ein präregistriertes modellübergreifendes Experiment ([Regel](evals/PREREGISTRATION.md), [Ergebnis](evals/results/2026-10-06-experiment-a.md)) mit 12 neuen Briefings, erzeugt von `gpt-5.5` und `claude-opus-5-5` und jeweils von der anderen Modellfamilie bewertet. Die Engine wurde dem einfachen Prompt bei GPT in 11 von 12 und bei Claude in 10 von 12 Briefings vorgezogen, und ein einfacher Prompt mit gleichem Aufwand schloss die Lücke nicht. Die Bewerter erkannten jedoch bei beiden Modellen in 22 von 24 Tests, welche Seite den Skill benutzt hatte. Nach der vorab festgelegten Regel zählen diese Präferenzwerte daher erst, wenn die Ausgaben im Format normalisiert und neu bewertet wurden. Die verblindete Prüfung durch den Autor steht ebenfalls noch aus. Davon unberührt: Mit der Engine wiederholten getrennte Läufe dieselben Mechanismen seltener (Überlappung 0,40 gegenüber 0,54 bei GPT, 0,50 gegenüber 0,63 bei Claude), bei 1,08× Tokens mit GPT und 1,99× mit Claude.
+- **Ablauf über zwei Züge:** Nur das Verhalten wurde geprüft. Eine Regressionssuite bestand 13 von 14 Fällen; der Fehlschlag, eine geratene Auswahl bei einer Antwort, die auf zwei Richtungen passte, führte zu einer Korrektur des Routers. Eine Präferenzstudie des gesamten Ablaufs gibt es nicht.
 
 Protokolle, Entscheidungsregeln und Ergebnisdateien: [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
 
