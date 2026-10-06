@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo 同时向多个方向伸展，然后停下。它返回少量在机制上而非措辞上不同的想法，并结束这一轮。只有在你选定一个之后，它才会检验并发展该方向。唯独“决定”这一步，它不做自动化。
 
-**当前为 `v0.3 beta`。** 下表来自单一模型（`gpt-5.4`）生成、同一系列的 AI 调用评审、且简报数量较少的实验。之后在 GPT 与 Claude 上做了跨模型实验，但其偏好结果在重新评审前无效，详见“如实解读”。这些都不代表普遍意义上的创造力。
+**当前为 `v0.4 beta`。** 下表来自单一模型（`gpt-5.4`）生成、同一系列的 AI 调用评审、且简报数量较少的实验。之后在 GPT 与 Claude 上做了跨模型实验，但其偏好结果在重新评审前无效，详见“如实解读”。这些都不代表普遍意义上的创造力。
 
 ## 功能
 
@@ -39,7 +39,7 @@ Imagination Octo 同时向多个方向伸展，然后停下。它返回少量在
 ## 工作原理
 
 ```text
- your brief ──► ┌─────────── diverge · imagination-engine ───────────┐
+ your brief ──► ┌──────── diverge · imagination-octo-engine ─────────┐
                 │  direct pass · mechanism transfer · premise shift  │
                 │    cull by failure · private proof per survivor    │
                 └──────────────────────────┬─────────────────────────┘
@@ -48,7 +48,7 @@ Imagination Octo 同时向多个方向伸展，然后停下。它返回少量在
                                            ▼
                                     ◆ YOU CHOOSE ◆        the turn always ends here
                                            ▼
-                ┌─────── develop · imagination-brainstorming ────────┐
+                ┌───── develop · imagination-octo-brainstorming ─────┐
                 │ load-bearing assumption · conventional competitor  │
                 │   native failure mode · boring half · falsifier    │
                 └──────────────────────────┬─────────────────────────┘
@@ -86,8 +86,8 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/insta
 | 技能 | 适用场景 | 返回内容 |
 |---|---|---|
 | `$imagination-octo` | 大多数请求 | 组合 → 你的选择 → 发展后的概念 |
-| `$imagination-engine` | 只需要发散时 | 3–5 个有用且不显而易见的方向 |
-| `$imagination-brainstorming` | 已经选定想法时 | 可用于决策的概念备忘录 |
+| `$imagination-octo-engine` | 只需要发散时 | 3–5 个有用且不显而易见的方向 |
+| `$imagination-octo-brainstorming` | 已经选定想法时 | 可用于决策的概念备忘录 |
 
 ## 测量结果（2026-07-30）
 
@@ -108,7 +108,7 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/insta
 - **候选版本 v0.6.0 未通过（2026-10-06）。** 它试图扩大方案组合并减少重复。在 12 份新简报上未能胜过 v0.5.3（GPT 5 胜 5 负 2 平，Claude 4 胜 6 负 2 平），在两个模型上都未通过预注册的门槛，因此保留 v0.5.3（[结果](evals/results/2026-10-06-experiment-b.md)）。
 - **两轮流程：** 只检查了行为。回归测试 14 项中通过 13 项；失败的一项（回复同时符合两个方向时擅自猜测）已通过修改路由修复。尚无针对整个流程的偏好评估。
 
-协议、判定规则与结果文件：[Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill)。
+协议、判定规则与结果文件：[Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming)。
 
 ## 何时使用，何时不用
 
@@ -129,7 +129,7 @@ curl -fsSL $LOG | python3 - disable
 
 ## 由 `imagination` 更名而来
 
-本插件及其路由技能在 v0.1.3 之前名为 `imagination`。GitHub 会重定向旧仓库地址，但插件名和路由命令已更改：请移除旧的 `imagination` 插件，安装 `imagination-octo`，并使用 `$imagination-octo` 调用。两个专用技能的名称不变。 从 v0.3 起，市场 ID 也由 `djfksjd` 改为 `imagination-octo`，因为旧 ID 与同一作者的其他插件冲突。现在的安装目标是 `imagination-octo@imagination-octo`。
+本插件及其路由技能在 v0.1.3 之前名为 `imagination`。GitHub 会重定向旧仓库地址，但插件名和路由命令已更改：请移除旧的 `imagination` 插件，安装 `imagination-octo`，并使用 `$imagination-octo` 调用。从 v0.4 起，两个专用技能及其仓库也改用同一系列名称：请用 `$imagination-octo-engine` 和 `$imagination-octo-brainstorming` 代替 `$imagination-engine` 和 `$imagination-brainstorming`。 从 v0.3 起，市场 ID 也由 `djfksjd` 改为 `imagination-octo`，因为旧 ID 与同一作者的其他插件冲突。现在的安装目标是 `imagination-octo@imagination-octo`。
 
 ## 手动安装
 

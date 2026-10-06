@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo se extiende en varias direcciones a la vez y luego se detiene. Devuelve un pequeño portafolio de ideas que difieren en su mecanismo, no en su redacción, y termina el turno. Solo cuando eliges una la pone a prueba y la desarrolla. La decisión es lo único que se niega a automatizar.
 
-**Esto es `v0.3 beta`.** La tabla de abajo proviene de un solo modelo (`gpt-5.4`), evaluado por llamadas de IA de la misma familia, sobre un conjunto pequeño de briefs. Después se hizo un experimento con GPT y Claude, pero su resultado de preferencia queda anulado hasta que se vuelva a juzgar; consulta *Léelas con honestidad*. Nada de esto afirma una creatividad universal.
+**Esto es `v0.4 beta`.** La tabla de abajo proviene de un solo modelo (`gpt-5.4`), evaluado por llamadas de IA de la misma familia, sobre un conjunto pequeño de briefs. Después se hizo un experimento con GPT y Claude, pero su resultado de preferencia queda anulado hasta que se vuelva a juzgar; consulta *Léelas con honestidad*. Nada de esto afirma una creatividad universal.
 
 ## Qué hace
 
@@ -39,7 +39,7 @@ Imagination Octo se extiende en varias direcciones a la vez y luego se detiene. 
 ## Cómo funciona
 
 ```text
- your brief ──► ┌─────────── diverge · imagination-engine ───────────┐
+ your brief ──► ┌──────── diverge · imagination-octo-engine ─────────┐
                 │  direct pass · mechanism transfer · premise shift  │
                 │    cull by failure · private proof per survivor    │
                 └──────────────────────────┬─────────────────────────┘
@@ -48,7 +48,7 @@ Imagination Octo se extiende en varias direcciones a la vez y luego se detiene. 
                                            ▼
                                     ◆ YOU CHOOSE ◆        the turn always ends here
                                            ▼
-                ┌─────── develop · imagination-brainstorming ────────┐
+                ┌───── develop · imagination-octo-brainstorming ─────┐
                 │ load-bearing assumption · conventional competitor  │
                 │   native failure mode · boring half · falsifier    │
                 └──────────────────────────┬─────────────────────────┘
@@ -86,8 +86,8 @@ Desarrolla la opción 2.
 | Skill | Ideal para | Devuelve |
 |---|---|---|
 | `$imagination-octo` | La mayoría de las peticiones | Portafolio → tu elección → concepto desarrollado |
-| `$imagination-engine` | Solo divergencia | 3–5 direcciones útiles y no obvias |
-| `$imagination-brainstorming` | Una idea que ya elegiste | Un memo de concepto listo para decidir |
+| `$imagination-octo-engine` | Solo divergencia | 3–5 direcciones útiles y no obvias |
+| `$imagination-octo-brainstorming` | Una idea que ya elegiste | Un memo de concepto listo para decidir |
 
 ## Mediciones (2026-07-30)
 
@@ -108,7 +108,7 @@ Léelas con honestidad:
 - **Una candidata v0.6.0 falló (2026-10-06).** Intentaba ampliar los portafolios y reducir la repetición. En 12 briefs nuevos no superó a la v0.5.3 (5–5–2 con GPT, 4–6–2 con Claude) y no pasó los umbrales prerregistrados en ninguno de los dos, así que se mantiene la v0.5.3 ([resultado](evals/results/2026-10-06-experiment-b.md)).
 - **Flujo de dos turnos:** solo se comprobó el comportamiento. Una suite de regresión pasó 13 de 14 casos; el fallo, una elección adivinada cuando la respuesta encajaba con dos direcciones, llevó a corregir el router. No hay estudio de preferencia del flujo completo.
 
-Protocolos, reglas de decisión y archivos de resultados: [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
+Protocolos, reglas de decisión y archivos de resultados: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).
 
 ## Cuándo usarlo y cuándo no
 
@@ -129,7 +129,7 @@ curl -fsSL $LOG | python3 - disable
 
 ## Antes se llamaba `imagination`
 
-Este plugin y su skill enrutadora se llamaban `imagination` hasta la v0.1.3. GitHub redirige la URL antigua del repositorio, pero el nombre del plugin y el comando del enrutador cambiaron: elimina el plugin `imagination` antiguo, instala `imagination-octo` e invoca `$imagination-octo`. Las dos skills especializadas conservan su nombre. Desde la v0.3 también cambió el id del marketplace, de `djfksjd` a `imagination-octo`, porque el anterior chocaba con otros plugins del mismo autor. El destino de instalación es ahora `imagination-octo@imagination-octo`.
+Este plugin y su skill enrutadora se llamaban `imagination` hasta la v0.1.3. GitHub redirige la URL antigua del repositorio, pero el nombre del plugin y el comando del enrutador cambiaron: elimina el plugin `imagination` antiguo, instala `imagination-octo` e invoca `$imagination-octo`. Desde la v0.4 las dos skills especializadas y sus repositorios también llevan el nombre de la familia: `$imagination-octo-engine` y `$imagination-octo-brainstorming` sustituyen a `$imagination-engine` y `$imagination-brainstorming`. Desde la v0.3 también cambió el id del marketplace, de `djfksjd` a `imagination-octo`, porque el anterior chocaba con otros plugins del mismo autor. El destino de instalación es ahora `imagination-octo@imagination-octo`.
 
 ## Instalación manual
 

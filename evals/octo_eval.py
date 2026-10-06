@@ -29,11 +29,11 @@ from typing import Any, Callable, Iterable
 EVALS = Path(__file__).resolve().parent
 REPO = EVALS.parent
 PROMPTS = EVALS / "prompts"
-ENGINE_SKILL = REPO / "skills" / "imagination-engine" / "SKILL.md"
+ENGINE_SKILL = REPO / "skills" / "imagination-octo-engine" / "SKILL.md"
 ROUTER_FILES = (
     "skills/imagination-octo/SKILL.md",
-    "skills/imagination-engine/SKILL.md",
-    "skills/imagination-brainstorming/SKILL.md",
+    "skills/imagination-octo-engine/SKILL.md",
+    "skills/imagination-octo-brainstorming/SKILL.md",
 )
 
 SEED = "octo-experiment-a-2026-10"
@@ -48,10 +48,10 @@ ARM_DEFS: dict[str, dict[str, Any]] = {
     "A1": {"prompt": "control-effort.md"},
     "A2": {
         "prompt": "treatment.md",
-        "skill": "skills/imagination-engine/SKILL.md",
+        "skill": "skills/imagination-octo-engine/SKILL.md",
         "ablate": True,
     },
-    "A3": {"prompt": "treatment.md", "skill": "skills/imagination-engine/SKILL.md"},
+    "A3": {"prompt": "treatment.md", "skill": "skills/imagination-octo-engine/SKILL.md"},
 }
 FAMILIES: dict[str, dict[str, str]] = {
     "gpt": {"generator": "gpt-5.5", "judge": "gpt-5.5", "reasoning": "medium"},

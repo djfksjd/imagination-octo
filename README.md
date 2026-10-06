@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo reaches in several directions at once and then stops. It returns a small portfolio of ideas that differ in mechanism, not in wording, and ends the turn. Only after you pick one does it pressure-test and develop that direction. The decision is the one part it refuses to automate.
 
-**This is `v0.3 beta`.** The table below comes from one model (`gpt-5.4`) judged by AI calls from the same family on a small set of briefs. A later cross-model run on GPT and Claude exists, but its preference result is void until it is re-judged; see *Read these honestly*. None of this is a claim of universal creativity.
+**This is `v0.4 beta`.** The table below comes from one model (`gpt-5.4`) judged by AI calls from the same family on a small set of briefs. A later cross-model run on GPT and Claude exists, but its preference result is void until it is re-judged; see *Read these honestly*. None of this is a claim of universal creativity.
 
 ## What it does
 
@@ -39,7 +39,7 @@ Imagination Octo reaches in several directions at once and then stops. It return
 ## How it works
 
 ```text
- your brief ──► ┌─────────── diverge · imagination-engine ───────────┐
+ your brief ──► ┌──────── diverge · imagination-octo-engine ─────────┐
                 │  direct pass · mechanism transfer · premise shift  │
                 │    cull by failure · private proof per survivor    │
                 └──────────────────────────┬─────────────────────────┘
@@ -48,7 +48,7 @@ Imagination Octo reaches in several directions at once and then stops. It return
                                            ▼
                                     ◆ YOU CHOOSE ◆        the turn always ends here
                                            ▼
-                ┌─────── develop · imagination-brainstorming ────────┐
+                ┌───── develop · imagination-octo-brainstorming ─────┐
                 │ load-bearing assumption · conventional competitor  │
                 │   native failure mode · boring half · falsifier    │
                 └──────────────────────────┬─────────────────────────┘
@@ -86,8 +86,8 @@ Develop option 2.
 | Skill | Best for | Returns |
 |---|---|---|
 | `$imagination-octo` | Most requests | Portfolio → your choice → developed concept |
-| `$imagination-engine` | Divergence only | 3–5 useful, non-obvious directions |
-| `$imagination-brainstorming` | An idea you already chose | A decision-ready concept memo |
+| `$imagination-octo-engine` | Divergence only | 3–5 useful, non-obvious directions |
+| `$imagination-octo-brainstorming` | An idea you already chose | A decision-ready concept memo |
 
 ## Measured (2026-07-30)
 
@@ -108,7 +108,7 @@ Read these honestly:
 - **A candidate v0.6.0 failed (2026-10-06).** It tried to widen portfolios and cut repetition. On 12 fresh briefs it did not beat v0.5.3 (5–5–2 with GPT, 4–6–2 with Claude) and missed preregistered gates on both, so v0.5.3 stays ([result](evals/results/2026-10-06-experiment-b.md)).
 - **Two-turn flow:** checked for behaviour only. A regression suite passed 13 of 14 cases; the failure, a guessed pick when the reply fit two directions, led to a router fix. There is no preference study of the whole flow.
 
-Protocols, decision rules and result files: [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
+Protocols, decision rules and result files: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).
 
 ## When to use it, and when not
 
@@ -129,7 +129,7 @@ curl -fsSL $LOG | python3 - disable
 
 ## Renamed from `imagination`
 
-This plugin and its router skill were called `imagination` up to v0.1.3. GitHub redirects the old repository URL, but the plugin name and the router command changed: remove the old `imagination` plugin, install `imagination-octo`, and call `$imagination-octo`. The two specialist skills keep their names. From v0.3 the marketplace id changed as well, from `djfksjd` to `imagination-octo`, because the old id collided with other plugins by the same author. The install target is now `imagination-octo@imagination-octo`.
+This plugin and its router skill were called `imagination` up to v0.1.3. GitHub redirects the old repository URL, but the plugin name and the router command changed: remove the old `imagination` plugin, install `imagination-octo`, and call `$imagination-octo`. From v0.4 the two specialist skills and their repositories carry the family name too: `$imagination-octo-engine` and `$imagination-octo-brainstorming` replace `$imagination-engine` and `$imagination-brainstorming`. From v0.3 the marketplace id changed as well, from `djfksjd` to `imagination-octo`, because the old id collided with other plugins by the same author. The install target is now `imagination-octo@imagination-octo`.
 
 ## Manual install
 

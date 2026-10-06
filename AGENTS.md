@@ -3,8 +3,8 @@
 The plugin exposes three skills:
 
 - `skills/imagination-octo/SKILL.md` is the user-facing state router.
-- `skills/imagination-engine/SKILL.md` is the evaluated divergence runtime.
-- `skills/imagination-brainstorming/SKILL.md` is the evaluated development runtime.
+- `skills/imagination-octo-engine/SKILL.md` is the evaluated divergence runtime.
+- `skills/imagination-octo-brainstorming/SKILL.md` is the evaluated development runtime.
 
 Preserve the user-choice boundary. The router must never select and develop a
 direction in the same turn. Keep both specialist runtimes synchronized with

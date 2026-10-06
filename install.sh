@@ -78,6 +78,8 @@ install_claude() {
   if [ "${CLEAN_LEGACY}" -eq 1 ]; then
     claude plugin uninstall "imagination@djfksjd" >/dev/null 2>&1
     claude plugin uninstall "imagination-octo@djfksjd" >/dev/null 2>&1
+    claude plugin uninstall "imagination-engine@djfksjd" >/dev/null 2>&1
+    claude plugin uninstall "imagination-brainstorming@djfksjd" >/dev/null 2>&1
   fi
   log "✓ Claude Code: ${PLUGIN} v$(claude_version)"
 }
@@ -89,6 +91,8 @@ install_codex() {
   if [ "${CLEAN_LEGACY}" -eq 1 ]; then
     codex plugin remove "imagination@djfksjd" >/dev/null 2>&1
     codex plugin remove "imagination-octo@djfksjd" >/dev/null 2>&1
+    codex plugin remove "imagination-engine@djfksjd" >/dev/null 2>&1
+    codex plugin remove "imagination-brainstorming@djfksjd" >/dev/null 2>&1
   fi
   log "✓ Codex: ${PLUGIN}"
 }
