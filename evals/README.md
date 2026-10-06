@@ -61,6 +61,11 @@ The 2026-10-06 run is in [`results/`](results/2026-10-06-experiment-a.md). Its
 preference result is void pending format-normalized re-judging, and
 `briefs.experiment-a.jsonl` is now retired: its outputs have been read.
 
+Experiment B ([rule](PREREGISTRATION-B.md), [result](results/2026-10-06-experiment-b.md))
+tested a candidate runtime, `runtimes/engine-v0.6.0-rc2.md`, against v0.5.3
+with `--spec specs/experiment-b.json`. It failed, so v0.5.3 stays, and
+`briefs.experiment-b.jsonl` is retired.
+
 `briefs.pilot.jsonl` holds two retired development briefs for checking that
 the pipeline runs end to end. A pilot result is not evidence.
 

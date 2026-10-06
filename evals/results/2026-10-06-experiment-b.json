@@ -1,0 +1,390 @@
+{
+  "runs": 4,
+  "briefs": 12,
+  "arms": {
+    "A0": {
+      "prompt": "control.md"
+    },
+    "OLD": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.5.3.md"
+    },
+    "NEW": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.6.0-rc2.md"
+    }
+  },
+  "runtime_hashes": {
+    "OLD": "46827a1b485b443a",
+    "NEW": "3b8f3a30e6ec8b80"
+  },
+  "families": {
+    "gpt": {
+      "generator": "gpt-5.5",
+      "judge": "claude-opus-5-5",
+      "pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 21,
+            "y": 18,
+            "tie": 9,
+            "missing": 0
+          },
+          "cell_net": 0.0625,
+          "briefs": {
+            "x": 5,
+            "y": 5,
+            "tie": 2
+          },
+          "sign_test_p": 0.62305,
+          "rating_diff": {
+            "fit": 0.0104,
+            "useful_surprise": -0.0104,
+            "set_diversity": 0.0729,
+            "craft": 0.0938
+          },
+          "worst_brief_median_fit": 0.0
+        },
+        "NEW vs A0": {
+          "pair": "NEW vs A0",
+          "cells": {
+            "x": 33,
+            "y": 6,
+            "tie": 9,
+            "missing": 0
+          },
+          "cell_net": 0.5625,
+          "briefs": {
+            "x": 11,
+            "y": 0,
+            "tie": 1
+          },
+          "sign_test_p": 0.00049,
+          "rating_diff": {
+            "fit": 0.125,
+            "useful_surprise": 1.0938,
+            "set_diversity": 0.5938,
+            "craft": 0.4583
+          },
+          "worst_brief_median_fit": -0.5
+        }
+      },
+      "trap_pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 2,
+            "y": 3,
+            "tie": 3,
+            "missing": 0
+          },
+          "cell_net": -0.125,
+          "briefs": {
+            "x": 0,
+            "y": 1,
+            "tie": 1
+          },
+          "sign_test_p": 1.0,
+          "rating_diff": {
+            "fit": 0.0,
+            "useful_surprise": -0.0625,
+            "set_diversity": -0.375,
+            "craft": 0.25
+          },
+          "worst_brief_median_fit": 0.0
+        },
+        "NEW vs A0": {
+          "pair": "NEW vs A0",
+          "cells": {
+            "x": 5,
+            "y": 1,
+            "tie": 2,
+            "missing": 0
+          },
+          "cell_net": 0.5,
+          "briefs": {
+            "x": 1,
+            "y": 0,
+            "tie": 1
+          },
+          "sign_test_p": 0.5,
+          "rating_diff": {
+            "fit": 0.0,
+            "useful_surprise": 1.5,
+            "set_diversity": 0.625,
+            "craft": 0.5
+          },
+          "worst_brief_median_fit": 0.0
+        }
+      },
+      "costs": {
+        "A0": {
+          "outputs": 48,
+          "total_tokens": 19448.1042,
+          "output_tokens": 753.3958,
+          "seconds": 18.3063,
+          "chars": 2432.2708,
+          "words": 434.0208,
+          "lines": 15.4167,
+          "bullets": 5.0,
+          "headings": 1.2917,
+          "bold_labels": 12.7708
+        },
+        "OLD": {
+          "outputs": 48,
+          "total_tokens": 20984.1667,
+          "output_tokens": 885.8958,
+          "seconds": 20.4713,
+          "chars": 2854.5833,
+          "words": 503.5625,
+          "lines": 26.6875,
+          "bullets": 4.375,
+          "headings": 3.0208,
+          "bold_labels": 10.9167
+        },
+        "NEW": {
+          "outputs": 48,
+          "total_tokens": 20883.5625,
+          "output_tokens": 868.1042,
+          "seconds": 20.1804,
+          "chars": 2873.5,
+          "words": 510.6667,
+          "lines": 26.9167,
+          "bullets": 4.0625,
+          "headings": 2.5,
+          "bold_labels": 8.5833
+        }
+      },
+      "convergence": {
+        "A0": {
+          "mechanism_overlap": 0.4479,
+          "distinct_mechanism_ratio": 0.5817,
+          "lexical_similarity": 0.7535,
+          "briefs_coded": 12
+        },
+        "OLD": {
+          "mechanism_overlap": 0.3833,
+          "distinct_mechanism_ratio": 0.6164,
+          "lexical_similarity": 0.8193,
+          "briefs_coded": 12
+        },
+        "NEW": {
+          "mechanism_overlap": 0.4488,
+          "distinct_mechanism_ratio": 0.5703,
+          "lexical_similarity": 0.8323,
+          "briefs_coded": 12
+        }
+      },
+      "shape": {
+        "A0": {
+          "ideas_per_portfolio": 5.0,
+          "share_also_in_A0": 1.0
+        },
+        "OLD": {
+          "ideas_per_portfolio": 5.0,
+          "share_also_in_A0": 0.5441
+        },
+        "NEW": {
+          "ideas_per_portfolio": 5.0,
+          "share_also_in_A0": 0.5699
+        }
+      },
+      "gates": {
+        "coverage": true,
+        "preference_not_worse": true,
+        "fit_non_inferior": true,
+        "craft_non_inferior": true,
+        "conventional_trap": false,
+        "beats_plain": true,
+        "cost": true,
+        "breadth": true,
+        "improves": false
+      }
+    },
+    "claude": {
+      "generator": "claude-opus-5-5",
+      "judge": "gpt-5.5",
+      "pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 16,
+            "y": 20,
+            "tie": 12,
+            "missing": 0
+          },
+          "cell_net": -0.0833,
+          "briefs": {
+            "x": 4,
+            "y": 6,
+            "tie": 2
+          },
+          "sign_test_p": 0.82812,
+          "rating_diff": {
+            "fit": -0.1458,
+            "useful_surprise": -0.1771,
+            "set_diversity": 0.2396,
+            "craft": -0.3229
+          },
+          "worst_brief_median_fit": -0.5
+        },
+        "NEW vs A0": {
+          "pair": "NEW vs A0",
+          "cells": {
+            "x": 27,
+            "y": 9,
+            "tie": 12,
+            "missing": 0
+          },
+          "cell_net": 0.375,
+          "briefs": {
+            "x": 8,
+            "y": 2,
+            "tie": 2
+          },
+          "sign_test_p": 0.05469,
+          "rating_diff": {
+            "fit": 0.0729,
+            "useful_surprise": 0.8021,
+            "set_diversity": 0.4271,
+            "craft": 0.2604
+          },
+          "worst_brief_median_fit": -1.0
+        }
+      },
+      "trap_pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "tie": 5,
+            "missing": 0
+          },
+          "cell_net": 0.375,
+          "briefs": {
+            "x": 2,
+            "y": 0,
+            "tie": 0
+          },
+          "sign_test_p": 0.25,
+          "rating_diff": {
+            "fit": 0.0,
+            "useful_surprise": 0.4375,
+            "set_diversity": 0.5,
+            "craft": 0.1875
+          },
+          "worst_brief_median_fit": 0.0
+        },
+        "NEW vs A0": {
+          "pair": "NEW vs A0",
+          "cells": {
+            "x": 5,
+            "y": 1,
+            "tie": 2,
+            "missing": 0
+          },
+          "cell_net": 0.5,
+          "briefs": {
+            "x": 1,
+            "y": 0,
+            "tie": 1
+          },
+          "sign_test_p": 0.5,
+          "rating_diff": {
+            "fit": 0.125,
+            "useful_surprise": 1.1875,
+            "set_diversity": 0.5625,
+            "craft": 0.5
+          },
+          "worst_brief_median_fit": 0.0
+        }
+      },
+      "costs": {
+        "A0": {
+          "outputs": 48,
+          "total_tokens": 3648.7708,
+          "output_tokens": 2788.1458,
+          "seconds": 35.0215,
+          "chars": 2738.0417,
+          "words": 524.125,
+          "lines": 27.3542,
+          "bullets": 16.9167,
+          "headings": 4.8125,
+          "bold_labels": 18.9792
+        },
+        "OLD": {
+          "outputs": 48,
+          "total_tokens": 7385.5,
+          "output_tokens": 4288.0833,
+          "seconds": 56.0304,
+          "chars": 2996.3542,
+          "words": 576.7292,
+          "lines": 24.8333,
+          "bullets": 11.0625,
+          "headings": 4.9583,
+          "bold_labels": 16.6042
+        },
+        "NEW": {
+          "outputs": 48,
+          "total_tokens": 7530.5,
+          "output_tokens": 4526.875,
+          "seconds": 58.5548,
+          "chars": 3037.7292,
+          "words": 583.6667,
+          "lines": 26.5,
+          "bullets": 15.125,
+          "headings": 4.3125,
+          "bold_labels": 19.4167
+        }
+      },
+      "convergence": {
+        "A0": {
+          "mechanism_overlap": 0.6944,
+          "distinct_mechanism_ratio": 0.4312,
+          "lexical_similarity": 0.862,
+          "briefs_coded": 12
+        },
+        "OLD": {
+          "mechanism_overlap": 0.5428,
+          "distinct_mechanism_ratio": 0.5231,
+          "lexical_similarity": 0.8413,
+          "briefs_coded": 12
+        },
+        "NEW": {
+          "mechanism_overlap": 0.5264,
+          "distinct_mechanism_ratio": 0.5323,
+          "lexical_similarity": 0.857,
+          "briefs_coded": 12
+        }
+      },
+      "shape": {
+        "A0": {
+          "ideas_per_portfolio": 4.3542,
+          "share_also_in_A0": 1.0
+        },
+        "OLD": {
+          "ideas_per_portfolio": 3.9792,
+          "share_also_in_A0": 0.5657
+        },
+        "NEW": {
+          "ideas_per_portfolio": 4.625,
+          "share_also_in_A0": 0.5429
+        }
+      },
+      "gates": {
+        "coverage": true,
+        "preference_not_worse": false,
+        "fit_non_inferior": true,
+        "craft_non_inferior": false,
+        "conventional_trap": true,
+        "beats_plain": true,
+        "cost": true,
+        "breadth": true,
+        "improves": false
+      }
+    }
+  },
+  "replace": false
+}
