@@ -180,3 +180,19 @@ def test_owner_votes_are_scored_against_the_hidden_sides(tmp_path: Path) -> None
     assert owner["owner"]["agreement_with_ai_pair_outcome"] == 1.0
     assert owner["decision"]["verdicts"]["owner_anchor_holds"] is True
     assert "A3" not in octo_eval.human_packet(exp).read_text(encoding="utf-8").split("const PAIRS=")[0]
+
+
+def test_experiment_specs_point_at_existing_prompts_and_runtimes() -> None:
+    for path in (REPO / "evals" / "specs").glob("*.json"):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        for arm in spec["arms"].values():
+            assert (REPO / "evals" / "prompts" / arm["prompt"]).exists()
+            assert "skill" not in arm or (REPO / arm["skill"]).exists()
+        for x, y in spec["pairs"]:
+            assert {x, y} <= set(spec["arms"])
+
+
+def test_frozen_runtime_copy_matches_the_shipped_engine() -> None:
+    frozen = (REPO / "evals" / "runtimes" / "engine-v0.5.3.md").read_text(encoding="utf-8")
+    assert "## Prove each survivor" in frozen
+    assert "modal map" not in frozen
