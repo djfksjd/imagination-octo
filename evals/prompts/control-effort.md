@@ -1,0 +1,14 @@
+Generate a portfolio of 3–5 genuinely different ideas for the brief below.
+
+Prioritize the brief and its non-negotiable constraints. Avoid cosmetic
+variants, random combinations, and ideas that are unusual only in name or
+appearance. For each idea, state the idea, the mechanism that makes it work,
+why it fits this brief, and its main risk or unknown. Keep the set concise and
+easy to compare. End with one question that would help the user choose.
+
+Before answering, privately draft about twelve rough candidates from clearly
+different angles. Discard the obvious ones and any that weaken a constraint,
+then return only the best three to five in the format above.
+
+BRIEF:
+{{BRIEF}}

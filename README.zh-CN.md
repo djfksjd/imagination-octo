@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src="assets/brand/imagination-octo-logo.png" alt="IMAGINATION OCTO — 广泛伸展，只选其一" width="380" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/brand/imagination-octo-logo-dark.png" />
+  <img src="assets/brand/imagination-octo-logo.png" alt="IMAGINATION OCTO — 广泛伸展，只选其一" width="380" />
+</picture>
 
 # IMAGINATION OCTO
 
@@ -12,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.2%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -20,7 +23,7 @@
 
 Imagination Octo 同时向多个方向伸展，然后停下。它返回少量在机制上而非措辞上不同的想法，并结束这一轮。只有在你选定一个之后，它才会检验并发展该方向。唯独“决定”这一步，它不做自动化。
 
-**当前为 `v0.2 beta`。** 下列测量结果来自单一模型（`gpt-5.4`）生成、同一模型系列的 AI 调用评审、且简报数量较少的实验。尚未在 Claude 上测量，也不代表普遍意义上的创造力。
+**当前为 `v0.3 beta`。** 下列测量结果来自单一模型（`gpt-5.4`）生成、同一模型系列的 AI 调用评审、且简报数量较少的实验。尚未在 Claude 上测量，也不代表普遍意义上的创造力。
 
 ## 功能
 
@@ -63,6 +66,8 @@ Imagination Octo 同时向多个方向伸展，然后停下。它返回少量在
 curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/install.sh | bash
 ```
 
+更新时再次运行同一条命令即可。如果提示存在以前单独安装的技能副本，请把命令结尾改为 `| bash -s -- --clean-legacy` 再运行；它只会把这些副本移走，不会删除。
+
 然后这样提问：
 
 ```text
@@ -100,6 +105,7 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/insta
 - **它也会输。** Workshop 有一个简报被全体评审判给普通提示词，更早的 Engine 版本在一个戏剧简报上也是如此。
 - **早期设计彻底失败。** 牌组加关卡的流水线（Engine v0.4.0）以 48 倍成本对普通提示词 0 比 30 落败，已被替换。该记录保留在 Engine 仓库中。
 - **尚未测量：** 多次独立运行是否收敛到相同的想法，以及把两轮完整流程作为一个产品的评估。
+- **正在测量：** Experiment A 已在 [`evals/`](evals/PREREGISTRATION.md) 预注册：包含投入对等的对照组在内的四个条件、GPT 与 Claude 两种生成模型、跨系列评审、多次运行间的收敛度，以及盲测验证。无论结果如何，都会替换这份清单。两轮流程的行为回归测试也在同一目录。
 
 协议、判定规则与结果文件：[Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill)。
 
@@ -109,20 +115,31 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/insta
 
 **请用普通提示词：** 事实性问题、常规实现、仅需命名，以及任何常规答案就是正确答案的情况。
 
+## 选择日志（需主动开启）
+
+默认关闭。开启后，每当你选定一个方向或否决一组方案，本机的 `~/.imagination-octo/choices.jsonl` 就会追加一行：展示过的方向、你的选择，以及你给出的理由。除非你要求保存原文，简报只以哈希形式保存。不会上传任何内容，技能也从不读取这份日志；它只用于你日后回看自己的选择。`enable --hosts` 会在全局 `CLAUDE.md` / `AGENTS.md` 中加入带标记的一行，让技能知道你已开启，`disable` 则会将其移除。
+
+```bash
+LOG=https://raw.githubusercontent.com/djfksjd/imagination-octo/main/skills/imagination-octo/scripts/choice_log.py
+curl -fsSL $LOG | python3 - enable --hosts claude,codex   # --with-brief keeps the brief text
+curl -fsSL $LOG | python3 - stats
+curl -fsSL $LOG | python3 - disable
+```
+
 ## 由 `imagination` 更名而来
 
-本插件及其路由技能在 v0.1.3 之前名为 `imagination`。GitHub 会重定向旧仓库地址，但插件名和路由命令已更改：请移除旧的 `imagination` 插件，安装 `imagination-octo`，并使用 `$imagination-octo` 调用。两个专用技能的名称不变。
+本插件及其路由技能在 v0.1.3 之前名为 `imagination`。GitHub 会重定向旧仓库地址，但插件名和路由命令已更改：请移除旧的 `imagination` 插件，安装 `imagination-octo`，并使用 `$imagination-octo` 调用。两个专用技能的名称不变。 从 v0.3 起，市场 ID 也由 `djfksjd` 改为 `imagination-octo`，因为旧 ID 与同一作者的其他插件冲突。现在的安装目标是 `imagination-octo@imagination-octo`。
 
 ## 手动安装
 
 ```bash
 # Claude Code
 claude plugin marketplace add djfksjd/imagination-octo
-claude plugin install imagination-octo@djfksjd
+claude plugin install imagination-octo@imagination-octo
 
 # Codex
 codex plugin marketplace add djfksjd/imagination-octo
-codex plugin add imagination-octo@djfksjd
+codex plugin add imagination-octo@imagination-octo
 ```
 
 ## 开发

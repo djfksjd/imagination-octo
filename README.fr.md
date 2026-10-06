@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src="assets/brand/imagination-octo-logo.png" alt="IMAGINATION OCTO — Voir large, en choisir une" width="380" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/brand/imagination-octo-logo-dark.png" />
+  <img src="assets/brand/imagination-octo-logo.png" alt="IMAGINATION OCTO — Voir large, en choisir une" width="380" />
+</picture>
 
 # IMAGINATION OCTO
 
@@ -12,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.2%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -20,7 +23,7 @@
 
 Imagination Octo s'étend dans plusieurs directions à la fois, puis s'arrête. Il renvoie un petit portefeuille d'idées qui diffèrent par leur mécanisme, non par leur formulation, et termine le tour. Ce n'est qu'après votre choix qu'il met cette direction à l'épreuve et la développe. La décision est la seule étape qu'il refuse d'automatiser.
 
-**Ceci est la `v0.2 beta`.** Les mesures ci-dessous proviennent d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Rien n'a été mesuré sur Claude, et il ne s'agit pas d'une affirmation de créativité universelle.
+**Ceci est la `v0.3 beta`.** Les mesures ci-dessous proviennent d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Rien n'a été mesuré sur Claude, et il ne s'agit pas d'une affirmation de créativité universelle.
 
 ## Ce qu'il fait
 
@@ -63,6 +66,8 @@ Imagination Octo s'étend dans plusieurs directions à la fois, puis s'arrête. 
 curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/install.sh | bash
 ```
 
+Pour mettre à jour, relancez la même commande. Si elle signale d'anciennes copies de ces skills installées séparément, terminez la commande par `| bash -s -- --clean-legacy` pour les mettre de côté ; rien n'est supprimé.
+
 Puis demandez :
 
 ```text
@@ -100,6 +105,7 @@ Comparaisons à l'aveugle préenregistrées contre un prompt ordinaire solide. 1
 - **Il peut perdre.** Un brief du Workshop est allé à l'unanimité au prompt ordinaire, et une version antérieure de l'Engine a perdu de la même façon un brief dramatique.
 - **Une conception antérieure a échoué nettement.** Le pipeline à cartes et à portes (Engine v0.4.0) a perdu 0–30 contre un prompt ordinaire pour 48× le coût et a été remplacé. Ce bilan est conservé dans le dépôt de l'Engine.
 - **Non mesuré :** la convergence d'exécutions séparées vers les mêmes idées, et le flux complet en deux tours considéré comme un seul produit.
+- **En cours de mesure :** l'Expérience A est préenregistrée dans [`evals/`](evals/PREREGISTRATION.md) : quatre conditions, dont un contrôle à effort égal, GPT et Claude comme générateurs, des juges de l'autre famille, la convergence entre exécutions et un test d'aveugle. Son résultat remplacera cette liste, quel qu'il soit. Le parcours en deux tours dispose d'une suite de régression comportementale dans le même dossier.
 
 Protocoles, règles de décision et fichiers de résultats : [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
 
@@ -109,20 +115,31 @@ Protocoles, règles de décision et fichiers de résultats : [Imagination Engine
 
 **Utilisez un prompt ordinaire** pour les questions factuelles, l'implémentation courante, le simple nommage, ou tout cas où la réponse conventionnelle est la bonne.
 
+## Journal des choix (optionnel)
+
+Désactivé par défaut. Une fois activé, chaque fois que vous choisissez une direction ou rejetez un portefeuille, une ligne est ajoutée à `~/.imagination-octo/choices.jsonl` sur votre machine : les directions proposées, votre choix et la raison que vous avez donnée. Les briefs sont enregistrés sous forme de hachage, sauf si vous demandez le texte. Rien n'est envoyé et les skills ne lisent jamais ce journal ; il sert à étudier vos propres choix. `enable --hosts` ajoute une ligne balisée à votre `CLAUDE.md` / `AGENTS.md` global pour que la skill voie l'activation, et `disable` la retire.
+
+```bash
+LOG=https://raw.githubusercontent.com/djfksjd/imagination-octo/main/skills/imagination-octo/scripts/choice_log.py
+curl -fsSL $LOG | python3 - enable --hosts claude,codex   # --with-brief keeps the brief text
+curl -fsSL $LOG | python3 - stats
+curl -fsSL $LOG | python3 - disable
+```
+
 ## Anciennement `imagination`
 
-Ce plugin et sa skill de routage s'appelaient `imagination` jusqu'à la v0.1.3. GitHub redirige l'ancienne URL du dépôt, mais le nom du plugin et la commande du routeur ont changé : supprimez l'ancien plugin `imagination`, installez `imagination-octo` et appelez `$imagination-octo`. Les deux skills spécialisées gardent leur nom.
+Ce plugin et sa skill de routage s'appelaient `imagination` jusqu'à la v0.1.3. GitHub redirige l'ancienne URL du dépôt, mais le nom du plugin et la commande du routeur ont changé : supprimez l'ancien plugin `imagination`, installez `imagination-octo` et appelez `$imagination-octo`. Les deux skills spécialisées gardent leur nom. Depuis la v0.3, l'identifiant du marketplace a lui aussi changé, de `djfksjd` à `imagination-octo`, car l'ancien entrait en collision avec d'autres plugins du même auteur. La cible d'installation est désormais `imagination-octo@imagination-octo`.
 
 ## Installation manuelle
 
 ```bash
 # Claude Code
 claude plugin marketplace add djfksjd/imagination-octo
-claude plugin install imagination-octo@djfksjd
+claude plugin install imagination-octo@imagination-octo
 
 # Codex
 codex plugin marketplace add djfksjd/imagination-octo
-codex plugin add imagination-octo@djfksjd
+codex plugin add imagination-octo@imagination-octo
 ```
 
 ## Développement
