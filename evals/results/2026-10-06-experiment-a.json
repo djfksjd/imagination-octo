@@ -1,0 +1,496 @@
+{
+  "experiment": "A",
+  "seed": "octo-experiment-a-2026-10",
+  "runs": 5,
+  "briefs": 12,
+  "trap_briefs": [
+    "tax-documents",
+    "우산-하교"
+  ],
+  "models": {
+    "gpt": {
+      "generator": "gpt-5.5",
+      "judge": "gpt-5.5",
+      "reasoning": "medium"
+    },
+    "claude": {
+      "generator": "claude-opus-5-5",
+      "judge": "claude-opus-5-5"
+    }
+  },
+  "hashes": {
+    "briefs": "f1e162bd3ae82125",
+    "engine_skill": "46827a1b485b443a",
+    "preregistration": "b7f859c5b206bab2",
+    "coding.md": "e897403961bfacc9",
+    "control-effort.md": "a799b56398a36c4e",
+    "control.md": "ff90445b0139afaa",
+    "judge.md": "034886be838740d3",
+    "probe.md": "5c7bd46f42064b7f",
+    "router-grader.md": "230f9a59f57a4cf6",
+    "router.md": "d851f9efefb21c9e",
+    "treatment.md": "5406e69eff7ecc6b"
+  },
+  "families": {
+    "gpt": {
+      "generator": "gpt-5.5",
+      "judge": "claude-opus-5-5",
+      "planned_outputs": 60,
+      "pairs": {
+        "A1 vs A0": {
+          "pair": "A1 vs A0",
+          "cells": {
+            "x": 16,
+            "y": 17,
+            "tie": 27,
+            "missing": 0
+          },
+          "cell_net": -0.0167,
+          "briefs": {
+            "x": 4,
+            "y": 5,
+            "tie": 3
+          },
+          "sign_test_p": 0.74609,
+          "rating_diff": {
+            "fit": 0.0083,
+            "useful_surprise": 0.0083,
+            "set_diversity": -0.125,
+            "craft": 0.075
+          },
+          "worst_brief_median_fit": -1.0
+        },
+        "A3 vs A0": {
+          "pair": "A3 vs A0",
+          "cells": {
+            "x": 47,
+            "y": 6,
+            "tie": 7,
+            "missing": 0
+          },
+          "cell_net": 0.6833,
+          "briefs": {
+            "x": 11,
+            "y": 1,
+            "tie": 0
+          },
+          "sign_test_p": 0.00317,
+          "rating_diff": {
+            "fit": 0.2083,
+            "useful_surprise": 1.0417,
+            "set_diversity": 0.475,
+            "craft": 0.375
+          },
+          "worst_brief_median_fit": -0.5
+        },
+        "A3 vs A1": {
+          "pair": "A3 vs A1",
+          "cells": {
+            "x": 41,
+            "y": 5,
+            "tie": 14,
+            "missing": 0
+          },
+          "cell_net": 0.6,
+          "briefs": {
+            "x": 11,
+            "y": 1,
+            "tie": 0
+          },
+          "sign_test_p": 0.00317,
+          "rating_diff": {
+            "fit": 0.1583,
+            "useful_surprise": 0.8917,
+            "set_diversity": 0.4833,
+            "craft": 0.2417
+          },
+          "worst_brief_median_fit": 0.0
+        },
+        "A3 vs A2": {
+          "pair": "A3 vs A2",
+          "cells": {
+            "x": 20,
+            "y": 20,
+            "tie": 20,
+            "missing": 0
+          },
+          "cell_net": 0.0,
+          "briefs": {
+            "x": 5,
+            "y": 3,
+            "tie": 4
+          },
+          "sign_test_p": 0.36328,
+          "rating_diff": {
+            "fit": -0.0333,
+            "useful_surprise": 0.0167,
+            "set_diversity": 0.0583,
+            "craft": 0.025
+          },
+          "worst_brief_median_fit": -0.5
+        }
+      },
+      "trap_A3_vs_A0": {
+        "pair": "A3 vs A0",
+        "cells": {
+          "x": 8,
+          "y": 1,
+          "tie": 1,
+          "missing": 0
+        },
+        "cell_net": 0.7,
+        "briefs": {
+          "x": 2,
+          "y": 0,
+          "tie": 0
+        },
+        "sign_test_p": 0.25,
+        "rating_diff": {
+          "fit": 0.25,
+          "useful_surprise": 0.8,
+          "set_diversity": 0.6,
+          "craft": 0.45
+        },
+        "worst_brief_median_fit": 0.0
+      },
+      "costs": {
+        "A0": {
+          "outputs": 60,
+          "total_tokens": 19409.8667,
+          "output_tokens": 815.4667,
+          "seconds": 18.9807,
+          "chars": 2550.6667,
+          "words": 460.9333,
+          "lines": 18.3,
+          "bullets": 5.3333,
+          "headings": 1.5333,
+          "bold_labels": 14.65
+        },
+        "A1": {
+          "outputs": 60,
+          "total_tokens": 19585.8667,
+          "output_tokens": 955.0,
+          "seconds": 21.2353,
+          "chars": 3017.9167,
+          "words": 532.1833,
+          "lines": 29.0167,
+          "bullets": 7.9333,
+          "headings": 4.1333,
+          "bold_labels": 21.4167
+        },
+        "A2": {
+          "outputs": 60,
+          "total_tokens": 20610.2333,
+          "output_tokens": 929.4667,
+          "seconds": 20.9485,
+          "chars": 2915.4333,
+          "words": 528.3167,
+          "lines": 27.55,
+          "bullets": 6.0,
+          "headings": 3.6667,
+          "bold_labels": 9.4167
+        },
+        "A3": {
+          "outputs": 60,
+          "total_tokens": 20921.2167,
+          "output_tokens": 933.7,
+          "seconds": 21.0067,
+          "chars": 2913.7,
+          "words": 523.0333,
+          "lines": 27.35,
+          "bullets": 4.5,
+          "headings": 2.75,
+          "bold_labels": 12.65
+        }
+      },
+      "convergence": {
+        "A0": {
+          "mechanism_overlap": 0.5406,
+          "distinct_mechanism_ratio": 0.4607,
+          "lexical_similarity": 0.7319,
+          "briefs_coded": 12
+        },
+        "A1": {
+          "mechanism_overlap": 0.4786,
+          "distinct_mechanism_ratio": 0.5003,
+          "lexical_similarity": 0.8028,
+          "briefs_coded": 12
+        },
+        "A2": {
+          "mechanism_overlap": 0.4235,
+          "distinct_mechanism_ratio": 0.5225,
+          "lexical_similarity": 0.7997,
+          "briefs_coded": 12
+        },
+        "A3": {
+          "mechanism_overlap": 0.3979,
+          "distinct_mechanism_ratio": 0.5509,
+          "lexical_similarity": 0.7896,
+          "briefs_coded": 12
+        }
+      },
+      "probe": {
+        "planned": 24,
+        "judged": 24,
+        "correct": 22,
+        "accuracy": 0.917,
+        "p_value": 2e-05
+      },
+      "decision": {
+        "gates": {
+          "coverage": true,
+          "gain_want": true,
+          "gain_useful_surprise": true,
+          "fit_non_inferior": true,
+          "craft_non_inferior": true,
+          "cost_ceiling": true,
+          "conventional_trap": true
+        },
+        "a1_share_of_a3_gain": {
+          "want": -0.024,
+          "useful_surprise": 0.008
+        },
+        "token_ratio_A3_over_A0": 1.078,
+        "time_ratio_A3_over_A0": 1.107,
+        "visible_length_ratio_A3_over_A0": 1.142,
+        "verdicts": {
+          "transfers": true,
+          "blinding_broken": true,
+          "mostly_ceremony": false,
+          "house_style": false,
+          "proof_section_carries_weight": true
+        }
+      }
+    },
+    "claude": {
+      "generator": "claude-opus-5-5",
+      "judge": "gpt-5.5",
+      "planned_outputs": 60,
+      "pairs": {
+        "A1 vs A0": {
+          "pair": "A1 vs A0",
+          "cells": {
+            "x": 36,
+            "y": 10,
+            "tie": 14,
+            "missing": 0
+          },
+          "cell_net": 0.4333,
+          "briefs": {
+            "x": 9,
+            "y": 1,
+            "tie": 2
+          },
+          "sign_test_p": 0.01074,
+          "rating_diff": {
+            "fit": 0.2833,
+            "useful_surprise": 0.4417,
+            "set_diversity": -0.0333,
+            "craft": 0.1833
+          },
+          "worst_brief_median_fit": -0.5
+        },
+        "A3 vs A0": {
+          "pair": "A3 vs A0",
+          "cells": {
+            "x": 47,
+            "y": 9,
+            "tie": 4,
+            "missing": 0
+          },
+          "cell_net": 0.6333,
+          "briefs": {
+            "x": 10,
+            "y": 2,
+            "tie": 0
+          },
+          "sign_test_p": 0.01929,
+          "rating_diff": {
+            "fit": 0.6083,
+            "useful_surprise": 0.7083,
+            "set_diversity": -0.2333,
+            "craft": 0.75
+          },
+          "worst_brief_median_fit": -0.5
+        },
+        "A3 vs A1": {
+          "pair": "A3 vs A1",
+          "cells": {
+            "x": 35,
+            "y": 9,
+            "tie": 16,
+            "missing": 0
+          },
+          "cell_net": 0.4333,
+          "briefs": {
+            "x": 10,
+            "y": 1,
+            "tie": 1
+          },
+          "sign_test_p": 0.00586,
+          "rating_diff": {
+            "fit": 0.3667,
+            "useful_surprise": 0.3167,
+            "set_diversity": -0.2917,
+            "craft": 0.5417
+          },
+          "worst_brief_median_fit": -0.5
+        },
+        "A3 vs A2": {
+          "pair": "A3 vs A2",
+          "cells": {
+            "x": 27,
+            "y": 19,
+            "tie": 14,
+            "missing": 0
+          },
+          "cell_net": 0.1333,
+          "briefs": {
+            "x": 6,
+            "y": 3,
+            "tie": 3
+          },
+          "sign_test_p": 0.25391,
+          "rating_diff": {
+            "fit": 0.125,
+            "useful_surprise": -0.1333,
+            "set_diversity": -0.1917,
+            "craft": 0.1917
+          },
+          "worst_brief_median_fit": -1.0
+        }
+      },
+      "trap_A3_vs_A0": {
+        "pair": "A3 vs A0",
+        "cells": {
+          "x": 8,
+          "y": 1,
+          "tie": 1,
+          "missing": 0
+        },
+        "cell_net": 0.7,
+        "briefs": {
+          "x": 2,
+          "y": 0,
+          "tie": 0
+        },
+        "sign_test_p": 0.25,
+        "rating_diff": {
+          "fit": 0.6,
+          "useful_surprise": 0.5,
+          "set_diversity": -0.3,
+          "craft": 0.6
+        },
+        "worst_brief_median_fit": 1.0
+      },
+      "costs": {
+        "A0": {
+          "outputs": 60,
+          "total_tokens": 3960.3333,
+          "output_tokens": 3082.6667,
+          "seconds": 37.9467,
+          "chars": 2917.4,
+          "words": 570.0,
+          "lines": 29.0667,
+          "bullets": 16.85,
+          "headings": 5.4,
+          "bold_labels": 19.3167
+        },
+        "A1": {
+          "outputs": 60,
+          "total_tokens": 4417.0,
+          "output_tokens": 3477.2833,
+          "seconds": 43.814,
+          "chars": 2881.0667,
+          "words": 565.0167,
+          "lines": 26.55,
+          "bullets": 16.4833,
+          "headings": 4.8333,
+          "bold_labels": 18.35
+        },
+        "A2": {
+          "outputs": 60,
+          "total_tokens": 6881.55,
+          "output_tokens": 4240.1167,
+          "seconds": 54.336,
+          "chars": 3035.2,
+          "words": 589.7167,
+          "lines": 25.3,
+          "bullets": 10.35,
+          "headings": 5.2333,
+          "bold_labels": 17.4667
+        },
+        "A3": {
+          "outputs": 60,
+          "total_tokens": 7870.6833,
+          "output_tokens": 4756.35,
+          "seconds": 61.1507,
+          "chars": 3067.5,
+          "words": 600.1333,
+          "lines": 27.0833,
+          "bullets": 12.4167,
+          "headings": 5.2333,
+          "bold_labels": 17.3167
+        }
+      },
+      "convergence": {
+        "A0": {
+          "mechanism_overlap": 0.6258,
+          "distinct_mechanism_ratio": 0.41,
+          "lexical_similarity": 0.8338,
+          "briefs_coded": 12
+        },
+        "A1": {
+          "mechanism_overlap": 0.6064,
+          "distinct_mechanism_ratio": 0.4268,
+          "lexical_similarity": 0.8308,
+          "briefs_coded": 12
+        },
+        "A2": {
+          "mechanism_overlap": 0.5154,
+          "distinct_mechanism_ratio": 0.4858,
+          "lexical_similarity": 0.8365,
+          "briefs_coded": 12
+        },
+        "A3": {
+          "mechanism_overlap": 0.5011,
+          "distinct_mechanism_ratio": 0.5123,
+          "lexical_similarity": 0.8297,
+          "briefs_coded": 12
+        }
+      },
+      "probe": {
+        "planned": 24,
+        "judged": 24,
+        "correct": 22,
+        "accuracy": 0.917,
+        "p_value": 2e-05
+      },
+      "decision": {
+        "gates": {
+          "coverage": true,
+          "gain_want": true,
+          "gain_useful_surprise": true,
+          "fit_non_inferior": true,
+          "craft_non_inferior": true,
+          "cost_ceiling": true,
+          "conventional_trap": true
+        },
+        "a1_share_of_a3_gain": {
+          "want": 0.684,
+          "useful_surprise": 0.624
+        },
+        "token_ratio_A3_over_A0": 1.987,
+        "time_ratio_A3_over_A0": 1.611,
+        "visible_length_ratio_A3_over_A0": 1.051,
+        "verdicts": {
+          "transfers": true,
+          "blinding_broken": true,
+          "mostly_ceremony": false,
+          "house_style": false,
+          "proof_section_carries_weight": true
+        }
+      }
+    }
+  }
+}

@@ -23,7 +23,7 @@
 
 O Imagination Octo se estende em várias direções ao mesmo tempo e então para. Ele devolve um pequeno portfólio de ideias que diferem no mecanismo, não na redação, e encerra o turno. Só depois que você escolhe uma é que ele testa e desenvolve essa direção. A decisão é a única parte que ele se recusa a automatizar.
 
-**Esta é a `v0.3 beta`.** As medições abaixo vêm de um único modelo (`gpt-5.4`), julgado por chamadas de IA da mesma família, em um conjunto pequeno de briefs. Nada foi medido no Claude, e isto não é uma afirmação de criatividade universal.
+**Esta é a `v0.3 beta`.** A tabela abaixo vem de um único modelo (`gpt-5.4`), julgado por chamadas de IA da mesma família, em um conjunto pequeno de briefs. Um experimento posterior com GPT e Claude existe, mas o resultado de preferência fica anulado até ser julgado de novo; veja *Leia com honestidade*. Nada disso afirma criatividade universal.
 
 ## O que ele faz
 
@@ -104,8 +104,8 @@ Leia com honestidade:
 - **Dez briefs são uma distribuição pequena.** Intervalos de Wilson de 95%: Engine 92,9–100,0%, Workshop 78,6–95,7%.
 - **Ele pode perder.** Um brief do Workshop foi por unanimidade para o prompt comum, e uma versão anterior do Engine perdeu um brief de drama do mesmo jeito.
 - **Um projeto anterior falhou por completo.** O pipeline de baralhos e portões (Engine v0.4.0) perdeu de 0–30 para um prompt comum com 48× o custo e foi substituído. Esse registro permanece no repositório do Engine.
-- **Não medido:** se execuções separadas convergem para as mesmas ideias, e o fluxo completo de dois turnos como um único produto.
-- **Em medição:** o Experimento A está pré-registrado em [`evals/`](evals/PREREGISTRATION.md): quatro condições, incluindo um controle com esforço equivalente, GPT e Claude como geradores, juízes da outra família, convergência entre execuções e um teste de cegamento. O resultado substituirá esta lista, seja qual for. O fluxo de dois turnos tem uma suíte de regressão comportamental na mesma pasta.
+- **Experimento A (2026-10-06): resultado de preferência anulado por enquanto.** Um experimento pré-registrado entre modelos ([regra](evals/PREREGISTRATION.md), [resultado](evals/results/2026-10-06-experiment-a.md)) com 12 briefs novos, gerados por `gpt-5.5` e `claude-opus-5-5` e julgados pela outra família. O motor foi preferido ao prompt simples em 11 de 12 briefs com GPT e em 10 de 12 com Claude, e um prompt simples com esforço equivalente não fechou a diferença. Mas os juízes acertaram qual lado usava a skill em 22 de 24 testes em cada modelo; pela regra fixada de antemão, esses números de preferência não contam até que as saídas tenham o formato normalizado e sejam julgadas de novo. A verificação às cegas do autor também está pendente. Não afetado por isso: com o motor, execuções separadas repetiram menos os mesmos mecanismos (sobreposição 0,40 contra 0,54 com GPT; 0,50 contra 0,63 com Claude), com 1,08× os tokens no GPT e 1,99× no Claude.
+- **Fluxo de dois turnos:** só o comportamento foi verificado. Uma suíte de regressão passou em 13 de 14 casos; a falha, uma escolha adivinhada quando a resposta servia para duas direções, levou a uma correção no roteador. Não há estudo de preferência do fluxo completo.
 
 Protocolos, regras de decisão e arquivos de resultado: [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
 

@@ -57,6 +57,10 @@ Outputs land in `evals/runs/<name>/`, which is ignored by git: raw outputs,
 votes, probes, mechanism codings, `summary.json`, and `REPORT.md`. Commit only
 a summary into `results/`, after checking it contains no private text.
 
+The 2026-10-06 run is in [`results/`](results/2026-10-06-experiment-a.md). Its
+preference result is void pending format-normalized re-judging, and
+`briefs.experiment-a.jsonl` is now retired: its outputs have been read.
+
 `briefs.pilot.jsonl` holds two retired development briefs for checking that
 the pipeline runs end to end. A pilot result is not evidence.
 
