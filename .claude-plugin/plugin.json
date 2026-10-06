@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "imagination-octo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Generate useful, non-obvious ideas, wait for the user's choice, then pressure-test and deepen the selected direction.",
   "author": {
     "name": "djfksjd",

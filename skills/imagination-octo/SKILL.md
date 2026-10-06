@@ -24,8 +24,9 @@ Use the conversation state:
 - **Re-diverge:** The user rejects the portfolio and asks for new directions.
 
 If a reply such as “the second one” has only one reasonable referent in the
-conversation, treat it as an explicit selection. Ask one concise question only
-when the selected direction is genuinely ambiguous.
+conversation, treat it as an explicit selection. When a reply could point to
+more than one direction, such as a word two of them share, do not guess: ask
+one concise question naming the candidates, and develop nothing in that turn.
 
 ## Diverge
 
@@ -66,6 +67,26 @@ a decision-ready concept; do not implement it.
   without regenerating the portfolio.
 - If the concept is accepted, summarize unresolved decisions and hand off to
   planning in a later turn.
+
+## Choice log (opt-in)
+
+Skip this section unless the user's standing instructions or this conversation
+contain the exact line `imagination-octo choice log: on`.
+
+When it is on, record each decision once, right after the user explicitly
+selects a direction or rejects the portfolio and before continuing:
+
+```bash
+python3 <this skill's directory>/scripts/choice_log.py record <<'JSON'
+{"event": "choice", "brief": "<the brief>", "portfolio": [{"title": "<title>", "mechanism": "<one line>"}], "pick": 2, "pick_reason": "<the user's stated reason, if any>"}
+JSON
+```
+
+For a rejected portfolio use `"event": "rediverge"` with `rejected_mechanisms`
+and `rediverge_reason`. Copy titles and reasons from the conversation; never
+invent a reason the user did not give. The log is write-only: never read it,
+and never let earlier choices shape a portfolio or a concept. If the command is
+unavailable or fails, continue without comment.
 
 Never read both specialist skills in the same turn. The user should experience
 one coherent conversation, not the internal routing.

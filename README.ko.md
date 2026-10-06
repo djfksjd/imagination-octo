@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src="assets/brand/imagination-octo-logo.png" alt="IMAGINATION OCTO — 넓게 뻗고, 하나를 고른다" width="380" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/brand/imagination-octo-logo-dark.png" />
+  <img src="assets/brand/imagination-octo-logo.png" alt="IMAGINATION OCTO — 넓게 뻗고, 하나를 고른다" width="380" />
+</picture>
 
 # IMAGINATION OCTO
 
@@ -12,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.2%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -20,7 +23,7 @@
 
 Imagination Octo는 여러 방향으로 동시에 뻗은 다음 멈춥니다. 표현이 아니라 작동 원리가 다른 아이디어 몇 개를 내놓고 턴을 끝냅니다. 사용자가 하나를 고른 뒤에만 그 방향을 검증하고 발전시킵니다. 결정만큼은 자동화하지 않습니다.
 
-**현재 `v0.2 beta`입니다.** 아래 측정값은 모델 하나(`gpt-5.4`)로 생성하고 같은 모델 계열의 AI 호출이 심사한 결과이며, 브리프 수도 적습니다. Claude에서는 측정하지 않았고, 보편적 창의성을 주장하지 않습니다.
+**현재 `v0.3 beta`입니다.** 아래 측정값은 모델 하나(`gpt-5.4`)로 생성하고 같은 모델 계열의 AI 호출이 심사한 결과이며, 브리프 수도 적습니다. Claude에서는 측정하지 않았고, 보편적 창의성을 주장하지 않습니다.
 
 ## 하는 일
 
@@ -63,6 +66,8 @@ Imagination Octo는 여러 방향으로 동시에 뻗은 다음 멈춥니다. �
 curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/install.sh | bash
 ```
 
+업데이트할 때도 같은 명령을 다시 실행하면 됩니다. 예전에 따로 설치한 스킬 복사본이 있다고 나오면 명령 끝을 `| bash -s -- --clean-legacy`로 바꿔 실행하세요. 삭제하지 않고 옮겨 둡니다.
+
 그다음 이렇게 요청합니다.
 
 ```text
@@ -100,6 +105,7 @@ $imagination-octo를 사용해서 대화 트리, 숨은 주사위, 설득 능력
 - **질 때도 있습니다.** Workshop 브리프 하나는 심사자 전원이 일반 프롬프트를 택했고, 이전 Engine 빌드도 드라마 브리프 하나에서 같은 결과였습니다.
 - **이전 설계는 완패했습니다.** 덱과 게이트 파이프라인(Engine v0.4.0)은 48배 비용으로 일반 프롬프트에 0 대 30으로 져서 교체했습니다. 그 기록은 Engine 저장소에 남아 있습니다.
 - **측정하지 않은 것:** 여러 번 실행했을 때 같은 아이디어로 수렴하는지, 그리고 두 턴 전체 흐름을 하나의 제품으로 본 평가.
+- **측정 중:** Experiment A를 [`evals/`](evals/PREREGISTRATION.md)에 사전 등록했습니다. 노력을 맞춘 대조군을 포함한 네 조건, GPT와 Claude 생성, 교차 계열 심사, 실행 간 수렴도, 블라인드 검증을 포함합니다. 결과가 어느 쪽이든 이 목록을 대체합니다. 두 턴 흐름의 동작 회귀 테스트도 같은 폴더에 있습니다.
 
 프로토콜, 판정 규칙, 결과 파일: [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
 
@@ -109,20 +115,31 @@ $imagination-octo를 사용해서 대화 트리, 숨은 주사위, 설득 능력
 
 **일반 프롬프트를 쓰세요:** 사실 질문, 일상적인 구현, 이름 짓기만 필요한 경우, 평범한 답이 정답인 모든 경우.
 
+## 선택 로그 (옵트인)
+
+기본은 꺼져 있습니다. 켜면 방향을 고르거나 포트폴리오를 거절할 때마다 내 컴퓨터의 `~/.imagination-octo/choices.jsonl`에 한 줄이 추가됩니다. 제시된 방향, 고른 번호, 직접 말한 이유가 기록됩니다. 브리프는 원문 저장을 요청하지 않는 한 해시로만 남습니다. 어디에도 업로드하지 않고, 스킬은 이 로그를 읽지 않습니다. 자신의 선택을 나중에 살펴보기 위한 기록입니다. `enable --hosts`는 스킬이 옵트인 여부를 볼 수 있도록 전역 `CLAUDE.md` / `AGENTS.md`에 표시된 한 줄을 추가하고, `disable`은 그 줄을 지웁니다.
+
+```bash
+LOG=https://raw.githubusercontent.com/djfksjd/imagination-octo/main/skills/imagination-octo/scripts/choice_log.py
+curl -fsSL $LOG | python3 - enable --hosts claude,codex   # --with-brief keeps the brief text
+curl -fsSL $LOG | python3 - stats
+curl -fsSL $LOG | python3 - disable
+```
+
 ## `imagination`에서 이름이 바뀌었습니다
 
-이 플러그인과 라우터 스킬은 v0.1.3까지 `imagination`이었습니다. 예전 저장소 URL은 GitHub가 리다이렉트하지만 플러그인 이름과 라우터 명령은 바뀌었습니다. 기존 `imagination` 플러그인을 제거하고 `imagination-octo`를 설치한 뒤 `$imagination-octo`로 호출하세요. 전문 스킬 두 개의 이름은 그대로입니다.
+이 플러그인과 라우터 스킬은 v0.1.3까지 `imagination`이었습니다. 예전 저장소 URL은 GitHub가 리다이렉트하지만 플러그인 이름과 라우터 명령은 바뀌었습니다. 기존 `imagination` 플러그인을 제거하고 `imagination-octo`를 설치한 뒤 `$imagination-octo`로 호출하세요. 전문 스킬 두 개의 이름은 그대로입니다. v0.3부터는 마켓플레이스 ID도 `djfksjd`에서 `imagination-octo`로 바뀌었습니다. 같은 제작자의 다른 플러그인과 ID가 겹쳤기 때문입니다. 설치 대상은 이제 `imagination-octo@imagination-octo`입니다.
 
 ## 수동 설치
 
 ```bash
 # Claude Code
 claude plugin marketplace add djfksjd/imagination-octo
-claude plugin install imagination-octo@djfksjd
+claude plugin install imagination-octo@imagination-octo
 
 # Codex
 codex plugin marketplace add djfksjd/imagination-octo
-codex plugin add imagination-octo@djfksjd
+codex plugin add imagination-octo@imagination-octo
 ```
 
 ## 개발
