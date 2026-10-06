@@ -1,16 +1,16 @@
 ---
-name: imagination-brainstorming
-description: "Develop and pressure-test an idea the user has already selected, turning it into a coherent concept before implementation. Use only when the user explicitly invokes imagination-brainstorming during v0.4 evaluation and provides a chosen direction, shortlist winner, or rough concept to deepen. Not for initial idea generation, open-ended brainstorming, naming, factual work, or implementation planning."
+name: imagination-octo-brainstorming
+description: "Develop and pressure-test an idea the user has already selected, turning it into a coherent concept before implementation. Use only when the user explicitly invokes imagination-octo-brainstorming during v0.4 evaluation and provides a chosen direction, shortlist winner, or rough concept to deepen. Not for initial idea generation, open-ended brainstorming, naming, factual work, or implementation planning."
 ---
 
-# Imagination Brainstorming
+# Imagination Octo Brainstorming
 
 Turn a chosen idea into a concept that can survive contact with its purpose,
 users, constraints, and ordinary operation. Preserve what made the direction
 worth choosing while exposing what it costs.
 
 This is a concept workshop, not an idea generator. If the user has not selected
-a direction, ask them to choose one or use `imagination-engine` when available.
+a direction, ask them to choose one or use `imagination-octo-engine` when available.
 Do not manufacture three alternatives, an unsafe option, or a ban contract.
 
 Work in the user's language. Use relevant project files when they exist, but do

@@ -7,9 +7,9 @@ description: "Guide a creative request through idea generation, a required user 
 
 Provide one simple entrance to two distinct creative phases:
 
-1. diverge into a portfolio with `imagination-engine`;
+1. diverge into a portfolio with `imagination-octo-engine`;
 2. wait for the user to choose;
-3. develop that choice with `imagination-brainstorming`.
+3. develop that choice with `imagination-octo-brainstorming`.
 
 The pause is part of the method. Never collapse the phases into one response.
 Work in the user's language.
@@ -30,7 +30,7 @@ one concise question naming the candidates, and develop nothing in that turn.
 
 ## Diverge
 
-Read [`../imagination-engine/SKILL.md`](../imagination-engine/SKILL.md) fully,
+Read [`../imagination-octo-engine/SKILL.md`](../imagination-octo-engine/SKILL.md) fully,
 then follow it for the current brief. Preserve constraints already stated in
 the conversation.
 
@@ -49,7 +49,7 @@ wait for the user to confirm that choice before development.
 ## Develop
 
 Proceed only after an explicit choice. Read
-[`../imagination-brainstorming/SKILL.md`](../imagination-brainstorming/SKILL.md)
+[`../imagination-octo-brainstorming/SKILL.md`](../imagination-octo-brainstorming/SKILL.md)
 fully, then follow it using the selected direction, original brief, and
 constraints from the conversation.
 

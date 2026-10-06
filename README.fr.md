@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo s'étend dans plusieurs directions à la fois, puis s'arrête. Il renvoie un petit portefeuille d'idées qui diffèrent par leur mécanisme, non par leur formulation, et termine le tour. Ce n'est qu'après votre choix qu'il met cette direction à l'épreuve et la développe. La décision est la seule étape qu'il refuse d'automatiser.
 
-**Ceci est la `v0.3 beta`.** Le tableau ci-dessous provient d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Une expérience ultérieure sur GPT et Claude existe, mais son résultat de préférence est annulé tant qu'il n'a pas été rejugé ; voir *À lire honnêtement*. Rien de tout cela ne prétend à une créativité universelle.
+**Ceci est la `v0.4 beta`.** Le tableau ci-dessous provient d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Une expérience ultérieure sur GPT et Claude existe, mais son résultat de préférence est annulé tant qu'il n'a pas été rejugé ; voir *À lire honnêtement*. Rien de tout cela ne prétend à une créativité universelle.
 
 ## Ce qu'il fait
 
@@ -39,7 +39,7 @@ Imagination Octo s'étend dans plusieurs directions à la fois, puis s'arrête. 
 ## Fonctionnement
 
 ```text
- your brief ──► ┌─────────── diverge · imagination-engine ───────────┐
+ your brief ──► ┌──────── diverge · imagination-octo-engine ─────────┐
                 │  direct pass · mechanism transfer · premise shift  │
                 │    cull by failure · private proof per survivor    │
                 └──────────────────────────┬─────────────────────────┘
@@ -48,7 +48,7 @@ Imagination Octo s'étend dans plusieurs directions à la fois, puis s'arrête. 
                                            ▼
                                     ◆ YOU CHOOSE ◆        the turn always ends here
                                            ▼
-                ┌─────── develop · imagination-brainstorming ────────┐
+                ┌───── develop · imagination-octo-brainstorming ─────┐
                 │ load-bearing assumption · conventional competitor  │
                 │   native failure mode · boring half · falsifier    │
                 └──────────────────────────┬─────────────────────────┘
@@ -86,8 +86,8 @@ Développe l'option 2.
 | Skill | Idéal pour | Renvoie |
 |---|---|---|
 | `$imagination-octo` | La plupart des demandes | Portefeuille → votre choix → concept développé |
-| `$imagination-engine` | La divergence seule | 3 à 5 directions utiles et non évidentes |
-| `$imagination-brainstorming` | Une idée déjà choisie | Une note de concept prête pour la décision |
+| `$imagination-octo-engine` | La divergence seule | 3 à 5 directions utiles et non évidentes |
+| `$imagination-octo-brainstorming` | Une idée déjà choisie | Une note de concept prête pour la décision |
 
 ## Mesures (2026-07-30)
 
@@ -108,7 +108,7 @@ Comparaisons à l'aveugle préenregistrées contre un prompt ordinaire solide. 1
 - **Une candidate v0.6.0 a échoué (2026-10-06).** Elle visait à élargir les portefeuilles et à réduire la répétition. Sur 12 briefs inédits, elle n'a pas battu la v0.5.3 (5–5–2 avec GPT, 4–6–2 avec Claude) et n'a pas franchi les seuils préenregistrés sur les deux modèles ; la v0.5.3 est donc conservée ([résultat](evals/results/2026-10-06-experiment-b.md)).
 - **Parcours en deux tours :** seul le comportement a été vérifié. Une suite de régression a réussi 13 cas sur 14 ; l'échec, un choix deviné quand la réponse correspondait à deux directions, a conduit à corriger le routeur. Il n'existe pas d'étude de préférence du parcours complet.
 
-Protocoles, règles de décision et fichiers de résultats : [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill).
+Protocoles, règles de décision et fichiers de résultats : [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).
 
 ## Quand l'utiliser, et quand s'en passer
 
@@ -129,7 +129,7 @@ curl -fsSL $LOG | python3 - disable
 
 ## Anciennement `imagination`
 
-Ce plugin et sa skill de routage s'appelaient `imagination` jusqu'à la v0.1.3. GitHub redirige l'ancienne URL du dépôt, mais le nom du plugin et la commande du routeur ont changé : supprimez l'ancien plugin `imagination`, installez `imagination-octo` et appelez `$imagination-octo`. Les deux skills spécialisées gardent leur nom. Depuis la v0.3, l'identifiant du marketplace a lui aussi changé, de `djfksjd` à `imagination-octo`, car l'ancien entrait en collision avec d'autres plugins du même auteur. La cible d'installation est désormais `imagination-octo@imagination-octo`.
+Ce plugin et sa skill de routage s'appelaient `imagination` jusqu'à la v0.1.3. GitHub redirige l'ancienne URL du dépôt, mais le nom du plugin et la commande du routeur ont changé : supprimez l'ancien plugin `imagination`, installez `imagination-octo` et appelez `$imagination-octo`. Depuis la v0.4, les deux skills spécialisées et leurs dépôts portent aussi le nom de la famille : `$imagination-octo-engine` et `$imagination-octo-brainstorming` remplacent `$imagination-engine` et `$imagination-brainstorming`. Depuis la v0.3, l'identifiant du marketplace a lui aussi changé, de `djfksjd` à `imagination-octo`, car l'ancien entrait en collision avec d'autres plugins du même auteur. La cible d'installation est désormais `imagination-octo@imagination-octo`.
 
 ## Installation manuelle
 

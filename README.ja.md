@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.3%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo は複数の方向へ同時に腕を伸ばし、そこで止まります。言い回しではなく仕組みが異なるアイデアを少数返してターンを終えます。あなたがひとつ選んだ後にだけ、その方向を検証し発展させます。決定だけは自動化しません。
 
-**現在は `v0.3 beta` です。** 下の表は、ひとつのモデル（`gpt-5.4`）が生成し、同じ系列の AI 呼び出しが審査した、少数のブリーフでの結果です。その後 GPT と Claude でモデル横断の実験を行いましたが、その選好結果は再審査まで無効です。「正直な読み方」を参照してください。いずれも普遍的な創造性を主張するものではありません。
+**現在は `v0.4 beta` です。** 下の表は、ひとつのモデル（`gpt-5.4`）が生成し、同じ系列の AI 呼び出しが審査した、少数のブリーフでの結果です。その後 GPT と Claude でモデル横断の実験を行いましたが、その選好結果は再審査まで無効です。「正直な読み方」を参照してください。いずれも普遍的な創造性を主張するものではありません。
 
 ## できること
 
@@ -39,7 +39,7 @@ Imagination Octo は複数の方向へ同時に腕を伸ばし、そこで止ま
 ## 仕組み
 
 ```text
- your brief ──► ┌─────────── diverge · imagination-engine ───────────┐
+ your brief ──► ┌──────── diverge · imagination-octo-engine ─────────┐
                 │  direct pass · mechanism transfer · premise shift  │
                 │    cull by failure · private proof per survivor    │
                 └──────────────────────────┬─────────────────────────┘
@@ -48,7 +48,7 @@ Imagination Octo は複数の方向へ同時に腕を伸ばし、そこで止ま
                                            ▼
                                     ◆ YOU CHOOSE ◆        the turn always ends here
                                            ▼
-                ┌─────── develop · imagination-brainstorming ────────┐
+                ┌───── develop · imagination-octo-brainstorming ─────┐
                 │ load-bearing assumption · conventional competitor  │
                 │   native failure mode · boring half · falsifier    │
                 └──────────────────────────┬─────────────────────────┘
@@ -86,8 +86,8 @@ $imagination-octo を使って、会話ツリー・隠しダイス・説得ス�
 | スキル | 適した場面 | 返すもの |
 |---|---|---|
 | `$imagination-octo` | ほとんどの依頼 | ポートフォリオ → あなたの選択 → 発展したコンセプト |
-| `$imagination-engine` | 発散だけが必要なとき | 有用で自明でない 3〜5 の方向 |
-| `$imagination-brainstorming` | すでに選んだアイデアがあるとき | 意思決定できるコンセプトメモ |
+| `$imagination-octo-engine` | 発散だけが必要なとき | 有用で自明でない 3〜5 の方向 |
+| `$imagination-octo-brainstorming` | すでに選んだアイデアがあるとき | 意思決定できるコンセプトメモ |
 
 ## 測定結果（2026-07-30）
 
@@ -108,7 +108,7 @@ $imagination-octo を使って、会話ツリー・隠しダイス・説得ス�
 - **候補 v0.6.0 は不合格でした（2026-10-06）。** ポートフォリオを広げ、繰り返しを減らすことを狙った版です。新しいブリーフ 12 件で v0.5.3 を上回れず（GPT 5 勝 5 敗 2 分、Claude 4 勝 6 敗 2 分）、両モデルで事前登録の基準を満たさなかったため、v0.5.3 を維持します（[結果](evals/results/2026-10-06-experiment-b.md)）。
 - **2 ターンの流れ：** 動作のみ確認しました。回帰テストは 14 件中 13 件が合格し、失敗した 1 件（返答が 2 つの方向に当てはまるときに推測で選んだ）はルーターを修正しました。流れ全体の選好評価はありません。
 
-プロトコル、判定規則、結果ファイル: [Imagination Engine](https://github.com/djfksjd/imagination-engine-skill) · [Imagination Brainstorming](https://github.com/djfksjd/imagination-brainstorming-skill)。
+プロトコル、判定規則、結果ファイル: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming)。
 
 ## 使うとき、使わないとき
 
@@ -129,7 +129,7 @@ curl -fsSL $LOG | python3 - disable
 
 ## `imagination` から改名しました
 
-このプラグインとルータースキルは v0.1.3 まで `imagination` という名前でした。旧リポジトリ URL は GitHub がリダイレクトしますが、プラグイン名とルーターのコマンドは変わりました。古い `imagination` プラグインを削除し、`imagination-octo` をインストールして `$imagination-octo` で呼び出してください。2 つの専門スキルの名前は変わりません。 v0.3 からはマーケットプレイス ID も `djfksjd` から `imagination-octo` に変わりました。同じ作者の別のプラグインと ID が衝突していたためです。インストール対象は `imagination-octo@imagination-octo` です。
+このプラグインとルータースキルは v0.1.3 まで `imagination` という名前でした。旧リポジトリ URL は GitHub がリダイレクトしますが、プラグイン名とルーターのコマンドは変わりました。古い `imagination` プラグインを削除し、`imagination-octo` をインストールして `$imagination-octo` で呼び出してください。v0.4 からは 2 つの専門スキルとそのリポジトリも同じ系列名になりました。`$imagination-engine` と `$imagination-brainstorming` の代わりに `$imagination-octo-engine` と `$imagination-octo-brainstorming` を使ってください。 v0.3 からはマーケットプレイス ID も `djfksjd` から `imagination-octo` に変わりました。同じ作者の別のプラグインと ID が衝突していたためです。インストール対象は `imagination-octo@imagination-octo` です。
 
 ## 手動インストール
 

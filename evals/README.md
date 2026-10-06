@@ -12,6 +12,11 @@ covers the scoring logic with synthetic votes instead.
 Models are fixed in `octo_eval.py`: `gpt-5.5` and `claude-opus-5-5` generate,
 and every judgment is made by the other family.
 
+The specialist skills were renamed in v0.4.0. Results, preregistrations, and
+the frozen runtimes under `runtimes/` from before that still say
+`imagination-engine` and `imagination-brainstorming`; they are records and are
+not edited. The instructions themselves did not change.
+
 ## Router regression
 
 ```bash

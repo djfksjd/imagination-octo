@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).parents[1]
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 README_NAMES = {
     "README.md",
     "README.ko.md",
@@ -59,8 +59,8 @@ def test_installer_updates_in_place_and_never_deletes_legacy_copies() -> None:
 def test_all_three_skills_are_present() -> None:
     expected = {
         "imagination-octo",
-        "imagination-engine",
-        "imagination-brainstorming",
+        "imagination-octo-engine",
+        "imagination-octo-brainstorming",
     }
     actual = {
         path.parent.name
@@ -71,7 +71,7 @@ def test_all_three_skills_are_present() -> None:
 
 def test_embedded_engine_contains_the_confirmed_survivor_proof() -> None:
     text = (
-        REPO / "skills" / "imagination-engine" / "SKILL.md"
+        REPO / "skills" / "imagination-octo-engine" / "SKILL.md"
     ).read_text(encoding="utf-8")
 
     assert "## Prove each survivor" in text
@@ -85,7 +85,7 @@ def test_embedded_engine_contains_the_confirmed_survivor_proof() -> None:
 
 def test_embedded_workshop_contains_the_confirmed_proportional_preflight() -> None:
     text = (
-        REPO / "skills" / "imagination-brainstorming" / "SKILL.md"
+        REPO / "skills" / "imagination-octo-brainstorming" / "SKILL.md"
     ).read_text(encoding="utf-8")
 
     assert "by function, not label" in text
@@ -113,8 +113,8 @@ def test_router_preserves_user_choice_boundary() -> None:
         encoding="utf-8"
     )
 
-    assert "../imagination-engine/SKILL.md" in text
-    assert "../imagination-brainstorming/SKILL.md" in text
+    assert "../imagination-octo-engine/SKILL.md" in text
+    assert "../imagination-octo-brainstorming/SKILL.md" in text
     assert "select a winner for the user" in text
     assert "wait for the user to confirm" in text
     assert "Never read both specialist skills in the same turn" in text
