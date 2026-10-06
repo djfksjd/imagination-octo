@@ -1,0 +1,31 @@
+{
+  "name": "experiment-b",
+  "arms": {
+    "A0": {
+      "prompt": "control.md"
+    },
+    "OLD": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.5.3.md"
+    },
+    "NEW": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.6.0-rc2.md"
+    }
+  },
+  "pairs": [
+    [
+      "NEW",
+      "OLD"
+    ],
+    [
+      "NEW",
+      "A0"
+    ]
+  ],
+  "decision": {
+    "new": "NEW",
+    "old": "OLD",
+    "plain": "A0"
+  }
+}

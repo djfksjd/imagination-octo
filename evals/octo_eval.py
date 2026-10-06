@@ -41,6 +41,18 @@ ARMS = ("A0", "A1", "A2", "A3")
 PAIRS = (("A1", "A0"), ("A3", "A0"), ("A3", "A1"), ("A3", "A2"))
 METRICS = ("fit", "useful_surprise", "set_diversity", "craft")
 ABLATED_SECTION = "## Prove each survivor"
+# Arm definitions: a prompt template, plus an optional runtime injected as a
+# skill. `--spec` replaces ARMS, PAIRS, and ARM_DEFS for other experiments.
+ARM_DEFS: dict[str, dict[str, Any]] = {
+    "A0": {"prompt": "control.md"},
+    "A1": {"prompt": "control-effort.md"},
+    "A2": {
+        "prompt": "treatment.md",
+        "skill": "skills/imagination-engine/SKILL.md",
+        "ablate": True,
+    },
+    "A3": {"prompt": "treatment.md", "skill": "skills/imagination-engine/SKILL.md"},
+}
 FAMILIES: dict[str, dict[str, str]] = {
     "gpt": {"generator": "gpt-5.5", "judge": "gpt-5.5", "reasoning": "medium"},
     "claude": {"generator": "claude-opus-5-5", "judge": "claude-opus-5-5"},
@@ -330,17 +342,13 @@ def ablated_skill(skill: str) -> str:
 
 
 def generation_prompt(arm: str, brief: str) -> str:
-    template = {
-        "A0": "control.md",
-        "A1": "control-effort.md",
-        "A2": "treatment.md",
-        "A3": "treatment.md",
-    }[arm]
-    task = (PROMPTS / template).read_text(encoding="utf-8").replace("{{BRIEF}}", brief)
-    if arm in ("A0", "A1"):
+    spec = ARM_DEFS[arm]
+    template = (PROMPTS / spec["prompt"]).read_text(encoding="utf-8")
+    task = template.replace("{{BRIEF}}", brief)
+    if "skill" not in spec:
         return CLEAN_ROOM + task
-    skill = ENGINE_SKILL.read_text(encoding="utf-8")
-    if arm == "A2":
+    skill = (REPO / spec["skill"]).read_text(encoding="utf-8")
+    if spec.get("ablate"):
         skill = ablated_skill(skill)
     return (
         CLEAN_ROOM
@@ -348,6 +356,19 @@ def generation_prompt(arm: str, brief: str) -> str:
         + f"<skill>\n{skill.strip()}\n</skill>\n\n"
         + task
     )
+
+
+DECISION: dict[str, str] = {}  # {"new", "old", "plain"} for a replacement test
+
+
+def load_spec(path: Path) -> None:
+    """Swap in another experiment's arms and comparisons."""
+    global ARMS, PAIRS, ARM_DEFS, DECISION
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    ARM_DEFS = spec["arms"]
+    ARMS = tuple(ARM_DEFS)
+    PAIRS = tuple((x, y) for x, y in spec["pairs"])
+    DECISION = spec.get("decision", {})
 
 
 def side_schema() -> dict[str, Any]:
@@ -927,6 +948,152 @@ def score(exp: Experiment, probe_runs: int, human_votes: Path | None) -> dict[st
     return summary
 
 
+def portfolio_shape(exp: Experiment, family: str) -> dict[str, dict[str, Any]]:
+    """Ideas per portfolio, and how much of an arm's mechanism set the first arm
+    (the plain prompt) had already produced."""
+    ideas: dict[str, list[float]] = defaultdict(list)
+    contained: dict[str, list[float]] = defaultdict(list)
+    baseline = ARMS[0]
+    for brief in exp.briefs:
+        coding = exp.codings.get(brief["id"], family)
+        if coding is None:
+            continue
+        labels = exp.labels(brief["id"], family)
+        union: dict[str, set[str]] = defaultdict(set)
+        for label, ids in coding["portfolios"].items():
+            arm = labels[label][0]
+            ideas[arm].append(len(ids))
+            union[arm] |= set(ids)
+        for arm in ARMS:
+            if union[arm]:
+                contained[arm].append(len(union[arm] & union[baseline]) / len(union[arm]))
+    return {
+        arm: {
+            "ideas_per_portfolio": mean(ideas[arm]),
+            f"share_also_in_{baseline}": mean(contained[arm]),
+        }
+        for arm in ARMS
+    }
+
+
+def decide_replacement(result: dict[str, Any], planned: int) -> dict[str, bool]:
+    """Gates for replacing the shipped runtime (`old`) with a candidate (`new`)."""
+    new, old, plain = DECISION["new"], DECISION["old"], DECISION["plain"]
+    versus_old = result["pairs"][f"{new} vs {old}"]
+    versus_plain = result["pairs"][f"{new} vs {plain}"]
+    trap = result["trap_pairs"][f"{new} vs {old}"]
+    diff, costs, conv = versus_old["rating_diff"], result["costs"], result["convergence"]
+
+    def at_least(value: float | None, floor: float) -> bool:
+        return value is not None and value >= floor
+
+    overlap_new = conv[new]["mechanism_overlap"]
+    overlap_old = conv[old]["mechanism_overlap"]
+    tokens = ratio(costs[new]["total_tokens"], costs[old]["total_tokens"])
+    return {
+        "coverage": all(pair["cells"]["missing"] == 0 for pair in result["pairs"].values())
+        and all(arm["outputs"] == planned for arm in costs.values()),
+        "preference_not_worse": versus_old["briefs"]["x"] >= versus_old["briefs"]["y"],
+        "fit_non_inferior": at_least(diff["fit"], -0.25),
+        "craft_non_inferior": at_least(diff["craft"], -0.25),
+        "conventional_trap": trap["cells"]["x"] >= trap["cells"]["y"]
+        and at_least(trap["rating_diff"]["fit"], -0.25),
+        "beats_plain": versus_plain["briefs"]["x"] > versus_plain["briefs"]["y"],
+        "cost": tokens is not None and tokens <= 1.10,
+        "breadth": at_least(result["shape"][new]["ideas_per_portfolio"], 4.2),
+        "improves": (
+            overlap_new is not None
+            and overlap_old is not None
+            and overlap_new <= overlap_old - 0.05
+        )
+        or at_least(diff["set_diversity"], 0.25),
+    }
+
+
+def score_generic(exp: Experiment) -> dict[str, Any]:
+    all_briefs = [brief["id"] for brief in exp.briefs]
+    traps = [brief["id"] for brief in exp.briefs if brief.get("trap")]
+    summary: dict[str, Any] = {
+        "runs": exp.runs,
+        "briefs": len(exp.briefs),
+        "arms": ARM_DEFS,
+        "runtime_hashes": {
+            arm: file_hash(REPO / spec["skill"])
+            for arm, spec in ARM_DEFS.items()
+            if "skill" in spec
+        },
+        "families": {},
+    }
+    for family in FAMILIES:
+        summary["families"][family] = {
+            "generator": FAMILIES[family]["generator"],
+            "judge": FAMILIES[OTHER[family]]["judge"],
+            "pairs": {
+                f"{x} vs {y}": score_pair(exp, family, x, y, all_briefs)
+                for x, y in PAIRS
+            },
+            "trap_pairs": {
+                f"{x} vs {y}": score_pair(exp, family, x, y, traps) for x, y in PAIRS
+            },
+            "costs": arm_costs(exp, family),
+            "convergence": convergence(exp, family),
+            "shape": portfolio_shape(exp, family),
+        }
+        if DECISION:
+            summary["families"][family]["gates"] = decide_replacement(
+                summary["families"][family], len(exp.briefs) * exp.runs
+            )
+    if DECISION:
+        summary["replace"] = all(
+            all(result["gates"].values()) for result in summary["families"].values()
+        )
+    return summary
+
+
+def report_generic(summary: dict[str, Any]) -> str:
+    lines = [f"# {summary['briefs']} briefs × {summary['runs']} runs"]
+    for result in summary["families"].values():
+        lines += [
+            "",
+            f"## Generator: {result['generator']} (judged by {result['judge']})",
+            "",
+            "| Pair | Cells W–L–T | Briefs W–L–T | fit | surprise | diversity | craft | trap cells W–L–T | trap fit |",
+            "|---|---|---|---|---|---|---|---|---|",
+        ]
+        for name, pair in result["pairs"].items():
+            cells, briefs, diff = pair["cells"], pair["briefs"], pair["rating_diff"]
+            trap = result["trap_pairs"][name]
+            lines.append(
+                f"| {name} | {cells['x']}–{cells['y']}–{cells['tie']} | "
+                f"{briefs['x']}–{briefs['y']}–{briefs['tie']} | "
+                + " | ".join(f"{diff[m]:+.2f}" if diff[m] is not None else "–" for m in METRICS)
+                + f" | {trap['cells']['x']}–{trap['cells']['y']}–{trap['cells']['tie']} | "
+                f"{trap['rating_diff']['fit']} |"
+            )
+        lines += [
+            "",
+            "| Arm | tokens | seconds | chars | ideas | overlap | distinct | also in baseline |",
+            "|---|---|---|---|---|---|---|---|",
+        ]
+        for arm in ARMS:
+            cost, conv = result["costs"][arm], result["convergence"][arm]
+            shape = list(result["shape"][arm].values())
+            lines.append(
+                f"| {arm} | {cost['total_tokens']} | {cost['seconds']} | {cost['chars']} | "
+                f"{shape[0]} | {conv['mechanism_overlap']} | "
+                f"{conv['distinct_mechanism_ratio']} | {shape[1]} |"
+            )
+        if "gates" in result:
+            lines += [
+                "",
+                "- Gates: "
+                + ", ".join(f"{k}={'PASS' if v else 'FAIL'}" for k, v in result["gates"].items()),
+            ]
+    if "replace" in summary:
+        lines += ["", f"**Replace the shipped runtime: {'YES' if summary['replace'] else 'NO'}**"]
+    return "\n".join(lines) + "\n"
+
+
 def report(summary: dict[str, Any]) -> str:
     lines = [
         f"# Experiment A — {summary['briefs']} briefs × {summary['runs']} runs",
@@ -1146,6 +1313,8 @@ def router(name: str, cases_path: Path, runs: int, workers: int) -> int:
 
 
 def command_run(args: argparse.Namespace) -> int:
+    if args.spec:
+        load_spec(args.spec)
     exp = Experiment(args.name, args.briefs, args.runs, args.workers)
     if args.claude_workers:
         LIMITS["claude"] = args.claude_workers
@@ -1164,11 +1333,14 @@ def command_run(args: argparse.Namespace) -> int:
             print(f"[{stage}] {failures} call(s) failed — re-run the same command to resume")
             return 3
     if "score" in stages:
-        summary = score(exp, args.probe_runs, args.human_votes)
+        if args.spec:
+            summary, render = score_generic(exp), report_generic
+        else:
+            summary, render = score(exp, args.probe_runs, args.human_votes), report
         (exp.dir / "summary.json").write_text(
             json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
-        text = report(summary)
+        text = render(summary)
         (exp.dir / "REPORT.md").write_text(text, encoding="utf-8")
         print(text)
     return 0
@@ -1202,6 +1374,7 @@ def parser() -> argparse.ArgumentParser:
     run.add_argument("--probe-runs", type=int, default=2)
     run.add_argument("--claude-workers", type=int, help="lower cap for Claude calls")
     run.add_argument("--human-votes", type=Path)
+    run.add_argument("--spec", type=Path, help="arms and pairs for another experiment")
     experiment("human-packet", command_human)
 
     regression = commands.add_parser("router")
