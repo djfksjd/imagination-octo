@@ -126,6 +126,7 @@ class Breaker:
 
 
 BREAKER = Breaker()
+LIMITS: dict[str, int] = {}  # optional per-provider cap on concurrent calls
 
 
 class Aborted(RuntimeError):
@@ -190,12 +191,16 @@ def call_claude(
             command, input=prompt, text=True, capture_output=True,
             timeout=timeout, check=False, cwd=clean_dir,
         )  # fmt: skip
-    if result.returncode:
-        detail = (result.stderr or result.stdout)[-600:]
-        raise RuntimeError(f"claude exited {result.returncode}: {detail}")
-    payload = json.loads(result.stdout)
-    if payload.get("is_error"):
-        raise RuntimeError(f"claude error: {str(payload.get('result'))[:600]}")
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        payload = {}
+    if result.returncode or payload.get("is_error") or not payload:
+        detail = payload.get("result") or result.stderr or result.stdout
+        status = payload.get("api_error_status")
+        raise RuntimeError(
+            f"claude exited {result.returncode} (status {status}): {str(detail)[:600]}"
+        )
     structured = payload.get("structured_output")
     message = (
         json.dumps(structured, ensure_ascii=False)
@@ -260,7 +265,7 @@ def call_model(
         except Exception as exc:  # noqa: BLE001 - every failure is retried
             error = exc
             BREAKER.report(False)
-            time.sleep(5 * (attempt + 1))
+            time.sleep(30 * (attempt + 1))  # rate limits need a real pause
             continue
         BREAKER.report(True)
         return {
@@ -284,28 +289,34 @@ def run_jobs(
     if not jobs:
         print(f"[{label}] nothing to do")
         return 0
-    gates = {family: threading.Semaphore(workers) for family in FAMILIES}
     done, failed, lock = 0, 0, threading.Lock()
 
     def guarded(job: Any) -> None:
         nonlocal done, failed
-        with gates[family_of(job)]:
-            try:
-                worker(job)
-                ok = True
-            except Aborted:
-                ok = False
-            except Exception as exc:  # noqa: BLE001 - keep the other jobs alive
-                ok = False
-                print(f"[{label}] error: {exc}", flush=True)
+        try:
+            worker(job)
+            ok = True
+        except Aborted:
+            ok = False
+        except Exception as exc:  # noqa: BLE001 - keep the other jobs alive
+            ok = False
+            print(f"[{label}] error: {exc}", flush=True)
         with lock:
             done += 1
             failed += 0 if ok else 1
             if done % 10 == 0 or done == len(jobs):
                 print(f"[{label}] {done}/{len(jobs)} ({failed} failed)", flush=True)
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=workers * 2) as pool:
-        list(pool.map(guarded, jobs))
+    # One pool per provider, so a slow or capped provider cannot starve the other.
+    pools = []
+    for family in FAMILIES:
+        own = [job for job in jobs if family_of(job) == family]
+        size = min(workers, LIMITS.get(family, workers))
+        pool = concurrent.futures.ThreadPoolExecutor(max_workers=size)
+        pools.append((pool, [pool.submit(guarded, job) for job in own]))
+    for pool, futures in pools:
+        concurrent.futures.wait(futures)
+        pool.shutdown()
     return failed
 
 
@@ -1136,6 +1147,8 @@ def router(name: str, cases_path: Path, runs: int, workers: int) -> int:
 
 def command_run(args: argparse.Namespace) -> int:
     exp = Experiment(args.name, args.briefs, args.runs, args.workers)
+    if args.claude_workers:
+        LIMITS["claude"] = args.claude_workers
     stages = [stage.strip() for stage in args.stages.split(",") if stage.strip()]
     actions: dict[str, Callable[[], int]] = {
         "generate": exp.generate,
@@ -1187,6 +1200,7 @@ def parser() -> argparse.ArgumentParser:
     run.add_argument("--stages", default="generate,judge,probe,converge,score")
     run.add_argument("--workers", type=int, default=3, help="concurrent calls per provider")
     run.add_argument("--probe-runs", type=int, default=2)
+    run.add_argument("--claude-workers", type=int, help="lower cap for Claude calls")
     run.add_argument("--human-votes", type=Path)
     experiment("human-packet", command_human)
 
