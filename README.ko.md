@@ -75,6 +75,8 @@ $imagination-octo를 사용해서 대화 트리, 숨은 주사위, 설득 능력
 게임 협상 메커니즘을 여러 개 만들어 줘.
 ```
 
+`codex exec`나 스크립트에서는 Codex가 전체 이름만 인식합니다: `$imagination-octo:imagination-octo`.
+
 첫 응답은 선택 질문으로 끝납니다. 번호나 방향으로 답하면 됩니다.
 
 ```text

@@ -75,6 +75,8 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/insta
 不使用对话树、隐藏骰子或说服属性。
 ```
 
+在 `codex exec` 或脚本中，Codex 只识别完整名称：`$imagination-octo:imagination-octo`。
+
 第一次回复以一个选择题结束。用编号或方向回答即可：
 
 ```text

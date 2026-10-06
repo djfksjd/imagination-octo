@@ -75,6 +75,8 @@ $imagination-octo を使って、会話ツリー・隠しダイス・説得ス�
 物語ゲームの交渉メカニクスを複数作ってください。
 ```
 
+`codex exec` やスクリプトでは、Codex は完全な名前だけを認識します: `$imagination-octo:imagination-octo`。
+
 最初の応答は選択の問いで終わります。番号か方向で答えます。
 
 ```text

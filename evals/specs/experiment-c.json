@@ -1,0 +1,39 @@
+{
+  "name": "experiment-c",
+  "arms": {
+    "A0": {
+      "prompt": "control.md"
+    },
+    "OLD": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.5.3.md"
+    },
+    "NEW": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc1.md",
+      "fanout": "scout.md"
+    },
+    "BOLD": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc3.md",
+      "fanout": "scout.md",
+      "workers_from": "NEW"
+    }
+  },
+  "pairs": [
+    [
+      "NEW",
+      "OLD"
+    ],
+    [
+      "BOLD",
+      "OLD"
+    ]
+  ],
+  "decision": {
+    "rule": "fresh-context",
+    "new": "NEW",
+    "old": "OLD",
+    "bold": "BOLD"
+  }
+}

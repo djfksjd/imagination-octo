@@ -75,6 +75,8 @@ Use $imagination-octo para inventar várias mecânicas de negociação para um j
 narrativo sem árvores de diálogo, dados ocultos ou atributo de persuasão.
 ```
 
+No `codex exec` ou em um script, o Codex reconhece apenas o nome completo: `$imagination-octo:imagination-octo`.
+
 A primeira resposta termina com uma escolha. Responda com um número ou uma direção:
 
 ```text

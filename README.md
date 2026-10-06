@@ -75,6 +75,8 @@ Use $imagination-octo to invent several negotiation mechanics for a narrative ga
 without dialogue trees, hidden dice, or a persuasion stat.
 ```
 
+In `codex exec` or a script, Codex resolves only the full name: `$imagination-octo:imagination-octo`.
+
 The first response ends with a choice. Reply with a number or a direction:
 
 ```text

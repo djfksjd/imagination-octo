@@ -75,6 +75,8 @@ Usa $imagination-octo para inventar varias mecánicas de negociación para un ju
 narrativo sin árboles de diálogo, dados ocultos ni estadística de persuasión.
 ```
 
+En `codex exec` o en un script, Codex solo reconoce el nombre completo: `$imagination-octo:imagination-octo`.
+
 La primera respuesta termina con una elección. Responde con un número o una dirección:
 
 ```text

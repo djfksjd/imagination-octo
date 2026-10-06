@@ -75,6 +75,8 @@ Utilise $imagination-octo pour inventer plusieurs mécaniques de négociation po
 narratif, sans arbres de dialogue, dés cachés ni statistique de persuasion.
 ```
 
+Dans `codex exec` ou dans un script, Codex ne reconnaît que le nom complet : `$imagination-octo:imagination-octo`.
+
 La première réponse se termine par un choix. Répondez par un numéro ou une direction :
 
 ```text

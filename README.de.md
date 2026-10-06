@@ -75,6 +75,8 @@ Nutze $imagination-octo, um mehrere Verhandlungsmechaniken für ein erzählerisc
 zu erfinden, ohne Dialogbäume, verdeckte Würfel oder einen Überzeugungswert.
 ```
 
+In `codex exec` oder in einem Skript erkennt Codex nur den vollständigen Namen: `$imagination-octo:imagination-octo`.
+
 Die erste Antwort endet mit einer Auswahl. Antworte mit einer Nummer oder Richtung:
 
 ```text

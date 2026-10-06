@@ -196,3 +196,114 @@ def test_frozen_runtime_copy_matches_the_shipped_engine() -> None:
     frozen = (REPO / "evals" / "runtimes" / "engine-v0.5.3.md").read_text(encoding="utf-8")
     assert "## Prove each survivor" in frozen
     assert "modal map" not in frozen
+
+
+def test_search_passes_are_read_from_the_runtime() -> None:
+    for name in ("engine-v0.5.3.md", "engine-v0.7.0-rc1.md", "engine-v0.7.0-rc3.md"):
+        skill = (REPO / "evals" / "runtimes" / name).read_text(encoding="utf-8")
+        passes = octo_eval.search_passes(skill)
+        assert [title for title, _ in passes] == [
+            "Direct pass", "Mechanism-transfer pass", "Premise-shift pass",
+        ]  # fmt: skip
+        assert all("\n" not in body and len(body) > 60 for _, body in passes)
+
+
+def test_fresh_context_candidates_change_only_the_stated_paragraphs() -> None:
+    runtimes = REPO / "evals" / "runtimes"
+    old = (runtimes / "engine-v0.5.3.md").read_text(encoding="utf-8").splitlines()
+    rc1 = (runtimes / "engine-v0.7.0-rc1.md").read_text(encoding="utf-8").splitlines()
+    rc3 = (runtimes / "engine-v0.7.0-rc3.md").read_text(encoding="utf-8")
+    assert [line for line in old if line not in rc1] == []
+    added = " ".join(line for line in rc1 if line not in old)
+    assert "give each pass to its own worker" in added
+    assert "common ground" not in added
+    assert "Let at most one common-ground" in rc3 and "no label, no recommendation" in rc3
+
+
+def test_fan_out_gives_each_pass_a_fresh_context(monkeypatch) -> None:
+    prompts: list[str] = []
+
+    def fake(family, role, prompt, **_):
+        prompts.append(prompt)
+        return {"text": f"reply {len(prompts)}", "model": "m", "seconds": 1.5,
+                "input_tokens": 10, "output_tokens": 5}  # fmt: skip
+
+    monkeypatch.setattr(octo_eval, "call_model", fake)
+    monkeypatch.setattr(octo_eval, "ARM_DEFS", {
+        "NEW": {"prompt": "treatment.md", "fanout": "scout.md",
+                "skill": "evals/runtimes/engine-v0.7.0-rc1.md"},
+    })  # fmt: skip
+    row = octo_eval.generate_fanout("gpt", "NEW", "BRIEF-TEXT")
+    assert len(prompts) == 4 and row["calls"] == 4
+    assert all("<skill>" not in prompt and "BRIEF-TEXT" in prompt for prompt in prompts[:3])
+    assert "Borrow causal mechanisms" in prompts[1] and "Borrow causal" not in prompts[0]
+    assert "<skill>" in prompts[3] and 'pass="Premise-shift pass"' in prompts[3]
+    assert row["text"] == "reply 4" and list(row["workers"].values())[0] == "reply 1"
+    assert (row["input_tokens"], row["output_tokens"], row["seconds"]) == (40, 20, 6.0)
+
+    prompts.clear()
+    again = octo_eval.generate_fanout("gpt", "NEW", "BRIEF-TEXT", {**row, "arm": "NEW"})
+    assert len(prompts) == 1 and "reply 2" in prompts[0]
+    assert again["workers"] == row["workers"] and again["workers_from"] == "NEW"
+
+
+def _fresh_context_result(**changes):
+    pair = lambda x, y, **diff: {  # noqa: E731
+        "cells": {"x": x, "y": y, "tie": 0, "missing": 0},
+        "briefs": {"x": x, "y": y, "tie": 0},
+        "rating_diff": {"fit": 0.3, "useful_surprise": 0.1, "set_diversity": 0.0,
+                        "craft": 0.3, **diff},
+    }  # fmt: skip
+    result = {
+        "pairs": {"NEW vs OLD": pair(7, 3), "BOLD vs OLD": pair(5, 5)},
+        "trap_pairs": {"NEW vs OLD": pair(2, 1), "BOLD vs OLD": pair(1, 1)},
+        "costs": {arm: {"outputs": 36, "total_tokens": tokens}
+                  for arm, tokens in (("A0", 1), ("OLD", 100), ("NEW", 380), ("BOLD", 380))},
+        "convergence": {arm: {"mechanism_overlap": 0.4} for arm in ("A0", "OLD", "NEW", "BOLD")},
+        "shape": {
+            "A0": {"ideas_per_portfolio": 4.5, "share_also_in_A0": 1.0},
+            "OLD": {"ideas_per_portfolio": 4.5, "share_also_in_A0": 0.60},
+            "NEW": {"ideas_per_portfolio": 4.5, "share_also_in_A0": 0.55},
+            "BOLD": {"ideas_per_portfolio": 4.4, "share_also_in_A0": 0.40},
+        },
+    }  # fmt: skip
+    for path, value in changes.items():
+        target = result
+        *parents, last = path.split("/")
+        for key in parents:
+            target = target[key]
+        target[last] = value
+    return result
+
+
+def test_fresh_context_gates(monkeypatch) -> None:
+    monkeypatch.setattr(octo_eval, "ARMS", ("A0", "OLD", "NEW", "BOLD"))
+    monkeypatch.setattr(octo_eval, "DECISION", {
+        "rule": "fresh-context", "new": "NEW", "old": "OLD", "bold": "BOLD",
+    })  # fmt: skip
+    gates = octo_eval.decide_fresh_context(_fresh_context_result(), 36)
+    assert gates.pop("claim_more_creative") is False  # +0.1 surprise, share only 0.05 lower
+    assert all(gates.values())
+
+    def failed(**changes):
+        gates = octo_eval.decide_fresh_context(_fresh_context_result(**changes), 36)
+        return {key for key, value in gates.items() if not value} - {"claim_more_creative"}
+
+    assert failed(**{"costs/NEW/total_tokens": 460}) == {"cost"}
+    assert failed(**{"pairs/NEW vs OLD/briefs": {"x": 5, "y": 5, "tie": 0}}) == {"preference"}
+    assert failed(**{"shape/BOLD/share_also_in_A0": 0.55}) == {"bold_beyond_plain"}
+    assert failed(**{"costs/A0/outputs": 35}) == {"coverage"}
+    assert failed(**{"convergence/NEW/mechanism_overlap": 0.55}) == {"not_more_repetitive"}
+
+
+def test_experiment_c_briefs_meet_the_preregistered_mix() -> None:
+    rows = octo_eval.read_jsonl(REPO / "evals" / "briefs.experiment-c.jsonl")
+    earlier = {
+        row["id"]
+        for name in ("experiment-a", "experiment-b", "b-dev", "pilot")
+        for row in octo_eval.read_jsonl(REPO / "evals" / f"briefs.{name}.jsonl")
+    }
+    assert len(rows) == 12 and not {row["id"] for row in rows} & earlier
+    assert [row["language"] for row in rows].count("ko") == 4
+    assert sum(1 for row in rows if row.get("trap")) == 2
+    assert sum(1 for row in rows if "premise" in row["domain"]) == 3
