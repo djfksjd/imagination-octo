@@ -1,0 +1,70 @@
+{
+  "name": "c-dev",
+  "arms": {
+    "A0": {
+      "prompt": "control.md"
+    },
+    "OLD": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.5.3.md"
+    },
+    "NEW": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc1.md",
+      "fanout": "scout.md"
+    },
+    "R2": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc2.md",
+      "fanout": "scout.md",
+      "workers_from": "NEW"
+    },
+    "R3": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc3.md",
+      "fanout": "scout.md",
+      "workers_from": "NEW"
+    },
+    "R4": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc4.md",
+      "fanout": "scout-working.md"
+    },
+    "R5": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc5.md",
+      "fanout": "scout-working.md",
+      "workers_from": "R4"
+    }
+  },
+  "pairs": [
+    [
+      "NEW",
+      "OLD"
+    ],
+    [
+      "R2",
+      "OLD"
+    ],
+    [
+      "R2",
+      "NEW"
+    ],
+    [
+      "R3",
+      "OLD"
+    ],
+    [
+      "R3",
+      "NEW"
+    ],
+    [
+      "R4",
+      "NEW"
+    ],
+    [
+      "R5",
+      "NEW"
+    ]
+  ]
+}

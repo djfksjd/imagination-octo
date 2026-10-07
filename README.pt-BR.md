@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 O Imagination Octo se estende em várias direções ao mesmo tempo e então para. Ele devolve um pequeno portfólio de ideias que diferem no mecanismo, não na redação, e encerra o turno. Só depois que você escolhe uma é que ele testa e desenvolve essa direção. A decisão é a única parte que ele se recusa a automatizar.
 
-**Esta é a `v0.4 beta`.** A tabela abaixo vem de um único modelo (`gpt-5.4`), julgado por chamadas de IA da mesma família, em um conjunto pequeno de briefs. Um experimento posterior com GPT e Claude existe, mas o resultado de preferência fica anulado até ser julgado de novo; veja *Leia com honestidade*. Nada disso afirma criatividade universal.
+**Esta é a `v0.5 beta`.** A tabela abaixo vem de um único modelo (`gpt-5.4`), julgado por chamadas de IA da mesma família, em um conjunto pequeno de briefs. Um experimento posterior com GPT e Claude existe, mas o resultado de preferência fica anulado até ser julgado de novo; veja *Leia com honestidade*. Nada disso afirma criatividade universal.
 
 ## O que ele faz
 
@@ -75,6 +75,8 @@ Use $imagination-octo para inventar várias mecânicas de negociação para um j
 narrativo sem árvores de diálogo, dados ocultos ou atributo de persuasão.
 ```
 
+No `codex exec` ou em um script, o Codex reconhece apenas o nome completo: `$imagination-octo:imagination-octo`.
+
 A primeira resposta termina com uma escolha. Responda com um número ou uma direção:
 
 ```text
@@ -106,6 +108,7 @@ Leia com honestidade:
 - **Um projeto anterior falhou por completo.** O pipeline de baralhos e portões (Engine v0.4.0) perdeu de 0–30 para um prompt comum com 48× o custo e foi substituído. Esse registro permanece no repositório do Engine.
 - **Experimento A (2026-10-06): resultado de preferência anulado por enquanto.** Um experimento pré-registrado entre modelos ([regra](evals/PREREGISTRATION.md), [resultado](evals/results/2026-10-06-experiment-a.md)) com 12 briefs novos, gerados por `gpt-5.5` e `claude-opus-5-5` e julgados pela outra família. O motor foi preferido ao prompt simples em 11 de 12 briefs com GPT e em 10 de 12 com Claude, e um prompt simples com esforço equivalente não fechou a diferença. Mas os juízes acertaram qual lado usava a skill em 22 de 24 testes em cada modelo; pela regra fixada de antemão, esses números de preferência não contam até que as saídas tenham o formato normalizado e sejam julgadas de novo. A verificação às cegas do autor também está pendente. Não afetado por isso: com o motor, execuções separadas repetiram menos os mesmos mecanismos (sobreposição 0,40 contra 0,54 com GPT; 0,50 contra 0,63 com Claude), com 1,08× os tokens no GPT e 1,99× no Claude.
 - **Uma candidata v0.6.0 falhou (2026-10-06).** Ela tentava ampliar os portfólios e reduzir a repetição. Em 12 briefs novos não superou a v0.5.3 (5–5–2 com GPT, 4–6–2 com Claude) e não passou nos limites pré-registrados em nenhum dos dois modelos, então a v0.5.3 permanece ([resultado](evals/results/2026-10-06-experiment-b.md)).
+- **O motor v0.7.0 passou (2026-10-07).** Ele dá a cada passagem de busca seu próprio contexto novo. Em 12 briefs novos foi preferido à v0.5.3 em 11 com GPT e em 10 com Claude, com a surpresa útil subindo +0,44 e +0,29, com 3,9× e 3,3× os tokens ([regra](evals/PREREGISTRATION-C.md), [resultado](evals/results/2026-10-07-experiment-c.md)). Pela nossa codificação, seus mecanismos não foram mais raros, então o ganho está em ideias mais bem escolhidas, mais do que em ideias mais estranhas. Julgado pela outra família de modelos, não por pessoas.
 - **Fluxo de dois turnos:** só o comportamento foi verificado. Uma suíte de regressão passou em 13 de 14 casos; a falha, uma escolha adivinhada quando a resposta servia para duas direções, levou a uma correção no roteador. Não há estudo de preferência do fluxo completo.
 
 Protocolos, regras de decisão e arquivos de resultado: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).

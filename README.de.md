@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo greift in mehrere Richtungen zugleich aus und hält dann an. Es liefert ein kleines Portfolio von Ideen, die sich im Mechanismus unterscheiden, nicht in der Formulierung, und beendet den Zug. Erst nachdem du eine gewählt hast, prüft und entwickelt es diese Richtung. Die Entscheidung ist der eine Teil, den es nicht automatisiert.
 
-**Dies ist `v0.4 beta`.** Die Tabelle unten stammt von einem einzigen Modell (`gpt-5.4`), bewertet durch KI-Aufrufe derselben Modellfamilie, auf einer kleinen Menge von Briefings. Ein späteres modellübergreifendes Experiment mit GPT und Claude liegt vor, sein Präferenzergebnis ist aber bis zur Neubewertung ungültig; siehe *Ehrlich gelesen*. Nichts davon ist ein Anspruch auf universelle Kreativität.
+**Dies ist `v0.5 beta`.** Die Tabelle unten stammt von einem einzigen Modell (`gpt-5.4`), bewertet durch KI-Aufrufe derselben Modellfamilie, auf einer kleinen Menge von Briefings. Ein späteres modellübergreifendes Experiment mit GPT und Claude liegt vor, sein Präferenzergebnis ist aber bis zur Neubewertung ungültig; siehe *Ehrlich gelesen*. Nichts davon ist ein Anspruch auf universelle Kreativität.
 
 ## Was es tut
 
@@ -75,6 +75,8 @@ Nutze $imagination-octo, um mehrere Verhandlungsmechaniken für ein erzählerisc
 zu erfinden, ohne Dialogbäume, verdeckte Würfel oder einen Überzeugungswert.
 ```
 
+In `codex exec` oder in einem Skript erkennt Codex nur den vollständigen Namen: `$imagination-octo:imagination-octo`.
+
 Die erste Antwort endet mit einer Auswahl. Antworte mit einer Nummer oder Richtung:
 
 ```text
@@ -106,6 +108,7 @@ Ehrlich gelesen:
 - **Ein früheres Design ist klar gescheitert.** Die Deck-und-Gate-Pipeline (Engine v0.4.0) verlor 0–30 gegen einen normalen Prompt bei 48-fachen Kosten und wurde ersetzt. Dieser Befund bleibt im Engine-Repository dokumentiert.
 - **Experiment A (2026-10-06): Präferenzergebnis vorerst ungültig.** Ein präregistriertes modellübergreifendes Experiment ([Regel](evals/PREREGISTRATION.md), [Ergebnis](evals/results/2026-10-06-experiment-a.md)) mit 12 neuen Briefings, erzeugt von `gpt-5.5` und `claude-opus-5-5` und jeweils von der anderen Modellfamilie bewertet. Die Engine wurde dem einfachen Prompt bei GPT in 11 von 12 und bei Claude in 10 von 12 Briefings vorgezogen, und ein einfacher Prompt mit gleichem Aufwand schloss die Lücke nicht. Die Bewerter erkannten jedoch bei beiden Modellen in 22 von 24 Tests, welche Seite den Skill benutzt hatte. Nach der vorab festgelegten Regel zählen diese Präferenzwerte daher erst, wenn die Ausgaben im Format normalisiert und neu bewertet wurden. Die verblindete Prüfung durch den Autor steht ebenfalls noch aus. Davon unberührt: Mit der Engine wiederholten getrennte Läufe dieselben Mechanismen seltener (Überlappung 0,40 gegenüber 0,54 bei GPT, 0,50 gegenüber 0,63 bei Claude), bei 1,08× Tokens mit GPT und 1,99× mit Claude.
 - **Ein Kandidat v0.6.0 ist durchgefallen (2026-10-06).** Er sollte Portfolios verbreitern und Wiederholungen verringern. Auf 12 neuen Briefings schlug er v0.5.3 nicht (5–5–2 mit GPT, 4–6–2 mit Claude) und verfehlte bei beiden Modellen präregistrierte Schwellen, daher bleibt v0.5.3 ([Ergebnis](evals/results/2026-10-06-experiment-b.md)).
+- **Engine v0.7.0 hat bestanden (2026-10-07).** Sie gibt jedem Suchdurchgang einen eigenen frischen Kontext. Auf 12 neuen Briefings wurde sie gegenüber v0.5.3 mit GPT in 11 und mit Claude in 10 bevorzugt, die nützliche Überraschung stieg um +0,44 und +0,29, bei 3,9× und 3,3× Tokens ([Regel](evals/PREREGISTRATION-C.md), [Ergebnis](evals/results/2026-10-07-experiment-c.md)). Nach unserer Kodierung waren ihre Mechanismen nicht seltener; der Gewinn liegt also eher in besser gewählten als in ausgefalleneren Ideen. Bewertet von der anderen Modellfamilie, nicht von Menschen.
 - **Ablauf über zwei Züge:** Nur das Verhalten wurde geprüft. Eine Regressionssuite bestand 13 von 14 Fällen; der Fehlschlag, eine geratene Auswahl bei einer Antwort, die auf zwei Richtungen passte, führte zu einer Korrektur des Routers. Eine Präferenzstudie des gesamten Ablaufs gibt es nicht.
 
 Protokolle, Entscheidungsregeln und Ergebnisdateien: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).

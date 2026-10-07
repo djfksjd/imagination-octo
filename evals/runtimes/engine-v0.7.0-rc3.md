@@ -1,9 +1,9 @@
 ---
-name: imagination-octo-engine
-description: "Generate several non-obvious, useful ideas without sacrificing the user's brief. Use only when the user explicitly invokes imagination-octo-engine while it is being evaluated, especially for concepts, premises, mechanics, products, services, worlds, rituals, or when previous ideas feel generic. Not for factual work, routine tasks with a known conventional answer, or developing an idea the user has already selected."
+name: imagination-engine
+description: "Generate several non-obvious, useful ideas without sacrificing the user's brief. Use only when the user explicitly invokes imagination-engine while v0.5 is being evaluated, especially for concepts, premises, mechanics, products, services, worlds, rituals, or when previous ideas feel generic. Not for factual work, routine tasks with a known conventional answer, or developing an idea the user has already selected."
 ---
 
-# Imagination Octo Engine
+# Imagination Engine
 
 Produce **useful surprise**: an idea should feel non-obvious after it is
 understood, yet clearly serve the brief. Treat fit as a veto. Randomness,
@@ -58,9 +58,16 @@ the nearest existing approaches and a few remote domains before the transfer
 pass. Use retrieved material as raw material, not as authority. Never delay a
 simple creative request with unnecessary research.
 
-Pooled candidates are raw material, not a draft. Workers overlap, and a rough
-sketch can hide a constraint violation, so everything below applies to each of
-them. Add a candidate of your own when the pool lacks a mechanism family.
+Pooled candidates are raw material, not a draft, and a rough sketch can hide a
+constraint violation, so everything below applies to each of them.
+
+Read the pool for agreement first. A mechanism that more than one worker
+reached on its own is common ground: it is what a capable person finds first,
+however each worker dressed or named it. Let at most one common-ground
+mechanism survive, in its strongest form, and present it like any other idea:
+no label, no recommendation. Take the remaining survivors, at least three,
+from mechanisms only one worker reached or from candidates you add where the
+pool lacks a mechanism family. They pass the same cull as everything else.
 
 Keep the candidates independent. Do not force unrelated survivors into one
 hybrid. Combine ideas only when a single causal mechanism genuinely supports
@@ -139,7 +146,7 @@ the hidden process unless the task actually needs it.
 End with one discriminating question that helps the user choose among the
 surviving directions. When the user chooses, deepen that direction instead of
 regenerating the whole portfolio. If they want a full concept review, hand off
-to `imagination-octo-brainstorming` when it is available. Do not choose on the
+to `imagination-brainstorming` when it is available. Do not choose on the
 user's behalf or automatically chain the workshop; their choice is the
 decision boundary between divergence and development.
 

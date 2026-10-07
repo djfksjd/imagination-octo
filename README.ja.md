@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo は複数の方向へ同時に腕を伸ばし、そこで止まります。言い回しではなく仕組みが異なるアイデアを少数返してターンを終えます。あなたがひとつ選んだ後にだけ、その方向を検証し発展させます。決定だけは自動化しません。
 
-**現在は `v0.4 beta` です。** 下の表は、ひとつのモデル（`gpt-5.4`）が生成し、同じ系列の AI 呼び出しが審査した、少数のブリーフでの結果です。その後 GPT と Claude でモデル横断の実験を行いましたが、その選好結果は再審査まで無効です。「正直な読み方」を参照してください。いずれも普遍的な創造性を主張するものではありません。
+**現在は `v0.5 beta` です。** 下の表は、ひとつのモデル（`gpt-5.4`）が生成し、同じ系列の AI 呼び出しが審査した、少数のブリーフでの結果です。その後 GPT と Claude でモデル横断の実験を行いましたが、その選好結果は再審査まで無効です。「正直な読み方」を参照してください。いずれも普遍的な創造性を主張するものではありません。
 
 ## できること
 
@@ -75,6 +75,8 @@ $imagination-octo を使って、会話ツリー・隠しダイス・説得ス�
 物語ゲームの交渉メカニクスを複数作ってください。
 ```
 
+`codex exec` やスクリプトでは、Codex は完全な名前だけを認識します: `$imagination-octo:imagination-octo`。
+
 最初の応答は選択の問いで終わります。番号か方向で答えます。
 
 ```text
@@ -106,6 +108,7 @@ $imagination-octo を使って、会話ツリー・隠しダイス・説得ス�
 - **以前の設計は完敗しました。** デッキとゲートのパイプライン（Engine v0.4.0）は 48 倍のコストで通常プロンプトに 0 対 30 で敗れ、置き換えました。その記録は Engine リポジトリに残しています。
 - **Experiment A（2026-10-06）：選好結果は現時点で無効です。** 事前登録したモデル横断の実験です ([規則](evals/PREREGISTRATION.md), [結果](evals/results/2026-10-06-experiment-a.md))。新しいブリーフ 12 件を `gpt-5.5` と `claude-opus-5-5` で生成し、互いに別系列が審査しました。エンジンは GPT で 12 件中 11 件、Claude で 12 件中 10 件のブリーフで通常プロンプトより好まれ、労力をそろえた通常プロンプトでも差は埋まりませんでした。しかし、どちらがスキルを使ったかを審査側が両モデルとも 24 回中 22 回言い当てました。事前に定めた規則により、出力の形式を正規化して再審査するまで、この選好の数値は根拠として扱いません。作者によるブラインド確認も未実施です。これに影響されない結果：エンジンを使うと、別々の実行で同じメカニズムが繰り返される度合いが下がりました（重複度 GPT 0.40 対 0.54、Claude 0.50 対 0.63）。トークンは GPT で 1.08 倍、Claude で 1.99 倍でした。
 - **候補 v0.6.0 は不合格でした（2026-10-06）。** ポートフォリオを広げ、繰り返しを減らすことを狙った版です。新しいブリーフ 12 件で v0.5.3 を上回れず（GPT 5 勝 5 敗 2 分、Claude 4 勝 6 敗 2 分）、両モデルで事前登録の基準を満たさなかったため、v0.5.3 を維持します（[結果](evals/results/2026-10-06-experiment-b.md)）。
+- **エンジン v0.7.0 が合格しました（2026-10-07）。** 探索パスごとに新しいコンテキストを与えます。新しいブリーフ 12 件で、GPT では 11 件、Claude では 10 件で v0.5.3 より好まれ、有用な意外性は +0.44 と +0.29 上がり、トークンは 3.9 倍と 3.3 倍でした（[規則](evals/PREREGISTRATION-C.md)、[結果](evals/results/2026-10-07-experiment-c.md)）。私たちのコーディングではメカニズムがより珍しくなったわけではなく、得られたのは奇抜さよりも、よりよく選ばれたアイデアです。審査は人ではなく別のモデル系列が行いました。
 - **2 ターンの流れ：** 動作のみ確認しました。回帰テストは 14 件中 13 件が合格し、失敗した 1 件（返答が 2 つの方向に当てはまるときに推測で選んだ）はルーターを修正しました。流れ全体の選好評価はありません。
 
 プロトコル、判定規則、結果ファイル: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming)。

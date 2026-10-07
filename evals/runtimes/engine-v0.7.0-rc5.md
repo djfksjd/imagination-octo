@@ -1,9 +1,9 @@
 ---
-name: imagination-octo-engine
-description: "Generate several non-obvious, useful ideas without sacrificing the user's brief. Use only when the user explicitly invokes imagination-octo-engine while it is being evaluated, especially for concepts, premises, mechanics, products, services, worlds, rituals, or when previous ideas feel generic. Not for factual work, routine tasks with a known conventional answer, or developing an idea the user has already selected."
+name: imagination-engine
+description: "Generate several non-obvious, useful ideas without sacrificing the user's brief. Use only when the user explicitly invokes imagination-engine while v0.5 is being evaluated, especially for concepts, premises, mechanics, products, services, worlds, rituals, or when previous ideas feel generic. Not for factual work, routine tasks with a known conventional answer, or developing an idea the user has already selected."
 ---
 
-# Imagination Octo Engine
+# Imagination Engine
 
 Produce **useful surprise**: an idea should feel non-obvious after it is
 understood, yet clearly serve the brief. Treat fit as a veto. Randomness,
@@ -46,12 +46,17 @@ justify them, run the passes yourself and finish each before starting the next.
 
 1. **Direct pass:** Generate strong, concrete, high-fit answers without trying
    to be strange. This protects the brief from being lost during divergence.
-2. **Mechanism-transfer pass:** Borrow causal mechanisms from unrelated
-   domains, not their nouns or aesthetics. Ask what the source mechanism does,
-   why it works there, and what would play the same functional roles here.
-3. **Premise-shift pass:** Change one hidden assumption at a time while
-   preserving every non-negotiable. Prefer shifts in actor, ownership, timing,
-   unit, information flow, or incentive over arbitrary world changes.
+2. **Mechanism-transfer pass:** State the problem in one sentence with the
+   brief's own domain words removed. Name eight fields that face that same
+   problem, set aside the four closest to the brief's field, and borrow from
+   the rest. Borrow causal mechanisms, not nouns or aesthetics: ask what the
+   source mechanism does, why it works there, and what would play the same
+   functional roles here.
+3. **Premise-shift pass:** List six things the brief takes for granted without
+   saying so. Set aside the two most often questioned, then change one of the
+   rest per candidate while preserving every non-negotiable. Prefer shifts in
+   actor, ownership, timing, unit, information flow, or incentive over
+   arbitrary world changes.
 
 When field-relative novelty matters and research tools are available, inspect
 the nearest existing approaches and a few remote domains before the transfer
@@ -61,6 +66,12 @@ simple creative request with unnecessary research.
 Pooled candidates are raw material, not a draft. Workers overlap, and a rough
 sketch can hide a constraint violation, so everything below applies to each of
 them. Add a candidate of your own when the pool lacks a mechanism family.
+
+A mechanism that more than one worker reached on its own is common ground,
+what a capable person finds first however it is dressed. One that a single
+worker reached is rarer. When two candidates serve the brief equally well,
+keep the rarer one, and do not let common ground take more than two places in
+the portfolio.
 
 Keep the candidates independent. Do not force unrelated survivors into one
 hybrid. Combine ideas only when a single causal mechanism genuinely supports
@@ -139,7 +150,7 @@ the hidden process unless the task actually needs it.
 End with one discriminating question that helps the user choose among the
 surviving directions. When the user chooses, deepen that direction instead of
 regenerating the whole portfolio. If they want a full concept review, hand off
-to `imagination-octo-brainstorming` when it is available. Do not choose on the
+to `imagination-brainstorming` when it is available. Do not choose on the
 user's behalf or automatically chain the workshop; their choice is the
 decision boundary between divergence and development.
 

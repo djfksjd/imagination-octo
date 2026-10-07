@@ -15,6 +15,7 @@ import concurrent.futures
 import hashlib
 import json
 import math
+import re
 import statistics
 import subprocess
 import sys
@@ -256,7 +257,7 @@ def call_model(
     *,
     schema: dict[str, Any] | None = None,
     check: Callable[[dict[str, Any]], None] | None = None,
-    timeout: int = 600,
+    timeout: int = 1800,  # a generator sometimes reasons for well over ten minutes
     attempts: int = 3,
 ) -> dict[str, Any]:
     """Call one model with retries; returns text, parsed JSON, tokens, seconds."""
@@ -356,6 +357,70 @@ def generation_prompt(arm: str, brief: str) -> str:
         + f"<skill>\n{skill.strip()}\n</skill>\n\n"
         + task
     )
+
+
+PASS_ITEM = re.compile(r"^\d\. \*\*(.+? pass):\*\* (.+?)(?=^\d\. \*\*|^\S)", re.M | re.S)
+
+
+def search_passes(skill: str) -> list[tuple[str, str]]:
+    """The numbered search passes of a runtime, as (name, instruction)."""
+    return [
+        (name, " ".join(body.split())) for name, body in PASS_ITEM.findall(skill)
+    ]
+
+
+def generate_fanout(
+    family: str, arm: str, brief: str, reuse: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """Emulate a host that gives each search pass to a worker with a fresh context.
+
+    Each pass runs as its own call that sees only the brief and that pass; the
+    final call gets the runtime, the task, and the pooled rough candidates.
+    Tokens and seconds are summed over every call.
+    """
+    spec = ARM_DEFS[arm]
+    skill = (REPO / spec["skill"]).read_text(encoding="utf-8")
+    template = (PROMPTS / spec["fanout"]).read_text(encoding="utf-8")
+    passes = search_passes(skill)
+    if len(passes) < 2:
+        raise ValueError(f"{spec['skill']} has no numbered search passes")
+    replies = []
+    for name, instruction in passes if reuse is None else []:
+        prompt = CLEAN_ROOM + template.replace("{{PASS}}", instruction).replace(
+            "{{BRIEF}}", brief
+        )
+        replies.append((name, call_model(family, "generator", prompt)))
+    if reuse is not None:  # same worker sketches as another arm, new synthesis
+        replies = [(name, {"text": text}) for name, text in reuse["workers"].items()]
+    pooled = "\n\n".join(
+        f'<worker pass="{name}">\n{reply["text"].strip()}\n</worker>'
+        for name, reply in replies
+    )
+    final = call_model(
+        family,
+        "generator",
+        generation_prompt(arm, brief)
+        + "\n\nYou gave each search pass to a separate worker, as the skill"
+        " instructs. Their rough candidates are below. Continue from there.\n\n"
+        + pooled,
+    )
+    if reuse is not None:
+        # Cost is approximated by the arm the sketches came from.
+        return {
+            **{key: reuse[key] for key in ("seconds", "input_tokens", "output_tokens", "calls")},
+            "text": final["text"], "model": final["model"],
+            "workers": reuse["workers"], "workers_from": reuse["arm"],
+        }  # fmt: skip
+    calls = [reply for _, reply in replies] + [final]
+    return {
+        "text": final["text"],
+        "model": final["model"],
+        "seconds": round(sum(call["seconds"] for call in calls), 2),
+        "input_tokens": sum(call["input_tokens"] for call in calls),
+        "output_tokens": sum(call["output_tokens"] for call in calls),
+        "calls": len(calls),
+        "workers": {name: reply["text"] for name, reply in replies},
+    }
 
 
 DECISION: dict[str, str] = {}  # {"new", "old", "plain"} for a replacement test
@@ -475,19 +540,29 @@ class Experiment:
 
         def worker(job: tuple[str, str, str, int]) -> None:
             brief_id, family, arm, run = job
-            prompt = generation_prompt(arm, self.brief[brief_id]["prompt"])
-            reply = call_model(family, "generator", prompt)
+            brief = self.brief[brief_id]["prompt"]
+            if "fanout" in ARM_DEFS[arm]:
+                source = ARM_DEFS[arm].get("workers_from")
+                reuse = self.outputs.get(brief_id, family, source, run) if source else None
+                if source and reuse is None:
+                    raise KeyError(f"{arm} needs {source} for {brief_id}/{family}/{run}")
+                reply = generate_fanout(family, arm, brief, reuse)
+            else:
+                reply = call_model(family, "generator", generation_prompt(arm, brief))
             self.outputs.add(
                 {
                     "brief_id": brief_id, "family": family, "arm": arm, "run": run,
-                    "text": reply["text"], "model": reply["model"],
-                    "seconds": reply["seconds"],
-                    "input_tokens": reply["input_tokens"],
-                    "output_tokens": reply["output_tokens"],
+                    **{key: value for key, value in reply.items() if key != "json"},
                 }  # fmt: skip
             )
 
-        return run_jobs("generate", jobs, worker, lambda job: job[1], self.workers)
+        # Arms that reuse another arm's worker sketches wait for that arm.
+        first = [job for job in jobs if "workers_from" not in ARM_DEFS[job[2]]]
+        later = [job for job in jobs if "workers_from" in ARM_DEFS[job[2]]]
+        failed = run_jobs("generate", first, worker, lambda job: job[1], self.workers)
+        if later and not failed:
+            failed = run_jobs("generate", later, worker, lambda job: job[1], self.workers)
+        return failed
 
     def text(self, brief_id: str, family: str, arm: str, run: int) -> str:
         row = self.outputs.get(brief_id, family, arm, run)
@@ -1010,6 +1085,66 @@ def decide_replacement(result: dict[str, Any], planned: int) -> dict[str, bool]:
     }
 
 
+def decide_fresh_context(result: dict[str, Any], planned: int) -> dict[str, bool]:
+    """Experiment C gates: a fan-out candidate (`new`) and its bolder selection
+    rule (`bold`), each against the shipped runtime (`old`)."""
+    new, old, bold = DECISION["new"], DECISION["old"], DECISION["bold"]
+    costs, shape, conv = result["costs"], result["shape"], result["convergence"]
+    share = f"share_also_in_{ARMS[0]}"
+
+    def at_least(value: float | None, floor: float) -> bool:
+        return value is not None and value >= floor
+
+    def at_most(value: float | None, ceiling: float | None) -> bool:
+        return value is not None and ceiling is not None and value <= ceiling
+
+    def versus(arm: str) -> tuple[dict[str, Any], dict[str, Any]]:
+        return result["pairs"][f"{arm} vs {old}"], result["trap_pairs"][f"{arm} vs {old}"]
+
+    def lowered(arm: str, key: str, by: float) -> bool:
+        base = shape[old][key]
+        return at_most(shape[arm][key], None if base is None else base - by)
+
+    pair, trap = versus(new)
+    diff = pair["rating_diff"]
+    tokens = ratio(costs[new]["total_tokens"], costs[old]["total_tokens"])
+    old_ideas = shape[old]["ideas_per_portfolio"]
+    old_overlap = conv[old]["mechanism_overlap"]
+    gates = {
+        "coverage": all(p["cells"]["missing"] == 0 for p in result["pairs"].values())
+        and all(arm["outputs"] == planned for arm in costs.values()),
+        "preference": pair["briefs"]["x"] > pair["briefs"]["y"],
+        "fit_non_inferior": at_least(diff["fit"], -0.25),
+        "craft_non_inferior": at_least(diff["craft"], -0.25),
+        "conventional_trap": trap["cells"]["x"] >= trap["cells"]["y"]
+        and at_least(trap["rating_diff"]["fit"], -0.25),
+        "cost": tokens is not None and tokens <= 4.5,
+        "breadth": old_ideas is not None
+        and at_least(shape[new]["ideas_per_portfolio"], old_ideas - 0.25),
+        "not_less_surprising": at_least(diff["useful_surprise"], -0.10),
+        "not_more_repetitive": at_most(
+            conv[new]["mechanism_overlap"],
+            None if old_overlap is None else old_overlap + 0.10,
+        ),
+        # Reported, not required: may the result be called "more creative"?
+        "claim_more_creative": at_least(diff["useful_surprise"], 0.25)
+        or lowered(new, share, 0.10),
+    }
+    pair, trap = versus(bold)
+    diff = pair["rating_diff"]
+    gates |= {
+        "bold_preference_not_worse": pair["briefs"]["x"] >= pair["briefs"]["y"],
+        "bold_fit_non_inferior": at_least(diff["fit"], -0.25),
+        "bold_beyond_plain": lowered(bold, share, 0.10),
+        "bold_breadth": old_ideas is not None
+        and at_least(shape[bold]["ideas_per_portfolio"], old_ideas - 0.25),
+    }
+    return gates
+
+
+REPORTED_ONLY = ("claim_more_creative",)
+
+
 def score_generic(exp: Experiment) -> dict[str, Any]:
     all_briefs = [brief["id"] for brief in exp.briefs]
     traps = [brief["id"] for brief in exp.briefs if brief.get("trap")]
@@ -1040,13 +1175,26 @@ def score_generic(exp: Experiment) -> dict[str, Any]:
             "shape": portfolio_shape(exp, family),
         }
         if DECISION:
-            summary["families"][family]["gates"] = decide_replacement(
+            decide = (
+                decide_fresh_context
+                if DECISION.get("rule") == "fresh-context"
+                else decide_replacement
+            )
+            summary["families"][family]["gates"] = decide(
                 summary["families"][family], len(exp.briefs) * exp.runs
             )
     if DECISION:
-        summary["replace"] = all(
-            all(result["gates"].values()) for result in summary["families"].values()
+        every = [result["gates"] for result in summary["families"].values()]
+
+        def holds(keep: Callable[[str], bool]) -> bool:
+            return all(value for gates in every for key, value in gates.items() if keep(key))
+
+        summary["replace"] = holds(
+            lambda key: not key.startswith("bold_") and key not in REPORTED_ONLY
         )
+        if DECISION.get("rule") == "fresh-context":
+            summary["bold_mode"] = holds(lambda key: key.startswith("bold_"))
+            summary["claim_more_creative"] = holds(lambda key: key in REPORTED_ONLY)
     return summary
 
 
@@ -1091,6 +1239,12 @@ def report_generic(summary: dict[str, Any]) -> str:
             ]
     if "replace" in summary:
         lines += ["", f"**Replace the shipped runtime: {'YES' if summary['replace'] else 'NO'}**"]
+    for key, label in (
+        ("bold_mode", "Ship the bolder selection rule as an on-request mode"),
+        ("claim_more_creative", "May be described as more creative"),
+    ):
+        if key in summary:
+            lines += ["", f"**{label}: {'YES' if summary[key] else 'NO'}**"]
     return "\n".join(lines) + "\n"
 
 

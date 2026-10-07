@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo 同时向多个方向伸展，然后停下。它返回少量在机制上而非措辞上不同的想法，并结束这一轮。只有在你选定一个之后，它才会检验并发展该方向。唯独“决定”这一步，它不做自动化。
 
-**当前为 `v0.4 beta`。** 下表来自单一模型（`gpt-5.4`）生成、同一系列的 AI 调用评审、且简报数量较少的实验。之后在 GPT 与 Claude 上做了跨模型实验，但其偏好结果在重新评审前无效，详见“如实解读”。这些都不代表普遍意义上的创造力。
+**当前为 `v0.5 beta`。** 下表来自单一模型（`gpt-5.4`）生成、同一系列的 AI 调用评审、且简报数量较少的实验。之后在 GPT 与 Claude 上做了跨模型实验，但其偏好结果在重新评审前无效，详见“如实解读”。这些都不代表普遍意义上的创造力。
 
 ## 功能
 
@@ -75,6 +75,8 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/insta
 不使用对话树、隐藏骰子或说服属性。
 ```
 
+在 `codex exec` 或脚本中，Codex 只识别完整名称：`$imagination-octo:imagination-octo`。
+
 第一次回复以一个选择题结束。用编号或方向回答即可：
 
 ```text
@@ -106,6 +108,7 @@ curl -fsSL https://raw.githubusercontent.com/djfksjd/imagination-octo/main/insta
 - **早期设计彻底失败。** 牌组加关卡的流水线（Engine v0.4.0）以 48 倍成本对普通提示词 0 比 30 落败，已被替换。该记录保留在 Engine 仓库中。
 - **Experiment A（2026-10-06）：偏好结果目前无效。** 这是一次预注册的跨模型实验 ([规则](evals/PREREGISTRATION.md), [结果](evals/results/2026-10-06-experiment-a.md))：12 份新简报，由 `gpt-5.5` 与 `claude-opus-5-5` 生成，并由另一系列的模型评审。引擎在 GPT 的 12 份简报中有 11 份、在 Claude 的 12 份中有 10 份比普通提示更受青睐，投入对等的普通提示也未能缩小差距。但评审在两个模型上都有 24 次中的 22 次猜出了哪一方使用了技能，因此按照事先确定的规则，在对输出做格式归一并重新评审之前，这些偏好数字不作为依据。作者本人的盲评也尚未完成。不受此影响的结果：使用引擎后，多次运行之间重复同一机制的程度更低（重合度 GPT 0.40 对 0.54，Claude 0.50 对 0.63）；令牌用量在 GPT 上为 1.08 倍，在 Claude 上为 1.99 倍。
 - **候选版本 v0.6.0 未通过（2026-10-06）。** 它试图扩大方案组合并减少重复。在 12 份新简报上未能胜过 v0.5.3（GPT 5 胜 5 负 2 平，Claude 4 胜 6 负 2 平），在两个模型上都未通过预注册的门槛，因此保留 v0.5.3（[结果](evals/results/2026-10-06-experiment-b.md)）。
+- **引擎 v0.7.0 通过（2026-10-07）。** 它让每一轮搜索都在各自全新的上下文中进行。在 12 份全新简报上，GPT 有 11 份、Claude 有 10 份比 v0.5.3 更受青睐，有用的意外性提高 +0.44 和 +0.29，令牌消耗为 3.9 倍和 3.3 倍（[规则](evals/PREREGISTRATION-C.md)，[结果](evals/results/2026-10-07-experiment-c.md)）。按我们的编码，它的机制并没有更少见，所以收益更多来自选得更好的想法，而不是更奇特的想法。评审是另一模型系列，不是人。
 - **两轮流程：** 只检查了行为。回归测试 14 项中通过 13 项；失败的一项（回复同时符合两个方向时擅自猜测）已通过修改路由修复。尚无针对整个流程的偏好评估。
 
 协议、判定规则与结果文件：[Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming)。
