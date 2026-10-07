@@ -43,6 +43,20 @@ Limits:
 - The run was interrupted once by a subscription limit and resumed with the
   same command.
 
+## Host check (not part of the preregistered result)
+
+The experiment emulated sub-agents. With the skill installed in real hosts and
+called once per brief:
+
+| Dispatch paragraph | Claude Code | Codex |
+|---|---|---|
+| As tested (v0.7.0): "or the request is too small to justify them" | workers dispatched in 2 of 4 calls | 0 of 1 |
+| Firmer (v0.7.1): "do it for every brief" | 3 of 3 | 1 of 1 |
+
+So v0.7.0's wording let hosts skip the step the experiment had measured.
+v0.7.1 changes only that paragraph. These are a handful of calls, enough to
+show the difference in behaviour and not a rate.
+
 These briefs are now retired.
 
 ## Generator: gpt-5.5 (judged by claude-opus-5-5)

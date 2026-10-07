@@ -203,7 +203,15 @@ def test_frozen_runtime_copy_matches_the_shipped_engine() -> None:
         ("while it is being evaluated", "while v0.5 is being evaluated"),
     ):
         shipped = shipped.replace(new, old)
-    assert shipped == frozen
+    # v0.7.1 only firms up the dispatch paragraph, so hosts do what was tested.
+    start = shipped.index("Candidates produced in one context")
+    end = shipped.index("1. **Direct pass:**")
+    paragraph = shipped[start:end]
+    assert "do it for every brief" in paragraph
+    assert "Only when the host has no such workers" in paragraph
+    frozen_start = frozen.index("Candidates produced in one context")
+    frozen_end = frozen.index("1. **Direct pass:**")
+    assert shipped[:start] + shipped[end:] == frozen[:frozen_start] + frozen[frozen_end:]
     old_runtime = (REPO / "evals" / "runtimes" / "engine-v0.5.3.md").read_text(encoding="utf-8")
     assert "## Prove each survivor" in old_runtime and "modal map" not in old_runtime
 
