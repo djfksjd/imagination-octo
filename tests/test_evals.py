@@ -193,9 +193,19 @@ def test_experiment_specs_point_at_existing_prompts_and_runtimes() -> None:
 
 
 def test_frozen_runtime_copy_matches_the_shipped_engine() -> None:
-    frozen = (REPO / "evals" / "runtimes" / "engine-v0.5.3.md").read_text(encoding="utf-8")
-    assert "## Prove each survivor" in frozen
-    assert "modal map" not in frozen
+    """The shipped engine is the Experiment C winner, apart from the rename."""
+    frozen = (REPO / "evals" / "runtimes" / "engine-v0.7.0-rc1.md").read_text(encoding="utf-8")
+    shipped = octo_eval.ENGINE_SKILL.read_text(encoding="utf-8")
+    for new, old in (
+        ("imagination-octo-engine", "imagination-engine"),
+        ("Imagination Octo Engine", "Imagination Engine"),
+        ("imagination-octo-brainstorming", "imagination-brainstorming"),
+        ("while it is being evaluated", "while v0.5 is being evaluated"),
+    ):
+        shipped = shipped.replace(new, old)
+    assert shipped == frozen
+    old_runtime = (REPO / "evals" / "runtimes" / "engine-v0.5.3.md").read_text(encoding="utf-8")
+    assert "## Prove each survivor" in old_runtime and "modal map" not in old_runtime
 
 
 def test_search_passes_are_read_from_the_runtime() -> None:

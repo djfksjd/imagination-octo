@@ -1,0 +1,454 @@
+{
+  "runs": 3,
+  "briefs": 12,
+  "arms": {
+    "A0": {
+      "prompt": "control.md"
+    },
+    "OLD": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.5.3.md"
+    },
+    "NEW": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc1.md",
+      "fanout": "scout.md"
+    },
+    "BOLD": {
+      "prompt": "treatment.md",
+      "skill": "evals/runtimes/engine-v0.7.0-rc3.md",
+      "fanout": "scout.md",
+      "workers_from": "NEW"
+    }
+  },
+  "runtime_hashes": {
+    "OLD": "46827a1b485b443a",
+    "NEW": "7135198dcbc22da3",
+    "BOLD": "7af1b388d6f1a73b"
+  },
+  "families": {
+    "gpt": {
+      "generator": "gpt-5.5",
+      "judge": "claude-opus-5-5",
+      "pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 25,
+            "y": 3,
+            "tie": 8,
+            "missing": 0
+          },
+          "cell_net": 0.6111,
+          "briefs": {
+            "x": 11,
+            "y": 1,
+            "tie": 0
+          },
+          "sign_test_p": 0.00317,
+          "rating_diff": {
+            "fit": 0.4167,
+            "useful_surprise": 0.4444,
+            "set_diversity": 0.0972,
+            "craft": 0.8056
+          },
+          "worst_brief_median_fit": 0.0
+        },
+        "BOLD vs OLD": {
+          "pair": "BOLD vs OLD",
+          "cells": {
+            "x": 23,
+            "y": 3,
+            "tie": 10,
+            "missing": 0
+          },
+          "cell_net": 0.5556,
+          "briefs": {
+            "x": 9,
+            "y": 0,
+            "tie": 3
+          },
+          "sign_test_p": 0.00195,
+          "rating_diff": {
+            "fit": 0.4444,
+            "useful_surprise": 0.5139,
+            "set_diversity": 0.3889,
+            "craft": 0.8056
+          },
+          "worst_brief_median_fit": 0.0
+        }
+      },
+      "trap_pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 4,
+            "y": 2,
+            "tie": 0,
+            "missing": 0
+          },
+          "cell_net": 0.3333,
+          "briefs": {
+            "x": 1,
+            "y": 1,
+            "tie": 0
+          },
+          "sign_test_p": 0.75,
+          "rating_diff": {
+            "fit": 0.0,
+            "useful_surprise": 0.5833,
+            "set_diversity": -0.5,
+            "craft": 0.6667
+          },
+          "worst_brief_median_fit": 0.0
+        },
+        "BOLD vs OLD": {
+          "pair": "BOLD vs OLD",
+          "cells": {
+            "x": 3,
+            "y": 2,
+            "tie": 1,
+            "missing": 0
+          },
+          "cell_net": 0.1667,
+          "briefs": {
+            "x": 1,
+            "y": 0,
+            "tie": 1
+          },
+          "sign_test_p": 0.5,
+          "rating_diff": {
+            "fit": 0.0,
+            "useful_surprise": 0.6667,
+            "set_diversity": 0.25,
+            "craft": 0.75
+          },
+          "worst_brief_median_fit": 0.0
+        }
+      },
+      "costs": {
+        "A0": {
+          "outputs": 36,
+          "total_tokens": 19605.6944,
+          "output_tokens": 782.8333,
+          "seconds": 17.7717,
+          "chars": 2561.1111,
+          "words": 455.75,
+          "lines": 18.2778,
+          "bullets": 1.6667,
+          "headings": 1.6944,
+          "bold_labels": 13.5
+        },
+        "OLD": {
+          "outputs": 36,
+          "total_tokens": 21045.4444,
+          "output_tokens": 880.0278,
+          "seconds": 19.5561,
+          "chars": 2871.3056,
+          "words": 508.1389,
+          "lines": 27.1389,
+          "bullets": 3.9444,
+          "headings": 2.5,
+          "bold_labels": 13.5278
+        },
+        "NEW": {
+          "outputs": 36,
+          "total_tokens": 81912.6389,
+          "output_tokens": 3165.0833,
+          "seconds": 71.6978,
+          "chars": 2889.1944,
+          "words": 516.25,
+          "lines": 26.1667,
+          "bullets": 2.5,
+          "headings": 2.5,
+          "bold_labels": 10.5833
+        },
+        "BOLD": {
+          "outputs": 36,
+          "total_tokens": 81912.6389,
+          "output_tokens": 3165.0833,
+          "seconds": 71.6978,
+          "chars": 2911.6944,
+          "words": 520.6944,
+          "lines": 25.9167,
+          "bullets": 1.6667,
+          "headings": 1.9444,
+          "bold_labels": 8.5278
+        }
+      },
+      "convergence": {
+        "A0": {
+          "mechanism_overlap": 0.5819,
+          "distinct_mechanism_ratio": 0.5811,
+          "lexical_similarity": 0.7685,
+          "briefs_coded": 12
+        },
+        "OLD": {
+          "mechanism_overlap": 0.4574,
+          "distinct_mechanism_ratio": 0.6626,
+          "lexical_similarity": 0.8107,
+          "briefs_coded": 12
+        },
+        "NEW": {
+          "mechanism_overlap": 0.4708,
+          "distinct_mechanism_ratio": 0.6568,
+          "lexical_similarity": 0.7981,
+          "briefs_coded": 12
+        },
+        "BOLD": {
+          "mechanism_overlap": 0.4972,
+          "distinct_mechanism_ratio": 0.6334,
+          "lexical_similarity": 0.7992,
+          "briefs_coded": 12
+        }
+      },
+      "shape": {
+        "A0": {
+          "ideas_per_portfolio": 5.0,
+          "share_also_in_A0": 1.0
+        },
+        "OLD": {
+          "ideas_per_portfolio": 5.0,
+          "share_also_in_A0": 0.4922
+        },
+        "NEW": {
+          "ideas_per_portfolio": 4.9722,
+          "share_also_in_A0": 0.4657
+        },
+        "BOLD": {
+          "ideas_per_portfolio": 4.9722,
+          "share_also_in_A0": 0.4499
+        }
+      },
+      "gates": {
+        "coverage": true,
+        "preference": true,
+        "fit_non_inferior": true,
+        "craft_non_inferior": true,
+        "conventional_trap": true,
+        "cost": true,
+        "breadth": true,
+        "not_less_surprising": true,
+        "not_more_repetitive": true,
+        "claim_more_creative": true,
+        "bold_preference_not_worse": true,
+        "bold_fit_non_inferior": true,
+        "bold_beyond_plain": false,
+        "bold_breadth": true
+      }
+    },
+    "claude": {
+      "generator": "claude-opus-5-5",
+      "judge": "gpt-5.5",
+      "pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 20,
+            "y": 4,
+            "tie": 12,
+            "missing": 0
+          },
+          "cell_net": 0.4444,
+          "briefs": {
+            "x": 10,
+            "y": 0,
+            "tie": 2
+          },
+          "sign_test_p": 0.00098,
+          "rating_diff": {
+            "fit": 0.1528,
+            "useful_surprise": 0.2917,
+            "set_diversity": 0.5,
+            "craft": 0.2917
+          },
+          "worst_brief_median_fit": -0.5
+        },
+        "BOLD vs OLD": {
+          "pair": "BOLD vs OLD",
+          "cells": {
+            "x": 11,
+            "y": 11,
+            "tie": 14,
+            "missing": 0
+          },
+          "cell_net": 0.0,
+          "briefs": {
+            "x": 5,
+            "y": 5,
+            "tie": 2
+          },
+          "sign_test_p": 0.62305,
+          "rating_diff": {
+            "fit": -0.0833,
+            "useful_surprise": -0.0139,
+            "set_diversity": 0.1806,
+            "craft": 0.0278
+          },
+          "worst_brief_median_fit": -1.0
+        }
+      },
+      "trap_pairs": {
+        "NEW vs OLD": {
+          "pair": "NEW vs OLD",
+          "cells": {
+            "x": 5,
+            "y": 0,
+            "tie": 1,
+            "missing": 0
+          },
+          "cell_net": 0.8333,
+          "briefs": {
+            "x": 2,
+            "y": 0,
+            "tie": 0
+          },
+          "sign_test_p": 0.25,
+          "rating_diff": {
+            "fit": 0.6667,
+            "useful_surprise": 0.4167,
+            "set_diversity": 0.75,
+            "craft": 0.6667
+          },
+          "worst_brief_median_fit": 0.0
+        },
+        "BOLD vs OLD": {
+          "pair": "BOLD vs OLD",
+          "cells": {
+            "x": 3,
+            "y": 0,
+            "tie": 3,
+            "missing": 0
+          },
+          "cell_net": 0.5,
+          "briefs": {
+            "x": 2,
+            "y": 0,
+            "tie": 0
+          },
+          "sign_test_p": 0.25,
+          "rating_diff": {
+            "fit": 0.25,
+            "useful_surprise": 0.0,
+            "set_diversity": 0.25,
+            "craft": 0.4167
+          },
+          "worst_brief_median_fit": 0.0
+        }
+      },
+      "costs": {
+        "A0": {
+          "outputs": 36,
+          "total_tokens": 3917.1111,
+          "output_tokens": 3055.75,
+          "seconds": 38.5572,
+          "chars": 2823.8611,
+          "words": 543.0556,
+          "lines": 28.5556,
+          "bullets": 16.7778,
+          "headings": 4.5556,
+          "bold_labels": 20.5
+        },
+        "OLD": {
+          "outputs": 36,
+          "total_tokens": 7174.7778,
+          "output_tokens": 4073.25,
+          "seconds": 53.2106,
+          "chars": 2962.8056,
+          "words": 574.4444,
+          "lines": 25.0833,
+          "bullets": 10.8611,
+          "headings": 4.9167,
+          "bold_labels": 16.3889
+        },
+        "NEW": {
+          "outputs": 36,
+          "total_tokens": 23387.9444,
+          "output_tokens": 12589.25,
+          "seconds": 159.3431,
+          "chars": 3322.3056,
+          "words": 650.0556,
+          "lines": 25.6111,
+          "bullets": 13.6111,
+          "headings": 5.1111,
+          "bold_labels": 17.3611
+        },
+        "BOLD": {
+          "outputs": 36,
+          "total_tokens": 23387.9444,
+          "output_tokens": 12589.25,
+          "seconds": 159.3431,
+          "chars": 3093.1389,
+          "words": 610.5556,
+          "lines": 24.1111,
+          "bullets": 13.1111,
+          "headings": 4.0833,
+          "bold_labels": 16.7778
+        }
+      },
+      "convergence": {
+        "A0": {
+          "mechanism_overlap": 0.6097,
+          "distinct_mechanism_ratio": 0.5649,
+          "lexical_similarity": 0.8617,
+          "briefs_coded": 12
+        },
+        "OLD": {
+          "mechanism_overlap": 0.5074,
+          "distinct_mechanism_ratio": 0.6293,
+          "lexical_similarity": 0.8385,
+          "briefs_coded": 12
+        },
+        "NEW": {
+          "mechanism_overlap": 0.4792,
+          "distinct_mechanism_ratio": 0.6407,
+          "lexical_similarity": 0.8648,
+          "briefs_coded": 12
+        },
+        "BOLD": {
+          "mechanism_overlap": 0.3306,
+          "distinct_mechanism_ratio": 0.7128,
+          "lexical_similarity": 0.8542,
+          "briefs_coded": 12
+        }
+      },
+      "shape": {
+        "A0": {
+          "ideas_per_portfolio": 4.6111,
+          "share_also_in_A0": 1.0
+        },
+        "OLD": {
+          "ideas_per_portfolio": 4.0,
+          "share_also_in_A0": 0.5496
+        },
+        "NEW": {
+          "ideas_per_portfolio": 4.3056,
+          "share_also_in_A0": 0.5867
+        },
+        "BOLD": {
+          "ideas_per_portfolio": 4.1667,
+          "share_also_in_A0": 0.3909
+        }
+      },
+      "gates": {
+        "coverage": true,
+        "preference": true,
+        "fit_non_inferior": true,
+        "craft_non_inferior": true,
+        "conventional_trap": true,
+        "cost": true,
+        "breadth": true,
+        "not_less_surprising": true,
+        "not_more_repetitive": true,
+        "claim_more_creative": true,
+        "bold_preference_not_worse": true,
+        "bold_fit_non_inferior": true,
+        "bold_beyond_plain": true,
+        "bold_breadth": true
+      }
+    }
+  },
+  "replace": true,
+  "bold_mode": false,
+  "claim_more_creative": true
+}

@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo se extiende en varias direcciones a la vez y luego se detiene. Devuelve un pequeño portafolio de ideas que difieren en su mecanismo, no en su redacción, y termina el turno. Solo cuando eliges una la pone a prueba y la desarrolla. La decisión es lo único que se niega a automatizar.
 
-**Esto es `v0.4 beta`.** La tabla de abajo proviene de un solo modelo (`gpt-5.4`), evaluado por llamadas de IA de la misma familia, sobre un conjunto pequeño de briefs. Después se hizo un experimento con GPT y Claude, pero su resultado de preferencia queda anulado hasta que se vuelva a juzgar; consulta *Léelas con honestidad*. Nada de esto afirma una creatividad universal.
+**Esto es `v0.5 beta`.** La tabla de abajo proviene de un solo modelo (`gpt-5.4`), evaluado por llamadas de IA de la misma familia, sobre un conjunto pequeño de briefs. Después se hizo un experimento con GPT y Claude, pero su resultado de preferencia queda anulado hasta que se vuelva a juzgar; consulta *Léelas con honestidad*. Nada de esto afirma una creatividad universal.
 
 ## Qué hace
 
@@ -108,6 +108,7 @@ Léelas con honestidad:
 - **Un diseño anterior fracasó por completo.** El pipeline de mazos y compuertas (Engine v0.4.0) perdió 0–30 contra un prompt normal con 48× el coste y fue reemplazado. Ese registro se conserva en el repositorio del Engine.
 - **Experimento A (2026-10-06): resultado de preferencia anulado por ahora.** Un experimento prerregistrado entre modelos ([regla](evals/PREREGISTRATION.md), [resultado](evals/results/2026-10-06-experiment-a.md)) con 12 briefs nuevos, generados por `gpt-5.5` y `claude-opus-5-5` y juzgados por la otra familia. El motor fue preferido al prompt normal en 11 de 12 briefs con GPT y en 10 de 12 con Claude, y un prompt normal con el mismo esfuerzo no cerró la diferencia. Pero los jueces adivinaron qué lado usaba la skill en 22 de 24 pruebas con cada modelo, así que, según la regla fijada de antemano, estas cifras de preferencia no cuentan hasta normalizar el formato de las salidas y volver a juzgarlas. La comprobación a ciegas del autor también sigue pendiente. No afectado por eso: con el motor, ejecuciones separadas repitieron menos los mismos mecanismos (solapamiento 0,40 frente a 0,54 con GPT; 0,50 frente a 0,63 con Claude), con 1,08× los tokens en GPT y 1,99× en Claude.
 - **Una candidata v0.6.0 falló (2026-10-06).** Intentaba ampliar los portafolios y reducir la repetición. En 12 briefs nuevos no superó a la v0.5.3 (5–5–2 con GPT, 4–6–2 con Claude) y no pasó los umbrales prerregistrados en ninguno de los dos, así que se mantiene la v0.5.3 ([resultado](evals/results/2026-10-06-experiment-b.md)).
+- **El motor v0.7.0 pasó (2026-10-07).** Da a cada pasada de búsqueda su propio contexto nuevo. En 12 briefs nuevos fue preferido a la v0.5.3 en 11 con GPT y en 10 con Claude, con la sorpresa útil subiendo +0,44 y +0,29, con 3,9× y 3,3× los tokens ([regla](evals/PREREGISTRATION-C.md), [resultado](evals/results/2026-10-07-experiment-c.md)). Según nuestra codificación sus mecanismos no fueron más raros, así que la ganancia está en ideas mejor elegidas más que en ideas más extrañas. Lo juzgó la otra familia de modelos, no personas.
 - **Flujo de dos turnos:** solo se comprobó el comportamiento. Una suite de regresión pasó 13 de 14 casos; el fallo, una elección adivinada cuando la respuesta encajaba con dos direcciones, llevó a corregir el router. No hay estudio de preferencia del flujo completo.
 
 Protocolos, reglas de decisión y archivos de resultados: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).

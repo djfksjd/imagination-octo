@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo reaches in several directions at once and then stops. It returns a small portfolio of ideas that differ in mechanism, not in wording, and ends the turn. Only after you pick one does it pressure-test and develop that direction. The decision is the one part it refuses to automate.
 
-**This is `v0.4 beta`.** The table below comes from one model (`gpt-5.4`) judged by AI calls from the same family on a small set of briefs. A later cross-model run on GPT and Claude exists, but its preference result is void until it is re-judged; see *Read these honestly*. None of this is a claim of universal creativity.
+**This is `v0.5 beta`.** The table below comes from one model (`gpt-5.4`) judged by AI calls from the same family on a small set of briefs. A later cross-model run on GPT and Claude exists, but its preference result is void until it is re-judged; see *Read these honestly*. None of this is a claim of universal creativity.
 
 ## What it does
 
@@ -108,6 +108,7 @@ Read these honestly:
 - **An earlier design failed outright.** The deck-and-gate pipeline (Engine v0.4.0) lost 0–30 to a plain prompt at 48× the cost and was replaced. That record is kept in the Engine repository.
 - **Experiment A (2026-10-06): preference result void for now.** A preregistered cross-model run ([rule](evals/PREREGISTRATION.md), [result](evals/results/2026-10-06-experiment-a.md)) on 12 fresh briefs with `gpt-5.5` and `claude-opus-5-5`, each judged by the other family. The engine was preferred to the plain prompt on 11 of 12 briefs with GPT and 10 of 12 with Claude, and an effort-matched plain prompt did not close the gap. But judges could tell which side used the skill in 22 of 24 probes on each model, so under the rule fixed in advance these preference numbers do not count until the outputs are format-normalized and re-judged. The owner's blind check is also still open. Not affected by that: separate runs repeated the same mechanisms less with the engine (overlap 0.40 vs 0.54 on GPT, 0.50 vs 0.63 on Claude), at 1.08× the tokens on GPT and 1.99× on Claude.
 - **A candidate v0.6.0 failed (2026-10-06).** It tried to widen portfolios and cut repetition. On 12 fresh briefs it did not beat v0.5.3 (5–5–2 with GPT, 4–6–2 with Claude) and missed preregistered gates on both, so v0.5.3 stays ([result](evals/results/2026-10-06-experiment-b.md)).
+- **Engine v0.7.0 passed (2026-10-07).** It gives each search pass its own fresh context. On 12 fresh briefs it was preferred to v0.5.3 on 11 with GPT and 10 with Claude, with useful surprise up +0.44 and +0.29, at 3.9× and 3.3× the tokens ([rule](evals/PREREGISTRATION-C.md), [result](evals/results/2026-10-07-experiment-c.md)). Its mechanisms were no rarer by our coding, so the gain is better-chosen ideas more than stranger ones. Judged by the other model family, not by people.
 - **Two-turn flow:** checked for behaviour only. A regression suite passed 13 of 14 cases; the failure, a guessed pick when the reply fit two directions, led to a router fix. There is no preference study of the whole flow.
 
 Protocols, decision rules and result files: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).

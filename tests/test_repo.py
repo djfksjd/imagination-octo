@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).parents[1]
-VERSION = "0.4.0"
+VERSION = "0.5.0"
 README_NAMES = {
     "README.md",
     "README.ko.md",

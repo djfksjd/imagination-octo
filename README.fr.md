@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo s'étend dans plusieurs directions à la fois, puis s'arrête. Il renvoie un petit portefeuille d'idées qui diffèrent par leur mécanisme, non par leur formulation, et termine le tour. Ce n'est qu'après votre choix qu'il met cette direction à l'épreuve et la développe. La décision est la seule étape qu'il refuse d'automatiser.
 
-**Ceci est la `v0.4 beta`.** Le tableau ci-dessous provient d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Une expérience ultérieure sur GPT et Claude existe, mais son résultat de préférence est annulé tant qu'il n'a pas été rejugé ; voir *À lire honnêtement*. Rien de tout cela ne prétend à une créativité universelle.
+**Ceci est la `v0.5 beta`.** Le tableau ci-dessous provient d'un seul modèle (`gpt-5.4`), jugé par des appels d'IA de la même famille, sur un petit ensemble de briefs. Une expérience ultérieure sur GPT et Claude existe, mais son résultat de préférence est annulé tant qu'il n'a pas été rejugé ; voir *À lire honnêtement*. Rien de tout cela ne prétend à une créativité universelle.
 
 ## Ce qu'il fait
 
@@ -108,6 +108,7 @@ Comparaisons à l'aveugle préenregistrées contre un prompt ordinaire solide. 1
 - **Une conception antérieure a échoué nettement.** Le pipeline à cartes et à portes (Engine v0.4.0) a perdu 0–30 contre un prompt ordinaire pour 48× le coût et a été remplacé. Ce bilan est conservé dans le dépôt de l'Engine.
 - **Expérience A (2026-10-06) : résultat de préférence annulé pour l'instant.** Une expérience préenregistrée entre modèles ([règle](evals/PREREGISTRATION.md), [résultat](evals/results/2026-10-06-experiment-a.md)) sur 12 briefs inédits, générés par `gpt-5.5` et `claude-opus-5-5` et jugés par l'autre famille. Le moteur a été préféré au prompt simple sur 11 briefs sur 12 avec GPT et 10 sur 12 avec Claude, et un prompt simple à effort égal n'a pas comblé l'écart. Mais les juges ont deviné quel côté utilisait la skill dans 22 tests sur 24 pour chaque modèle ; selon la règle fixée à l'avance, ces chiffres de préférence ne comptent donc pas tant que les sorties n'ont pas été normalisées en format puis rejugées. La vérification à l'aveugle par l'auteur reste aussi à faire. Non concerné par cela : avec le moteur, des exécutions séparées ont moins répété les mêmes mécanismes (recouvrement 0,40 contre 0,54 avec GPT, 0,50 contre 0,63 avec Claude), pour 1,08× les tokens sur GPT et 1,99× sur Claude.
 - **Une candidate v0.6.0 a échoué (2026-10-06).** Elle visait à élargir les portefeuilles et à réduire la répétition. Sur 12 briefs inédits, elle n'a pas battu la v0.5.3 (5–5–2 avec GPT, 4–6–2 avec Claude) et n'a pas franchi les seuils préenregistrés sur les deux modèles ; la v0.5.3 est donc conservée ([résultat](evals/results/2026-10-06-experiment-b.md)).
+- **Le moteur v0.7.0 a réussi (2026-10-07).** Il donne à chaque passe de recherche son propre contexte vierge. Sur 12 briefs inédits, il a été préféré à la v0.5.3 sur 11 avec GPT et 10 avec Claude, avec une surprise utile en hausse de +0,44 et +0,29, pour 3,9× et 3,3× les tokens ([règle](evals/PREREGISTRATION-C.md), [résultat](evals/results/2026-10-07-experiment-c.md)). D'après notre codage, ses mécanismes n'étaient pas plus rares : le gain tient à des idées mieux choisies plutôt qu'à des idées plus étranges. Jugé par l'autre famille de modèles, pas par des personnes.
 - **Parcours en deux tours :** seul le comportement a été vérifié. Une suite de régression a réussi 13 cas sur 14 ; l'échec, un choix deviné quand la réponse correspondait à deux directions, a conduit à corriger le routeur. Il n'existe pas d'étude de préférence du parcours complet.
 
 Protocoles, règles de décision et fichiers de résultats : [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).

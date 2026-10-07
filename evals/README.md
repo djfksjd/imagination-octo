@@ -71,6 +71,14 @@ tested a candidate runtime, `runtimes/engine-v0.6.0-rc2.md`, against v0.5.3
 with `--spec specs/experiment-b.json`. It failed, so v0.5.3 stays, and
 `briefs.experiment-b.jsonl` is retired.
 
+Experiment C ([rule](PREREGISTRATION-C.md), [result](results/2026-10-07-experiment-c.md))
+tested giving each search pass a fresh context, with
+`--spec specs/experiment-c.json`. It passed, and the engine shipped as v0.7.0;
+a stricter selection rule tested alongside did not. `briefs.experiment-c.jsonl`
+is retired. A spec arm with `"fanout"` runs each pass of its runtime as a
+separate call and pools the results; `specs/c-dev.json` holds the five
+development candidates.
+
 `briefs.pilot.jsonl` holds two retired development briefs for checking that
 the pipeline runs end to end. A pilot result is not evidence.
 

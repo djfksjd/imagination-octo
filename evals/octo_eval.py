@@ -257,7 +257,7 @@ def call_model(
     *,
     schema: dict[str, Any] | None = None,
     check: Callable[[dict[str, Any]], None] | None = None,
-    timeout: int = 600,
+    timeout: int = 1800,  # a generator sometimes reasons for well over ten minutes
     attempts: int = 3,
 ) -> dict[str, Any]:
     """Call one model with retries; returns text, parsed JSON, tokens, seconds."""

@@ -15,7 +15,7 @@
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/djfksjd/imagination-octo/tests.yml?style=flat-square&label=tests)](https://github.com/djfksjd/imagination-octo/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-MIT-1f2937?style=flat-square)](LICENSE)
-![Stage](https://img.shields.io/badge/stage-v0.4%20beta-d69526?style=flat-square)
+![Stage](https://img.shields.io/badge/stage-v0.5%20beta-d69526?style=flat-square)
 ![Skills](https://img.shields.io/badge/skills-3-6d5ef5?style=flat-square)
 ![Hosts](https://img.shields.io/badge/hosts-Claude%20Code%20%C2%B7%20Codex-0ea5b7?style=flat-square)
 
@@ -23,7 +23,7 @@
 
 Imagination Octo는 여러 방향으로 동시에 뻗은 다음 멈춥니다. 표현이 아니라 작동 원리가 다른 아이디어 몇 개를 내놓고 턴을 끝냅니다. 사용자가 하나를 고른 뒤에만 그 방향을 검증하고 발전시킵니다. 결정만큼은 자동화하지 않습니다.
 
-**현재 `v0.4 beta`입니다.** 아래 표는 모델 하나(`gpt-5.4`)로 생성하고 같은 계열의 AI 호출이 심사한 결과이며, 브리프 수도 적습니다. 이후 GPT와 Claude로 교차 모델 실험을 했지만, 그 선호도 결과는 재심사 전까지 무효입니다. *정직하게 읽는 법*을 보세요. 어느 쪽도 보편적 창의성을 주장하지 않습니다.
+**현재 `v0.5 beta`입니다.** 아래 표는 모델 하나(`gpt-5.4`)로 생성하고 같은 계열의 AI 호출이 심사한 결과이며, 브리프 수도 적습니다. 이후 GPT와 Claude로 교차 모델 실험을 했지만, 그 선호도 결과는 재심사 전까지 무효입니다. *정직하게 읽는 법*을 보세요. 어느 쪽도 보편적 창의성을 주장하지 않습니다.
 
 ## 하는 일
 
@@ -108,6 +108,7 @@ $imagination-octo를 사용해서 대화 트리, 숨은 주사위, 설득 능력
 - **이전 설계는 완패했습니다.** 덱과 게이트 파이프라인(Engine v0.4.0)은 48배 비용으로 일반 프롬프트에 0 대 30으로 져서 교체했습니다. 그 기록은 Engine 저장소에 남아 있습니다.
 - **Experiment A (2026-10-06): 선호도 결과는 현재 무효입니다.** 사전 등록한 교차 모델 실험입니다 ([규칙](evals/PREREGISTRATION.md), [결과](evals/results/2026-10-06-experiment-a.md)). 새 브리프 12개를 `gpt-5.5`와 `claude-opus-5-5`로 생성하고 서로 다른 계열이 심사했습니다. 엔진은 GPT에서 12개 중 11개, Claude에서 12개 중 10개 브리프에서 일반 프롬프트보다 선호됐고, 노력을 맞춘 일반 프롬프트도 그 차이를 메우지 못했습니다. 그러나 심사자가 어느 쪽이 스킬을 썼는지를 두 모델 모두 24번 중 22번 맞혔습니다. 미리 정한 규칙에 따라, 출력 형식을 정규화해 다시 심사하기 전까지 이 선호도 수치는 근거로 쓰지 않습니다. 제작자의 블라인드 확인도 아직 남아 있습니다. 이와 무관하게 유효한 것: 엔진을 쓰면 여러 번 실행했을 때 같은 메커니즘이 덜 반복됐습니다(중복도 GPT 0.40 대 0.54, Claude 0.50 대 0.63). 토큰은 GPT 1.08배, Claude 1.99배였습니다.
 - **후보 v0.6.0은 탈락했습니다 (2026-10-06).** 포트폴리오를 넓히고 반복을 줄이려던 버전입니다. 새 브리프 12개에서 v0.5.3을 이기지 못했고(GPT 5승 5패 2무, Claude 4승 6패 2무) 두 모델 모두에서 사전 등록 관문을 통과하지 못해 v0.5.3을 유지합니다 ([결과](evals/results/2026-10-06-experiment-b.md)).
+- **엔진 v0.7.0이 통과했습니다 (2026-10-07).** 탐색 단계마다 새 컨텍스트를 따로 줍니다. 새 브리프 12개에서 GPT로는 11개, Claude로는 10개에서 v0.5.3보다 선호됐고, 유용한 의외성은 +0.44, +0.29 올랐으며, 토큰은 3.9배, 3.3배를 썼습니다([규칙](evals/PREREGISTRATION-C.md), [결과](evals/results/2026-10-07-experiment-c.md)). 우리 코딩 기준으로 메커니즘이 더 드물어지지는 않았으므로, 이득은 더 낯선 아이디어보다 더 잘 고른 아이디어에 가깝습니다. 심사는 사람이 아니라 다른 모델 계열이 했습니다.
 - **두 턴 흐름:** 동작만 확인했습니다. 회귀 테스트 14건 중 13건이 통과했고, 실패 1건(답이 두 방향에 다 맞을 때 임의로 고른 경우)은 라우터를 고쳤습니다. 흐름 전체에 대한 선호도 평가는 없습니다.
 
 프로토콜, 판정 규칙, 결과 파일: [Imagination Octo Engine](https://github.com/djfksjd/imagination-octo-engine) · [Imagination Octo Brainstorming](https://github.com/djfksjd/imagination-octo-brainstorming).
